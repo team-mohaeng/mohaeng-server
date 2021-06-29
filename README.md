@@ -29,9 +29,9 @@
 
 ## RULE
 
-[Coding Convention](./rules/Coding Convention.md)
+[Coding Convention](https://github.com/team-journey/journey-server/blob/develop/rules/Coding%20Convention.md)
 
-[Commit Convention](./rules/Commit Convention.md)
+[Commit Convention](https://github.com/team-journey/journey-server/blob/develop/rules/Commit%20Convention.md)
 
-[Git Rule](./rules/Git Rule.md)
+[Git Rule](https://github.com/team-journey/journey-server/blob/develop/rules/Git%20Rule.md)
 
