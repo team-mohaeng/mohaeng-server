@@ -27,11 +27,11 @@
 
 ## 태그 (tag)
 
-[기능](https://www.notion.so/fb48fa22274b4d80b28f154fc62cc147)
+![image](https://user-images.githubusercontent.com/49138331/123763250-8d5e6a80-d8fe-11eb-9b94-bfa03a8e37a0.png)
 
-[개선](https://www.notion.so/183399771f114537b34e6938c508e034)
+![image](https://user-images.githubusercontent.com/49138331/123763287-951e0f00-d8fe-11eb-9f00-ca8ccd2dc63b.png)
 
-[Etc.](https://www.notion.so/3c735a5c3fc849b78527fe442580087a)
+![image](https://user-images.githubusercontent.com/49138331/123763320-9bac8680-d8fe-11eb-8f65-313af9f45f6c.png)
 
 ---
 
