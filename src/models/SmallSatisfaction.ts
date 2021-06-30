@@ -17,8 +17,10 @@ const SmallSatisfactionSchema = new mongoose.Schema({
   },
   likes: [
     {
-      user: mongoose.Types.ObjectId,
-      ref: "User",
+      user: {
+       type: mongoose.Types.ObjectId,
+       ref: "User",
+      },
     },
   ],
   content: {
@@ -52,7 +54,8 @@ const SmallSatisfactionSchema = new mongoose.Schema({
   date: {
     type: Date,
     required: true,
-  }
+    default: Date.now,
+  },
 });
 
 export default mongoose.model<ISmallSatisfaction & mongoose.Document>("SmallSatisfaction", SmallSatisfactionSchema);
