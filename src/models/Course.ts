@@ -39,8 +39,8 @@ const CourseSchema = new mongoose.Schema({
           ment: {
             type: String,
             required: true,
-          }
-        }
+          },
+        },
       ],
       totalCounts: {
         type: Number,

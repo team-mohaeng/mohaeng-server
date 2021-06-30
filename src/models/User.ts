@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema({
   userId: {
     type: String,
     required: true,
-    Unique: true,
+    unique: true,
   },
   userPw: {
     type: String,
@@ -20,10 +20,12 @@ const UserSchema = new mongoose.Schema({
   nickname: {
     type: String,
     required: true,
+    unique: true,
   },
   affinity: {
     type: Number,
     required: true,
+    default: 0,
   },
   messages: [
     {
@@ -41,7 +43,7 @@ const UserSchema = new mongoose.Schema({
            type: Date,
            required: true,
           },
-        }
+        },
       ],
       challengeMessages: [
         {
@@ -57,29 +59,33 @@ const UserSchema = new mongoose.Schema({
            type: Date,
            required: true,
           },
-        }
-      ]
-    }
+        },
+      ],
+    },
   ],
   courses: [
     {
       id: {
         type: Number,
         required: true,
+        unique: true,
       },
       situation: {
         type: Number,
         required: true,
+        default: 0,
       },
       challenges: [
         {
           day: {
             type: Number,
             required: true,
+            unique: true,
           },
           situation: {
             type: Number,
             required: true,
+            default: 0,
           },
           date: {
             type: Date,
@@ -87,9 +93,12 @@ const UserSchema = new mongoose.Schema({
           currentCounts: {
             type: Number,
             required: true,
+            default: 0,
           },
-        }
+        },
       ],
     },
-  ]
-})
+  ],
+});
+
+export default mongoose.model<IUser & mongoose.Document>("User", UserSchema); 
