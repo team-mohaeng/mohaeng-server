@@ -1,3 +1,5 @@
+import { IChallenge } from "./IChallenge";
+
 export interface ICourse {
   id: number;
   title: string;
