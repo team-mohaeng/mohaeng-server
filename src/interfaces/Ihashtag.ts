@@ -1,3 +1,3 @@
-export interface Ihashtag {
+export interface IHashtag {
 	hashtag: string;
 }
