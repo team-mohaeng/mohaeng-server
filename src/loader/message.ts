@@ -1,5 +1,7 @@
 import admin from "firebase-admin";
-// import account frrom "../../firebase-admin.json";
+// import account from "../../journey-admin.json";
+
+// let account = require("");
 
 // admin.initializeApp({
 //   credential: admin.credential.cert(account),

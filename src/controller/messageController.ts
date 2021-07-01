@@ -1,26 +1,31 @@
 import admin from "firebase-admin";
+import express from "express";
+import config from "../config";
 
-export default {
-  pushAlarm: async (req, res) => {
-    let deviceToken = 'fcm Token';
+const router = express.Router();
+
+router.get("/", async(req, res) => {
+  try {
+    let deviceToken = config.deviceToken;
 
     let message = {
-      notification: {
+      data: {
         title: '쟈기',
         body: '쟈니..?',
       },
       token: deviceToken,
     };
-
-    admin.messaging()
-        .send(message)
-        .then(function (response) {
-          console.log('Successfully sent message::', response);
-          return res.status(200).message("SUCCESS")
-        })
-        .catch(function (err) {
-          console.log('Error Sending message!!! : ', err);
-          return res.status(400).message("FAIL");
-        });
+  
+    admin
+      .messaging()
+      .send(message)
+      .then(function (response) {
+        console.log('Successfully sent message: : ', response);
+      })
+      .catch(function (err) {
+        console.log('Error Sending message!!! : ', err);
+      })
+  } catch (error) {
+    console.error(error.message);
   }
-}
+});
