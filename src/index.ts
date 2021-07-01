@@ -6,7 +6,7 @@ import connectDB from "./loader/db";
 connectDB();
 
 app.use(express.json());
-app.use("/api/message", require("./controller/messageController"));
+// app.use("/api/message", require("./controller/messageController"));
 
 // error handler
 app.use(function (err, req, res, next) {
