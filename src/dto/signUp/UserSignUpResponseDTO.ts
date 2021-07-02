@@ -1,8 +1,6 @@
 export default interface UserSignUpResponseDTO {
   status: number;
-  data: {
-    jwt: string;
-  };
+  data: JwtTokenDTO;
 }
 
 interface JwtTokenDTO {
