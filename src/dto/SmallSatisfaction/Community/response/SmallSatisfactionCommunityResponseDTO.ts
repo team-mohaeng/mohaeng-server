@@ -1,7 +1,6 @@
-import mongoose from "mongoose";
 import { IHashtag } from "../../../../interfaces/IHashtag";
 
-export interface ResponseDTO {
+export default interface SmallSatisfactionCommunityResponseDTO {
   SmallSatisfaction: SmallSatisfactionResponseDTO;
 }
 
@@ -12,8 +11,6 @@ export interface SmallSatisfactionResponseDTO{
 }
 
 export interface CommunityResponseDTO {
-	user: mongoose.Types.ObjectId;
-	_id: mongoose.Types.ObjectId;
 	postId: number;
 	nickname: string;
 	likeCount: number; 

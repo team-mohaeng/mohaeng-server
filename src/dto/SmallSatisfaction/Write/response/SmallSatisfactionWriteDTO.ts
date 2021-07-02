@@ -1,4 +1,4 @@
-export interface ResponseDTO {
+export default interface SmallSatisfactionWriteResponseDTO {
   SmallSatisfaction: SmallSatisfactionResponseDTO;
 }
 

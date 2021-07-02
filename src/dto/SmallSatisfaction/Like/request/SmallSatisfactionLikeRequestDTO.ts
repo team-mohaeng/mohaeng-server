@@ -1,10 +1,7 @@
-import mongoose from "mongoose";
-
-export interface RequestDTO {
+export default interface SmallSatisfactionLikeRequestDTO {
   SmallSatisfaction: SmallSatisfactionRequestDTO;
 }
 
 export interface SmallSatisfactionRequestDTO{
-  user: mongoose.Types.ObjectId;
   like: boolean;
 }

@@ -2,12 +2,11 @@ import mongoose from "mongoose";
 import { IImage } from "../../../../interfaces/IImage";
 import { IHashtag } from "../../../../interfaces/IHashtag";
 
-export interface RequestDTO {
+export default interface SmallSatisfactionWriteRequestDTO {
   SmallSatisfaction: SmallSatisfactionRequestDTO;
 }
 
 export interface SmallSatisfactionRequestDTO {
-  user: mongoose.Types.ObjectId;
 	content: string;
 	images?: [IImage];
 	moodImage: string;
