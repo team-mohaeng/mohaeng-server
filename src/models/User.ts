@@ -29,6 +29,10 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  situation: {
+    type: Number,
+    default: 0,
+  },
   affinity: {
     type: Number,
     // required: true,
