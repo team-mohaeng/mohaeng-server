@@ -8,7 +8,7 @@ const router = express.Router();
 const constant = require("../constant");
 
 import User from "../models/User";
-import UserSignUpRequestDTO from "../dto/signUp/UserSignUpRequestDTO";
+import UserSignUpRequestDTO from "../dto/SignUp/UserSignUpRequestDTO";
 import authService from "../service/authService";
 
 router.post(
