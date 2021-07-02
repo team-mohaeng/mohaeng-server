@@ -9,7 +9,10 @@ export default (req, res, next) => {
 
   // Check if not token
   if (!token) {
-    return res.status(403).json({ message: constant.TOKEN_ERROR_MESSAGE });
+    return res.status(403).json({ 
+       status: 403,
+      message: constant.TOKEN_ERROR_MESSAGE
+    });
   }
 
   // Verify token
@@ -19,6 +22,9 @@ export default (req, res, next) => {
     req.body.user = decoded.user;
     next();
   } catch (err) {
-    res.status(403).json({ message: constant.TOKEN_ERROR_MESSAGE });
+    res.status(403).json({ 
+      status: 403,
+      message: constant.TOKEN_ERROR_MESSAGE 
+    });
   }
 };
