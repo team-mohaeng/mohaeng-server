@@ -10,7 +10,7 @@ import UserSignInResponseDTO from "../dto/SignIn/UserSignInResponseDTO";
 export default {
   signin: async (dto: UserSignInRequestDTO) => {
     try {
-      const { userId, userPw } = dto;
+      const { userId, userPw, userToken } = dto;
 
       let user = await User.findOne({ userId });
       if (!user) {
@@ -29,6 +29,9 @@ export default {
         };
         return notMatchPw;
       }
+
+      user.id = userToken;
+      await user.save();
 
       const payload = {
         user: {

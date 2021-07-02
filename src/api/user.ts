@@ -11,6 +11,7 @@ router.post(
   [
     check("userId", "이메일 형태가 아닙니다.").isEmail(),
     check("userPw", "비밀번호는 영문과 숫자를 포함한 8~16자로 입력해주세요.").isAlphanumeric().isLength({ min: 8, max: 16 }),
+    check("userToken", "유저 디바이스 토큰 값이 없습니다.").not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -24,6 +25,7 @@ router.post(
     const requestDTO: UserSignInRequestDTO = {
       userId: req.body.userId,
       userPw: req.body.userPw,
+      userToken: req.body.userToken,
     };
 
     const result = await userService.signin(requestDTO);
