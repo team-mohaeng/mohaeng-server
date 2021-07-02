@@ -4,8 +4,8 @@ import config from "../config";
 
 import User from "../models/User";
 import { IFail } from "../interfaces/IFail";
-import UserSignUpRequestDTO from "../dto/signUp/UserSignUpRequestDTO";
-import UserSignUpResponseDTO from "../dto/signUp/UserSignUpResponseDTO";
+import UserSignUpRequestDTO from "../dto/SignUp/UserSignUpRequestDTO";
+import UserSignUpResponseDTO from "../dto/SignUp/UserSignUpResponseDTO";
 
 export default {
   signup: async (dto: UserSignUpRequestDTO) => {
@@ -61,7 +61,7 @@ export default {
           jwt: jwtToken,
         },
       };
-      
+
       return responseDTO;
     } catch (err) {
       console.error(err.message);
