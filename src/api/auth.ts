@@ -1,10 +1,6 @@
 import express from "express";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
-import config from "../config";
 import { check, validationResult } from "express-validator";
 
-import User from "../models/User";
 import UserSignUpRequestDTO from "../dto/SignUp/UserSignUpRequestDTO";
 import authService from "../service/authService";
 
