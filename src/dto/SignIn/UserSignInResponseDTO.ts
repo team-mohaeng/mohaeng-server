@@ -1,4 +1,4 @@
-export default interface UserSignUpResponseDTO {
+export default interface UserSignInResponseDTO {
   status: number;
   data: JwtTokenDTO;
 }
