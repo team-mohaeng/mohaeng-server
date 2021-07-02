@@ -22,6 +22,14 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  gender: {
+    type: Number,
+    required: true,
+  },
+  birthYear: {
+    type: Number,
+    required: true,
+  },
   affinity: {
     type: Number,
     required: true,
