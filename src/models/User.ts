@@ -6,7 +6,6 @@ import { IUserCourse } from "../interfaces/IUserCourse";
 const UserSchema = new mongoose.Schema({
   id: {
     type: String,
-    required: true,
   },
   userId: {
     type: String,
@@ -22,9 +21,17 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  affinity: {
+  gender: {
     type: Number,
     required: true,
+  },
+  birthYear: {
+    type: Number,
+    required: true,
+  },
+  affinity: {
+    type: Number,
+    // required: true,
     default: 0,
   },
   messages: [
@@ -67,8 +74,7 @@ const UserSchema = new mongoose.Schema({
     {
       id: {
         type: Number,
-        required: true,
-        unique: true,
+        ref: "Course",
       },
       situation: {
         type: Number,
@@ -80,7 +86,6 @@ const UserSchema = new mongoose.Schema({
           day: {
             type: Number,
             required: true,
-            unique: true,
           },
           situation: {
             type: Number,
