@@ -8,6 +8,7 @@ connectDB();
 app.use(express.json());
 
 app.use("/api/signup", require("./api/auth"));
+app.use("/api/signin", require("./api/user"));
 // app.use("/api/message", require("./controller/messageController"));
 
 // error handler
