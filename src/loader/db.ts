@@ -14,9 +14,9 @@ const connectDB = async () => {
 
     console.log("Mongoose Connected ...");
 
-    // User.createCollection().then(function(collection) {
-    //   console.log('User Collection is created!');
-    // });
+    User.createCollection().then(function(collection) {
+      console.log('User Collection is created!');
+    });
     // Course.createCollection().then(function(collection) {
     //   console.log('Course Collection is created!');
     // });
