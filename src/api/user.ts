@@ -6,6 +6,42 @@ import userService from "../service/userService";
 
 const router = express.Router();
 
+/**
+ * @api {post} /api/signin 로그인
+ * 
+ * @apiVersion 1.0.0
+ * @apiName SignIn
+ * @apiGroup User
+ * 
+ * @apiHeaderExample {json} Header-Example:
+ * {
+ *  "Content-Type": "application/json"
+ * }
+ * 
+ * @apiSuccess {String} jwt
+ * 
+ * @apiParamExample {json} Request-Example:
+ * {
+ *  "userId": "test1@gmail.com",
+ *  "userPw": "1234abcd"
+ * }
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * 200 OK
+ * {
+ *  "status": 200,
+ *  "data": {
+ *    "jwt": "jwt토큰"
+ *  }
+ * }
+ * 
+ * @apiErrorExample Error-Response:
+ * 404 가입하지 않은 아이디
+ * {
+ *  "status": 404,
+ *  "message": "유저가 존재하지 않습니다."
+ * }
+ */
 router.post(
   "/",
   [

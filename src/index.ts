@@ -1,11 +1,16 @@
 import express from "express";
-const app = express();
 import connectDB from "./loader/db";
+import path from "path";
+
+const app = express();
+const apidocPath = path.join(__dirname, "../apidoc");
 
 // Connect Database
 connectDB();
 
 app.use(express.json());
+
+app.use("/apidoc", express.static(apidocPath));
 
 app.use("/api/signup", require("./api/auth"));
 app.use("/api/signin", require("./api/user"));
