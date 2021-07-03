@@ -110,6 +110,15 @@ define({ "api": [
         }
       ]
     },
+    "parameter": {
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n \"userId\": \"test1@gmail.com\",\n \"userPw\": \"1234abcd\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -126,15 +135,6 @@ define({ "api": [
         {
           "title": "Success-Response:",
           "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"jwt\": \"jwt토큰\"\n }\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "parameter": {
-      "examples": [
-        {
-          "title": "Request-Example:",
-          "content": "{\n \"userId\": \"test1@gmail.com\",\n \"userPw\": \"1234abcd\"\n}",
           "type": "json"
         }
       ]
@@ -167,6 +167,15 @@ define({ "api": [
         }
       ]
     },
+    "parameter": {
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n \"userId\": \"test1@gmail.com\",\n \"userPw\": \"1234abcd\",\n \"nickname\": \"test1\",\n \"gender\": 0,\n \"birthYear\": 1998\n}",
+          "type": "json"
+        }
+      ]
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -183,15 +192,6 @@ define({ "api": [
         {
           "title": "Success-Response:",
           "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"jwt\": \"jwt토큰\"\n }\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "parameter": {
-      "examples": [
-        {
-          "title": "Request-Example:",
-          "content": "{\n \"userId\": \"test1@gmail.com\",\n \"userPw\": \"1234abcd\",\n \"nickname\": \"test1\",\n \"gender\": 0,\n \"birthYear\": 1998\n}",
           "type": "json"
         }
       ]

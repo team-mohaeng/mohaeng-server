@@ -18,13 +18,13 @@ const router = express.Router();
  *  "Content-Type": "application/json"
  * }
  * 
- * @apiSuccess {String} jwt
- * 
  * @apiParamExample {json} Request-Example:
  * {
  *  "userId": "test1@gmail.com",
  *  "userPw": "1234abcd"
  * }
+ * 
+ * @apiSuccess {String} jwt
  * 
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
