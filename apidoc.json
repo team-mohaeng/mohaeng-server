@@ -3,5 +3,5 @@
   "version": "1.0.0",
   "description": "🌹 쟈기들과는 async 하고싶지 않아.. 오로지 sync.. 🌹",
   "title": "쟈니",
-  "url": "https://3.35.235.150:5000"
+  "url": "https://api.github.com/v1"
 }
