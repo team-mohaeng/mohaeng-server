@@ -9,6 +9,7 @@ app.use(express.json());
 
 app.use("/api/signup", require("./api/auth"));
 app.use("/api/signin", require("./api/user"));
+app.use("/api/home", require("./api/home"));
 // app.use("/api/message", require("./controller/messageController"));
 
 // error handler
@@ -17,9 +18,15 @@ app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "production" ? err : {};
 
+  
   // render the error page
   res.status(err.status || 500);
+  res.json({
+    message: err.message,
+    error: err
+  });
   res.render("error");
+  
 });
 
 app
