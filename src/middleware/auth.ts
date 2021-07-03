@@ -1,17 +1,17 @@
 import jwt from "jsonwebtoken";
 import config from "../config";
 
-let constant = require("../constant");
+import { TOKEN_ERROR_MESSAGE } from "../constant";
 
 export default (req, res, next) => {
   // Get token from header
-  const token = req.header("x-auth-token");
+  const token = req.header("Bearer");
 
   // Check if not token
   if (!token) {
-    return res.status(403).json({ 
-       status: 403,
-      message: constant.TOKEN_ERROR_MESSAGE
+    return res.status(403).json({
+      status: 403,
+      message: TOKEN_ERROR_MESSAGE
     });
   }
 
@@ -24,7 +24,7 @@ export default (req, res, next) => {
   } catch (err) {
     res.status(403).json({ 
       status: 403,
-      message: constant.TOKEN_ERROR_MESSAGE 
+      message: TOKEN_ERROR_MESSAGE
     });
   }
 };
