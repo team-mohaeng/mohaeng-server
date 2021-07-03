@@ -43,15 +43,15 @@ define({ "api": [
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "course.title",
-            "description": ""
+            "field": "title",
+            "description": "<p>코스 제목</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "course.property",
-            "description": ""
+            "field": "property",
+            "description": "<p>코스 속성</p>"
           },
           {
             "group": "Success 200",
@@ -64,8 +64,8 @@ define({ "api": [
             "group": "Success 200",
             "type": "Number",
             "optional": false,
-            "field": "challenge.day",
-            "description": ""
+            "field": "day",
+            "description": "<p>챌린지 n일차</p>"
           }
         ]
       },
@@ -93,49 +93,6 @@ define({ "api": [
     },
     "filename": "src/api/home.ts",
     "groupTitle": "Main"
-  },
-  {
-    "type": "get",
-    "url": "/user/:id",
-    "title": "Request User information",
-    "name": "GetUser",
-    "group": "User",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Number",
-            "optional": false,
-            "field": "id",
-            "description": "<p>User's unique ID.</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "firstname",
-            "description": "<p>Firstname of the User.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "lastname",
-            "description": "<p>Lastname of the User.</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "src/api/apiDummy.ts",
-    "groupTitle": "User"
   },
   {
     "type": "post",
