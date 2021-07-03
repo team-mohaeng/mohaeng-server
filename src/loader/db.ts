@@ -23,8 +23,6 @@ const connectDB = async () => {
     // SmallSatisfaction.createCollection().then(function(collection) {
     //   console.log('Course Collection is created!');
     // });
-
-    
   } catch (err) {
     console.error(err.message);
     process.exit(1);
