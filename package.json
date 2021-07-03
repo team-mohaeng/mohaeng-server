@@ -14,7 +14,8 @@
     "express": "^4.17.1",
     "express-validator": "^6.12.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.13.0"
+    "mongoose": "^5.13.0",
+    "package.json": "^2.0.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
