@@ -6,6 +6,15 @@ import authService from "../service/authService";
 
 const router = express.Router();
 
+/**
+ * @api {post} /api/signup
+ * 
+ * @apiVersion 1.0.0
+ * @apiName SignUp
+ * @apiGroup User
+ * 
+ * @apiSuccess {String} jwt
+ */
 router.post(
   "/",
   [
