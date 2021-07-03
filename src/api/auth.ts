@@ -6,6 +6,45 @@ import authService from "../service/authService";
 
 const router = express.Router();
 
+/**
+ * @api {post} /api/signup 회원가입
+ * 
+ * @apiVersion 1.0.0
+ * @apiName SignUp
+ * @apiGroup User
+ * 
+ * @apiHeaderExample {json} Header-Example:
+ * {
+ *  "Content-Type": "application/json"
+ * }
+ * 
+ * @apiParamExample {json} Request-Example:
+ * {
+ *  "userId": "test1@gmail.com",
+ *  "userPw": "1234abcd",
+ *  "nickname": "test1",
+ *  "gender": 0,
+ *  "birthYear": 1998
+ * }
+ * 
+ * @apiSuccess {String} jwt
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * 200 OK
+ * {
+ *  "status": 200,
+ *  "data": {
+ *    "jwt": "jwt토큰"
+ *  }
+ * }
+ * 
+ * @apiErrorExample Error-Response:
+ * 400 아이디 중복
+ * {
+ *  "status": 400,
+ *  "message": "이미 사용 중인 아이디입니다."
+ * }
+ */
 router.post(
   "/",
   [
