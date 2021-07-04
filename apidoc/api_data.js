@@ -114,7 +114,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n \"userId\": \"test1@gmail.com\",\n \"userPw\": \"1234abcd\"\n}",
+          "content": "{\n \"userId\": \"test1@gmail.com\",\n \"userPw\": \"1234abcd\",\n \"userToken\": \"fcm token\"\n}",
           "type": "json"
         }
       ]

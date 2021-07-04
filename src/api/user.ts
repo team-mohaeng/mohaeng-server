@@ -21,7 +21,8 @@ const router = express.Router();
  * @apiParamExample {json} Request-Example:
  * {
  *  "userId": "test1@gmail.com",
- *  "userPw": "1234abcd"
+ *  "userPw": "1234abcd",
+ *  "userToken": "fcm token"
  * }
  * 
  * @apiSuccess {String} jwt
