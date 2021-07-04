@@ -4,11 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const app = express_1.default();
 const db_1 = __importDefault(require("./loader/db"));
+const path_1 = __importDefault(require("path"));
+const app = express_1.default();
+const apidocPath = path_1.default.join(__dirname, "../apidoc");
 // Connect Database
 db_1.default();
 app.use(express_1.default.json());
+app.use("/apidoc", express_1.default.static(apidocPath));
 app.use("/api/signup", require("./api/auth"));
 app.use("/api/signin", require("./api/user"));
 app.use("/api/home", require("./api/home"));
