@@ -15,6 +15,7 @@ app.use("/apidoc", express.static(apidocPath));
 app.use("/api/signup", require("./api/auth"));
 app.use("/api/signin", require("./api/user"));
 app.use("/api/home", require("./api/home"));
+app.use("/api/courses", require("./api/course"));
 // app.use("/api/message", require("./controller/messageController"));
 
 // error handler

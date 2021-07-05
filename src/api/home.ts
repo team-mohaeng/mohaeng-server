@@ -1,5 +1,4 @@
 import express, { Router } from "express";
-import { check, validationResult } from "express-validator";
 import auth from "../middleware/auth";
 import homeService from "../service/homeService";
 

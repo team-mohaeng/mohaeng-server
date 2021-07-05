@@ -28,7 +28,6 @@ const CourseSchema = new mongoose.Schema({
       day: {
         type: Number,
         required: true,
-        unique: true,
       },
       description: {
         type: String,
