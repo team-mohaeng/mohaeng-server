@@ -31,7 +31,6 @@ export default {
       }
 
       user.id = userToken;
-      user.situation = 0;
       await user.save();
 
       const payload = {
@@ -43,7 +42,7 @@ export default {
       const jwtToken = jwt.sign(
         payload,
         config.jwtSecret,
-        { expiresIn: 36000 },
+        { expiresIn: '24h' },
       );
 
       const responseDTO: UserSignInResponseDTO = {
