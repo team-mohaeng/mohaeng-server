@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
+const dateFormatter_1 = require("../formatter/dateFormatter");
 const SmallSatisfactionSchema = new mongoose_1.default.Schema({
     user: {
         type: mongoose_1.default.Types.ObjectId,
@@ -41,9 +42,8 @@ const SmallSatisfactionSchema = new mongoose_1.default.Schema({
         required: true,
     },
     date: {
-        type: Date,
-        required: true,
-        default: Date.now,
+        type: String,
+        default: dateFormatter_1.dateFormatter(),
     },
 });
 exports.default = mongoose_1.default.model("SmallSatisfaction", SmallSatisfactionSchema);

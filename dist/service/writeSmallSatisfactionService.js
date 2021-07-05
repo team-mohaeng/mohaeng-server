@@ -4,10 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const SmallSatisfaction_1 = __importDefault(require("../models/SmallSatisfaction"));
+const dateFormatter_1 = require("../formatter/dateFormatter");
 exports.default = {
     smallSatisfaction: async (dto) => {
         try {
-            const { content, moodText, moodImage, mainImage, subImages, hashtags, isPrivate, date, } = dto;
+            const { content, moodText, moodImage, mainImage, subImages, hashtags, isPrivate, } = dto;
+            const date = dateFormatter_1.dateFormatter();
             let smallSatisfaction = new SmallSatisfaction_1.default({
                 content,
                 moodText,
@@ -16,7 +18,7 @@ exports.default = {
                 subImages,
                 hashtags,
                 isPrivate,
-                date
+                date,
             });
             await smallSatisfaction.save();
             const responseDTO = {

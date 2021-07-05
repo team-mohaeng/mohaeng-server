@@ -1,6 +1,7 @@
 import SmallSatisfaction from "../models/SmallSatisfaction"
 import { SmallSatisfactionWriteRequestDTO } from "../dto/SmallSatisfaction/Write/request/SmallSatisfactionWriteDTO"
 import { SmallSatisfactionWriteResponseDTO } from "../dto/SmallSatisfaction/Write/response/SmallSatisfactionWriteDTO"
+import { dateFormatter } from "../formatter/dateFormatter";
 
 export default {
   smallSatisfaction: async (dto: SmallSatisfactionWriteRequestDTO) => {
@@ -12,8 +13,9 @@ export default {
         mainImage,
         subImages,
         hashtags,
-        isPrivate, 
-        date, } = dto;
+        isPrivate, } = dto;
+
+      const date = dateFormatter();
         
       let smallSatisfaction = new SmallSatisfaction({
         content,
@@ -23,7 +25,7 @@ export default {
         subImages,
         hashtags,
         isPrivate, 
-        date
+        date,
       })
       await smallSatisfaction.save();
 

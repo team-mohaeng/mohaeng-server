@@ -9,5 +9,4 @@ export interface SmallSatisfactionWriteRequestDTO {
 	moodText: string;
 	hashtags?: [IHashtag]; //바꾼거
 	isPrivate: boolean;
-	date: Date;
 }

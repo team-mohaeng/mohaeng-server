@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { ISmallSatisfaction } from "../interfaces/ISmallSatisfaction";
+import { dateFormatter } from "../formatter/dateFormatter";
 
 const SmallSatisfactionSchema = new mongoose.Schema({
   user: {
@@ -38,9 +39,8 @@ const SmallSatisfactionSchema = new mongoose.Schema({
     required: true,
   },
   date: {
-    type: Date,
-    required: true,
-    default: Date.now,
+    type: String,
+    default: dateFormatter(),
   },
 });
 
