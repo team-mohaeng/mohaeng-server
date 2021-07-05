@@ -31,7 +31,6 @@ export default {
       }
 
       user.id = userToken;
-      user.situation = 0;
       await user.save();
 
       const payload = {
