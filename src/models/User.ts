@@ -6,6 +6,7 @@ import { IUserCourse } from "../interfaces/IUserCourse";
 const UserSchema = new mongoose.Schema({
   id: {
     type: String,
+    unique: true,
   },
   userId: {
     type: String,
@@ -35,8 +36,7 @@ const UserSchema = new mongoose.Schema({
   },
   affinity: {
     type: Number,
-    // required: true,
-    default: 0,
+    default: 20,
   },
   messages: [
     {

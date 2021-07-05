@@ -6,6 +6,9 @@ import User from "../models/User";
 import { IFail } from "../interfaces/IFail";
 import UserSignUpRequestDTO from "../dto/SignUp/UserSignUpRequestDTO";
 import UserSignUpResponseDTO from "../dto/SignUp/UserSignUpResponseDTO";
+import Course from "../models/Course";
+import { IUserCourse } from "../interfaces/IUserCourse";
+import { IUserChallenge } from "../interfaces/IUsrChallenge";
 
 export default {
   signup: async (dto: UserSignUpRequestDTO) => {
@@ -16,7 +19,7 @@ export default {
       if (user) {
         const duplicateId: IFail = {
           status: 400,
-          message: "이미 사용 중인 아이디입니다.",
+          message: "이미 사용 중인 이메일입니다.",
         };
         return duplicateId;
       }
@@ -37,6 +40,32 @@ export default {
         gender,
         birthYear
       });
+
+      const courses = await Course.find({});
+      let userCourse: Array<IUserCourse> = new Array<IUserCourse>();
+
+      courses.forEach((course) => {
+        let userChallenge: Array<IUserChallenge> = new Array<IUserChallenge>();
+
+        course.challenges.forEach((challenge) => {
+          userChallenge.push(
+            {
+              day: challenge.day,
+              situation: 0,
+              currentCounts: 0
+            }
+          );
+        });
+
+        userCourse.push(
+          {
+            id: course.id,
+            situation: 0,
+            challenges: userChallenge
+          }
+        );
+      });
+      user.courses = userCourse;
 
       const salt = await bcrypt.genSalt(10);
       user.userPw = await bcrypt.hash(userPw, salt);
