@@ -1,17 +1,13 @@
-import mongoose from "mongoose";
 import { IImage } from "../../../../interfaces/IImage";
 import { IHashtag } from "../../../../interfaces/IHashtag";
 
-export default interface SmallSatisfactionWriteRequestDTO {
-  SmallSatisfaction: SmallSatisfactionRequestDTO;
-}
-
-export interface SmallSatisfactionRequestDTO {
+export interface SmallSatisfactionWriteRequestDTO {
 	content: string;
-	images?: [IImage];
-	moodImage: string;
+	mainImage?: IImage;
+	subImages?: [IImage];
+	moodImage: IImage;
 	moodText: string;
-	hashtags?: [IHashtag];
+	hashtags?: [IHashtag]; //바꾼거
 	isPrivate: boolean;
 	date: Date;
 }

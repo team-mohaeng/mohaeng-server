@@ -6,15 +6,6 @@ const SmallSatisfactionSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "User",
   },
-  _id: {
-    type: mongoose.Types.ObjectId,
-    required: true,
-  },
-  postId: {
-    type: Number,
-    required: true,
-    unique: true,
-  },
   likes: [
     {
       user: {
@@ -27,26 +18,21 @@ const SmallSatisfactionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  images: [
-    {
-      image: {
-        type: String,
-      },
-    },
-  ],
+  mainImage: {
+    type: String,
+  },
+  subImages: {
+    type: [String],
+  },
   moodImage: {
     type: String,
   },
   moodText: {
     type: String,
   },
-  hashtags: [
-    {
-      hashtag: {
-        type: String,
-      },
-    },
-  ],
+  hashtags: {
+      type: [String],
+  },
   isPrivate: {
     type: Boolean,
     required: true,

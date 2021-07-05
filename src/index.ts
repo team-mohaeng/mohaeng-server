@@ -7,6 +7,7 @@ connectDB();
 
 app.use(express.json());
 // app.use("/api/message", require("./controller/messageController"));
+app.use("/api/writeSmallSatisfaction", require("./api/writeSmallSatisfaction"));
 
 // error handler
 app.use(function (err, req, res, next) {

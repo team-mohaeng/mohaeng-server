@@ -22,4 +22,11 @@ export default {
   mongoURI: process.env.MONGODB_URI,
 
   deviceToken: process.env.deviceToken,
+  
+  /**
+   * Your secret sauce
+   */
+  awsBucket: process.env.AWS_BUCKET,
+  awsS3AccessKey: process.env.AWS_ACCESS_KEY,
+  awsS3SecretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 };
