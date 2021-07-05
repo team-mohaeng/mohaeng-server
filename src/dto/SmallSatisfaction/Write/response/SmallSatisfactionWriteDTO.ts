@@ -1,7 +1,7 @@
-export default interface SmallSatisfactionWriteResponseDTO {
-  SmallSatisfaction: SmallSatisfactionResponseDTO;
-}
-
-export interface SmallSatisfactionResponseDTO{
-  image: string;
+import { IImage } from "../../../../interfaces/IImage"
+export interface SmallSatisfactionWriteResponseDTO {
+  status: number;
+  data: {
+    image: IImage;
+  }
 }

@@ -1,10 +1,6 @@
 import { IHashtag } from "../../../../interfaces/IHashtag";
 
-export default interface SmallSatisfactionCommunityResponseDTO {
-  SmallSatisfaction: SmallSatisfactionResponseDTO;
-}
-
-export interface SmallSatisfactionResponseDTO{
+export interface SmallSatisfactionCommunityResponseDTO {
   hasSmallSatisfaction: boolean;
   userCount: number;
   smallSatisfactions: [CommunityResponseDTO];

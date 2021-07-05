@@ -1,19 +1,11 @@
 import mongoose from "mongoose";
 import { ISmallSatisfaction } from "../interfaces/ISmallSatisfaction";
+import { dateFormatter } from "../formatter/dateFormatter";
 
 const SmallSatisfactionSchema = new mongoose.Schema({
   user: {
     type: mongoose.Types.ObjectId,
     ref: "User",
-  },
-  _id: {
-    type: mongoose.Types.ObjectId,
-    required: true,
-  },
-  postId: {
-    type: Number,
-    required: true,
-    unique: true,
   },
   likes: [
     {
@@ -27,34 +19,28 @@ const SmallSatisfactionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  images: [
-    {
-      image: {
-        type: String,
-      },
-    },
-  ],
+  mainImage: {
+    type: String,
+  },
+  subImages: {
+    type: [String],
+  },
   moodImage: {
     type: String,
   },
   moodText: {
     type: String,
   },
-  hashtags: [
-    {
-      hashtag: {
-        type: String,
-      },
-    },
-  ],
+  hashtags: {
+      type: [String],
+  },
   isPrivate: {
     type: Boolean,
     required: true,
   },
   date: {
-    type: Date,
-    required: true,
-    default: Date.now,
+    type: String,
+    default: dateFormatter(),
   },
 });
 
