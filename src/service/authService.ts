@@ -81,7 +81,7 @@ export default {
       const jwtToken = jwt.sign(
         payload,
         config.jwtSecret,
-        { expiresIn: '24h' },
+        { expiresIn: '36000' },
       );
 
       const responseDTO: UserSignUpResponseDTO = {
