@@ -10,6 +10,6 @@ export interface IUser {
 	birthYear: number;
 	situation: number;	// default 0
 	affinity: number; // default 0
-	messages?: [IMessage];
-	courses?: [IUserCourse];
+	messages?: IMessage[];
+	courses?: IUserCourse[];
 }
