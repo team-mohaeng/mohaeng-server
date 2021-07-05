@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"version":3,"file":"constant.js","sourceRoot":"","sources":["../src/constant.ts"],"names":[],"mappings":"AAAA,uBAAuB;AACvB,MAAM,UAAU,GAAG,CAAC,CAAC;AACrB,MAAM,WAAW,GAAG,CAAC,CAAC;AACtB,MAAM,QAAQ,GAAG,CAAC,CAAC;AAEnB,SAAS;AACT,MAAM,oBAAoB,GAAG,+BAA+B,CAAA;AAC5D,MAAM,mBAAmB,GAAG,qCAAqC,CAAA;AACjE,MAAM,kBAAkB,GAAG,6CAA6C,CAAA"}
+=======
+{"version":3,"file":"constant.js","sourceRoot":"","sources":["../src/constant.ts"],"names":[],"mappings":";;;AAAA,uBAAuB;AACV,QAAA,UAAU,GAAG,CAAC,CAAC;AACf,QAAA,WAAW,GAAG,CAAC,CAAC;AAChB,QAAA,QAAQ,GAAG,CAAC,CAAC;AAE1B,SAAS;AACI,QAAA,oBAAoB,GAAG,+BAA+B,CAAA;AACtD,QAAA,mBAAmB,GAAG,qCAAqC,CAAA;AAC3D,QAAA,kBAAkB,GAAG,6CAA6C,CAAA"}
+>>>>>>> ad7adf7d97810049385634942338c20103a7ee17
