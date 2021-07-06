@@ -28,7 +28,6 @@ exports.default = {
                 return notMatchPw;
             }
             user.id = userToken;
-            user.situation = 0;
             await user.save();
             const payload = {
                 user: {

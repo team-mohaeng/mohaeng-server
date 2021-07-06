@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "ts-code src",
-    "build": "tsc && node --max-old-space-size=12000 dist",
+    "build": "tsc && node dist",
     "test": "nodemon"
   },
   "dependencies": {

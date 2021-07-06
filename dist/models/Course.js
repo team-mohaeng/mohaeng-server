@@ -31,7 +31,6 @@ const CourseSchema = new mongoose_1.default.Schema({
             day: {
                 type: Number,
                 required: true,
-                unique: true,
             },
             description: {
                 type: String,

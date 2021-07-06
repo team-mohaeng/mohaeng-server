@@ -7,10 +7,6 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const UserSchema = new mongoose_1.default.Schema({
     id: {
         type: String,
-<<<<<<< HEAD
-        required: true,
-=======
->>>>>>> ad7adf7d97810049385634942338c20103a7ee17
     },
     userId: {
         type: String,
@@ -26,11 +22,6 @@ const UserSchema = new mongoose_1.default.Schema({
         required: true,
         unique: true,
     },
-<<<<<<< HEAD
-    affinity: {
-        type: Number,
-        required: true,
-=======
     gender: {
         type: Number,
         required: true,
@@ -45,9 +36,7 @@ const UserSchema = new mongoose_1.default.Schema({
     },
     affinity: {
         type: Number,
-        // required: true,
->>>>>>> ad7adf7d97810049385634942338c20103a7ee17
-        default: 0,
+        default: 20,
     },
     messages: [
         {
@@ -90,10 +79,6 @@ const UserSchema = new mongoose_1.default.Schema({
             id: {
                 type: Number,
                 required: true,
-<<<<<<< HEAD
-                unique: true,
-=======
->>>>>>> ad7adf7d97810049385634942338c20103a7ee17
             },
             situation: {
                 type: Number,
@@ -105,10 +90,6 @@ const UserSchema = new mongoose_1.default.Schema({
                     day: {
                         type: Number,
                         required: true,
-<<<<<<< HEAD
-                        unique: true,
-=======
->>>>>>> ad7adf7d97810049385634942338c20103a7ee17
                     },
                     situation: {
                         type: Number,

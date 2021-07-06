@@ -49,7 +49,7 @@ const router = express_1.default.Router();
 router.post("/", [
     express_validator_1.check("userId", "이메일 형태가 아닙니다.").isEmail(),
     express_validator_1.check("userPw", "비밀번호는 영문과 숫자를 포함한 8~16자로 입력해주세요.").isAlphanumeric().isLength({ min: 8, max: 16 }),
-    express_validator_1.check("nickname", "입력 칸을 채워주세요!").isLength({ min: 1, max: 6 }),
+    express_validator_1.check("nickname", "닉네임은 2~6글자 사이입니다.").isLength({ min: 2, max: 6 }),
     express_validator_1.check("gender", "입력 칸을 채워주세요!").not().isEmpty(),
     express_validator_1.check("birthYear", "입력 칸을 채워주세요!").not().isEmpty(),
 ], async (req, res) => {

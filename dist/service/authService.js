@@ -7,6 +7,7 @@ const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = __importDefault(require("../config"));
 const User_1 = __importDefault(require("../models/User"));
+const Course_1 = __importDefault(require("../models/Course"));
 exports.default = {
     signup: async (dto) => {
         try {
@@ -15,7 +16,7 @@ exports.default = {
             if (user) {
                 const duplicateId = {
                     status: 400,
-                    message: "이미 사용 중인 아이디입니다.",
+                    message: "이미 사용 중인 이메일입니다.",
                 };
                 return duplicateId;
             }
@@ -23,7 +24,7 @@ exports.default = {
             if (user) {
                 const duplicateNickname = {
                     status: 400,
-                    message: "이미 사용 중인 닉네임입니다.",
+                    message: "이미 사용 중인 닉네임입니다",
                 };
                 return duplicateNickname;
             }
@@ -34,6 +35,24 @@ exports.default = {
                 gender,
                 birthYear
             });
+            const courses = await Course_1.default.find({});
+            let userCourse = new Array();
+            courses.forEach((course) => {
+                let userChallenge = new Array();
+                course.challenges.forEach((challenge) => {
+                    userChallenge.push({
+                        day: challenge.day,
+                        situation: 0,
+                        currentCounts: 0
+                    });
+                });
+                userCourse.push({
+                    id: course.id,
+                    situation: 0,
+                    challenges: userChallenge
+                });
+            });
+            user.courses = userCourse;
             const salt = await bcryptjs_1.default.genSalt(10);
             user.userPw = await bcryptjs_1.default.hash(userPw, salt);
             await user.save();
