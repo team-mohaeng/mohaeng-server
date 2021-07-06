@@ -1,4 +1,4 @@
-import CourseLibraryResponseDTO, { CourseResponseDTO, TotalCourseResponseDTO } from "../dto/Course/CourseLibrary/CourseLibraryResponseDTO";
+import CourseLibraryResponseDTO, { ChallengeResponseDTO, CourseResponseDTO, TotalCourseResponseDTO } from "../dto/Course/CourseLibrary/CourseLibraryResponseDTO";
 import { IFail } from "../interfaces/IFail";
 import { IUserCourse } from "../interfaces/IUserCourse";
 import Course from "../models/Course";
@@ -8,7 +8,7 @@ export default {
   library: async (token: String) => {
     try {
       let user = await User.findOne({ id: token });
-      let courses = await Course.find({}, {"_id": 0, "challenges": 0, "__v": 0});
+      let courses = await Course.find({});
       let progressCourseId: Number;
 
       if (!user) {
@@ -24,25 +24,48 @@ export default {
       })
       courses = courses.filter((course) => course.id != progressCourseId);
 
-      let responseCourse: Array<CourseResponseDTO> = new Array<CourseResponseDTO>();
-
+      let courseLibraryArray: Array<CourseResponseDTO> = new Array<CourseResponseDTO>();
       courses.forEach((course) => {
-        const responseDTO: CourseResponseDTO = {
+        let challengeLibraryArray: Array<ChallengeResponseDTO> = new Array<ChallengeResponseDTO>();
+        const userCourse = user.courses[course.id - 1];
+
+        course.challenges.forEach((challenge) => {
+          const userChallenge = userCourse.challenges[challenge.id - 1];
+          let ments: Array<String> = new Array<String>();
+          challenge.userMents.forEach((ment) => {
+            ments.push(ment.ment);
+          });
+
+          challengeLibraryArray.push({
+            id: challenge.id,
+            situation: userChallenge.situation,
+            title: challenge.title,
+            description: challenge.description,
+            year: userChallenge.year,
+            month: userChallenge.month,
+            day: userChallenge.day,
+            currentStamp: userChallenge.currentStamp,
+            totalStamp: challenge.totalStamp,
+            userMents: ments
+          });
+        });
+
+        courseLibraryArray.push({
           id: course.id,
-          situation: 0, // 수정 필요함
+          situation: userCourse.situation,
           title: course.title,
           description: course.description,
           totalDays: course.totalDays,
-          property: course.property
-        };
-        responseCourse.push(responseDTO);
+          property: course.property,
+          challenges: challengeLibraryArray
+        });
       });
-      responseCourse = responseCourse.sort((a, b) => (a.situation > b.situation)? -1: Number(a.situation > b.situation));
+      courseLibraryArray = courseLibraryArray.sort((a, b) => (a.situation > b.situation)? -1: Number(a.situation > b.situation));
 
       const responseDTO: CourseLibraryResponseDTO = {
         status: 200,
         data: {
-          course: responseCourse,
+          courses: courseLibraryArray
         }
       };
 

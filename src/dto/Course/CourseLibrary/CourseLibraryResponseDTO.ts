@@ -4,7 +4,7 @@ export default interface CourseLibraryResponseDTO {
 }
 
 export interface TotalCourseResponseDTO {
-  course: CourseResponseDTO[];
+  courses: CourseResponseDTO[];
 }
 
 export interface CourseResponseDTO {
@@ -14,4 +14,18 @@ export interface CourseResponseDTO {
   description: string;
   totalDays: number;
   property: string;
+  challenges: ChallengeResponseDTO[];
+}
+
+export interface ChallengeResponseDTO {
+  id: number;
+  situation: number;
+  title: string;
+  description: string;
+  year: string;
+  month: string;
+  day: string;
+  currentStamp: number;
+  totalStamp: number;
+  userMents: String[];
 }
