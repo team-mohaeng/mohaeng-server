@@ -1,4 +1,4 @@
-import HomeResponseDTO, { HomeChallengeResponseDTO, HomeCourseResponseDTO, HomeMentResponseDTO } from "../dto/Home/HomeResponseDTO";
+import HomeResponseDTO, { HomeChallengeResponseDTO, HomeCourseResponseDTO } from "../dto/Home/HomeResponseDTO";
 import { IFail } from "../interfaces/IFail";
 import Course from "../models/Course";
 import User from "../models/User"
