@@ -67,8 +67,6 @@ export default {
       });
       user.courses = userCourse;
 
-      console.log(userCourse);
-
       const salt = await bcrypt.genSalt(10);
       user.userPw = await bcrypt.hash(userPw, salt);
 
