@@ -28,7 +28,7 @@ export default {
       if (user) {
         const duplicateNickname: IFail = {
           status: 400,
-          message: "이미 사용 중인 닉네임입니다.",
+          message: "이미 사용 중인 닉네임입니다",
         };
         return duplicateNickname;
       }
@@ -66,6 +66,8 @@ export default {
         );
       });
       user.courses = userCourse;
+
+      console.log(userCourse);
 
       const salt = await bcrypt.genSalt(10);
       user.userPw = await bcrypt.hash(userPw, salt);
