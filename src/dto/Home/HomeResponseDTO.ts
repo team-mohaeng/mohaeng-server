@@ -33,7 +33,3 @@ export interface HomeChallengeResponseDTO {
   totalStamp: number;
   userMents: String[];
 }
-
-export interface HomeMentResponseDTO {
-  ment: string;
- }
