@@ -6,7 +6,6 @@ import { IUserCourse } from "../interfaces/IUserCourse";
 const UserSchema = new mongoose.Schema({
   id: {
     type: String,
-    unique: true,
   },
   userId: {
     type: String,
