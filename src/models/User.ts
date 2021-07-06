@@ -75,6 +75,10 @@ const UserSchema = new mongoose.Schema({
   ],
   courses: [
     {
+      course: {
+        type: mongoose.Types.ObjectId,
+        ref: "Course",
+      },
       id: {
         type: Number,
         required: true,
