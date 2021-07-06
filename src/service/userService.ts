@@ -30,15 +30,6 @@ export default {
         return notMatchPw;
       }
 
-      user = await User.findOne({ id: userToken });
-      if (user) {
-        const duplicateToken: IFail = {
-          status: 400,
-          message: "이미 사용 중인 토큰입니다.",
-        };
-        return duplicateToken;
-      }
-
       user.id = userToken;
       await user.save();
 
