@@ -1,7 +1,5 @@
-import HomeResponseDTO from "../dto/Home/HomeResponseDTO";
+import HomeResponseDTO, { HomeChallengeResponseDTO, HomeCourseResponseDTO, HomeMentResponseDTO } from "../dto/Home/HomeResponseDTO";
 import { IFail } from "../interfaces/IFail";
-import { IUserCourse } from "../interfaces/IUserCourse";
-import { IUserChallenge } from "../interfaces/IUsrChallenge";
 import Course from "../models/Course";
 import User from "../models/User"
 
@@ -18,49 +16,53 @@ export default {
         return notExistUser;
       }
 
-      if (user.situation != 0) {
-        let userCourse: IUserCourse;
-        let userChallenge: IUserChallenge;
+      let userCourseArray: Array<HomeCourseResponseDTO> = new Array<HomeCourseResponseDTO>();
+      user = await user.populate("course");
 
-        user.courses.forEach((course) => {
-          if (course.situation == 1) {
-            userCourse = course;
-          }
+      let userChallengeArray: Array<HomeChallengeResponseDTO> = new Array<HomeChallengeResponseDTO>();
+      const dummyCourseList = await Course.find();
+      user.courses.forEach((course) => {
+        const dummyCourse = dummyCourseList[course.id - 1];
+
+        course.challenges.forEach((challenge) => {
+          const dummyChallenge = dummyCourse.challenges[challenge.id - 1];
+          let ments: Array<String> = new Array<String>();
+          dummyChallenge.userMents.forEach((ment) => {
+            ments.push(ment.ment);
+          });
+
+          userChallengeArray.push({
+            id: challenge.id,
+            situation: challenge.situation,
+            title: dummyChallenge.title,
+            description: dummyChallenge.description,
+            year: challenge.year,
+            month: challenge.month,
+            day: challenge.day,
+            currentStamp: challenge.currentStamp,
+            totalStamp: dummyChallenge.totalStamp,
+            userMents: ments
+          });
         });
-
-        userCourse.challenges.forEach((challenge) => {
-          if (challenge.situation === 1) {
-            userChallenge = challenge;
-          }
+        
+        userCourseArray.push({
+          id: course.id,
+          situation: course.situation,
+          title: dummyCourse.title,
+          description: dummyCourse.description,
+          totalDays: dummyCourse.totalDays,
+          property: dummyCourse.property,
+          challenges: userChallengeArray
         });
-
-        const progressCourse = await Course.findOne({ id: userCourse.id });
-        console.log(progressCourse);
-
-        const responseDTO: HomeResponseDTO = {
-          status: 200,
-          data: {
-            situation: user.situation,
-            affinity: user.affinity,
-            course: {
-              title: progressCourse.title,
-              property: progressCourse.property,
-            },
-            challenge: {
-              day: userChallenge.day,
-            },
-          },
-        };
-
-        return responseDTO;
-      }
+      });
 
       const responseDTO: HomeResponseDTO = {
         status: 200,
         data: {
           situation: user.situation,
           affinity: user.affinity,
-        },
+          course: userCourseArray
+        }
       };
 
       return responseDTO;
