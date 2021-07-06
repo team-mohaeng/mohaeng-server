@@ -13,6 +13,7 @@ export default {
       const { userId, userPw, userToken } = dto;
 
       let user = await User.findOne({ userId });
+      console.log(user);
       if (!user) {
         const notExistUser: IFail = {
           status: 404,

@@ -1,9 +1,9 @@
 import { IMent } from "./IMent";
 
 export interface IChallenge {
-  day: number;
+  id: number;
   title: string;
   description: string;
   userMents: [IMent];
-  totalCounts: number;
+  totalStamp: number;
 }
