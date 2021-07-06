@@ -50,7 +50,7 @@ export default {
         course.challenges.forEach((challenge) => {
           userChallenge.push(
             {
-              day: challenge.day,
+              id: challenge.id,
               situation: 0,
               currentCounts: 0
             }
