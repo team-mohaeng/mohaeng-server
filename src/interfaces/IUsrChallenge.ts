@@ -4,8 +4,8 @@ export interface IUserChallenge {
   id: number;
   situation: number;
   date?: Date;
-  year: number;
-  month: number;
-  day: number;
+  year?: number;
+  month?: number;
+  day?: number;
   currentCounts: number;
 }

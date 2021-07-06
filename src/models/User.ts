@@ -86,7 +86,7 @@ const UserSchema = new mongoose.Schema({
       },
       challenges: [
         {
-          day: {
+          id: {
             type: Number,
             required: true,
           },
@@ -97,6 +97,15 @@ const UserSchema = new mongoose.Schema({
           },
           date: {
             type: Date,
+          },
+          year: {
+            type: Number,
+          },
+          month: {
+            type: Number,
+          },
+          day: {
+            type: Number,
           },
           currentCounts: {
             type: Number,
