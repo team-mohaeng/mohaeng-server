@@ -59,6 +59,7 @@ export default {
 
         userCourse.push(
           {
+            course: course._id,
             id: course.id,
             situation: 0,
             challenges: userChallenge
