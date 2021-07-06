@@ -7,5 +7,5 @@ export interface IUserChallenge {
   year?: number;
   month?: number;
   day?: number;
-  currentCounts: number;
+  currentStamp: number;
 }

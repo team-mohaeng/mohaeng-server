@@ -99,15 +99,18 @@ const UserSchema = new mongoose.Schema({
             type: Date,
           },
           year: {
-            type: Number,
+            type: String,
+            default: "",
           },
           month: {
-            type: Number,
+            type: String,
+            default: "",
           },
           day: {
-            type: Number,
+            type: String,
+            default: "",
           },
-          currentCounts: {
+          currentStamp: {
             type: Number,
             required: true,
             default: 0,
