@@ -17,11 +17,9 @@ export default {
       }
 
       let userCourseArray: Array<HomeCourseResponseDTO> = new Array<HomeCourseResponseDTO>();
-      user = await user.populate("course");
-
-      let userChallengeArray: Array<HomeChallengeResponseDTO> = new Array<HomeChallengeResponseDTO>();
       const dummyCourseList = await Course.find();
       user.courses.forEach((course) => {
+        let userChallengeArray: Array<HomeChallengeResponseDTO> = new Array<HomeChallengeResponseDTO>();
         const dummyCourse = dummyCourseList[course.id - 1];
 
         course.challenges.forEach((challenge) => {
@@ -54,6 +52,7 @@ export default {
           property: dummyCourse.property,
           challenges: userChallengeArray
         });
+
       });
 
       const responseDTO: HomeResponseDTO = {
@@ -61,7 +60,7 @@ export default {
         data: {
           situation: user.situation,
           affinity: user.affinity,
-          course: userCourseArray
+          courses: userCourseArray
         }
       };
 
