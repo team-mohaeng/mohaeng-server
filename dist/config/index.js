@@ -17,6 +17,11 @@ exports.default = {
      */
     port: parseInt(process.env.PORT, 10),
     /**
+     * Your secret sauce
+     */
+    jwtSecret: process.env.JWT_SECRET,
+    jwtAlgorithm: process.env.JWT_ALGO,
+    /**
      * That long string from mlab
      */
     mongoURI: process.env.MONGODB_URI,

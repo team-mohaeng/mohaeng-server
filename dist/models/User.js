@@ -7,7 +7,6 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const UserSchema = new mongoose_1.default.Schema({
     id: {
         type: String,
-        required: true,
     },
     userId: {
         type: String,
@@ -23,10 +22,21 @@ const UserSchema = new mongoose_1.default.Schema({
         required: true,
         unique: true,
     },
-    affinity: {
+    gender: {
         type: Number,
         required: true,
+    },
+    birthYear: {
+        type: Number,
+        required: true,
+    },
+    situation: {
+        type: Number,
         default: 0,
+    },
+    affinity: {
+        type: Number,
+        default: 20,
     },
     messages: [
         {
@@ -69,7 +79,6 @@ const UserSchema = new mongoose_1.default.Schema({
             id: {
                 type: Number,
                 required: true,
-                unique: true,
             },
             situation: {
                 type: Number,
@@ -81,7 +90,6 @@ const UserSchema = new mongoose_1.default.Schema({
                     day: {
                         type: Number,
                         required: true,
-                        unique: true,
                     },
                     situation: {
                         type: Number,
