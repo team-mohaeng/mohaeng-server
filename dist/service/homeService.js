@@ -16,43 +16,47 @@ exports.default = {
                 };
                 return notExistUser;
             }
-            if (user.situation != 0) {
-                let userCourse;
-                let userChallenge;
-                user.courses.forEach((course) => {
-                    if (course.situation == 1) {
-                        userCourse = course;
-                    }
+            let userCourseArray = new Array();
+            const dummyCourseList = await Course_1.default.find();
+            user.courses.forEach((course) => {
+                let userChallengeArray = new Array();
+                const dummyCourse = dummyCourseList[course.id - 1];
+                course.challenges.forEach((challenge) => {
+                    const dummyChallenge = dummyCourse.challenges[challenge.id - 1];
+                    let ments = new Array();
+                    dummyChallenge.userMents.forEach((ment) => {
+                        ments.push(ment.ment);
+                    });
+                    userChallengeArray.push({
+                        id: challenge.id,
+                        situation: challenge.situation,
+                        title: dummyChallenge.title,
+                        description: dummyChallenge.description,
+                        year: challenge.year,
+                        month: challenge.month,
+                        day: challenge.day,
+                        currentStamp: challenge.currentStamp,
+                        totalStamp: dummyChallenge.totalStamp,
+                        userMents: ments
+                    });
                 });
-                userCourse.challenges.forEach((challenge) => {
-                    if (challenge.situation === 1) {
-                        userChallenge = challenge;
-                    }
+                userCourseArray.push({
+                    id: course.id,
+                    situation: course.situation,
+                    title: dummyCourse.title,
+                    description: dummyCourse.description,
+                    totalDays: dummyCourse.totalDays,
+                    property: dummyCourse.property,
+                    challenges: userChallengeArray
                 });
-                const progressCourse = await Course_1.default.findOne({ id: userCourse.id });
-                console.log(progressCourse);
-                const responseDTO = {
-                    status: 200,
-                    data: {
-                        situation: user.situation,
-                        affinity: user.affinity,
-                        course: {
-                            title: progressCourse.title,
-                            property: progressCourse.property,
-                        },
-                        challenge: {
-                            day: userChallenge.day,
-                        },
-                    },
-                };
-                return responseDTO;
-            }
+            });
             const responseDTO = {
                 status: 200,
                 data: {
                     situation: user.situation,
                     affinity: user.affinity,
-                },
+                    courses: userCourseArray
+                }
             };
             return responseDTO;
         }

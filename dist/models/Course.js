@@ -28,7 +28,7 @@ const CourseSchema = new mongoose_1.default.Schema({
     },
     challenges: [
         {
-            day: {
+            id: {
                 type: Number,
                 required: true,
             },
@@ -44,7 +44,7 @@ const CourseSchema = new mongoose_1.default.Schema({
                     },
                 },
             ],
-            totalCounts: {
+            totalStamp: {
                 type: Number,
                 required: true,
             },

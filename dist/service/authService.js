@@ -41,12 +41,13 @@ exports.default = {
                 let userChallenge = new Array();
                 course.challenges.forEach((challenge) => {
                     userChallenge.push({
-                        day: challenge.day,
+                        id: challenge.id,
                         situation: 0,
-                        currentCounts: 0
+                        currentStamp: 0
                     });
                 });
                 userCourse.push({
+                    course: course._id,
                     id: course.id,
                     situation: 0,
                     challenges: userChallenge

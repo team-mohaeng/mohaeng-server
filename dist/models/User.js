@@ -76,6 +76,10 @@ const UserSchema = new mongoose_1.default.Schema({
     ],
     courses: [
         {
+            course: {
+                type: mongoose_1.default.Types.ObjectId,
+                ref: "Course",
+            },
             id: {
                 type: Number,
                 required: true,
@@ -87,7 +91,7 @@ const UserSchema = new mongoose_1.default.Schema({
             },
             challenges: [
                 {
-                    day: {
+                    id: {
                         type: Number,
                         required: true,
                     },
@@ -99,7 +103,19 @@ const UserSchema = new mongoose_1.default.Schema({
                     date: {
                         type: Date,
                     },
-                    currentCounts: {
+                    year: {
+                        type: String,
+                        default: "",
+                    },
+                    month: {
+                        type: String,
+                        default: "",
+                    },
+                    day: {
+                        type: String,
+                        default: "",
+                    },
+                    currentStamp: {
                         type: Number,
                         required: true,
                         default: 0,
