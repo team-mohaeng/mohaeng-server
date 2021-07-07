@@ -50,8 +50,14 @@ const router = express.Router();
  *  "message": "만료된 토큰입니다. 우리 아기 고앵이 토큰 하나 더 받아와 쪽-"
  * }
  */
-router.get("/", auth, async(req, res) => {
+router.get("/", auth, async (req, res) => {
   const result = await courseService.library(req.body.user.id);
+
+  res.json(result);
+});
+
+router.put("/:id", auth, async (req, res) => {
+  const result = await courseService.progress(req.body.user.id, req.params.id);
 
   res.json(result);
 });
