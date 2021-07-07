@@ -10,4 +10,10 @@ router.get("/:courseId/:challengeId", auth, async (req, res) => {
   res.json(result);
 });
 
+router.put("/:courseId/:challengeId", auth, async (req, res) => {
+  const result = await challengeService.stamp(req.body.user.id, req.params.courseId, req.params.challengeId);
+
+  res.json(result);
+});
+
 module.exports = router;
