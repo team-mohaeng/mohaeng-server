@@ -4,6 +4,12 @@ import challengeService from "../service/challengeService";
 
 const router = express.Router();
 
+router.get("/", auth, async (req, res) => {
+  const result = await challengeService.challenges(req.body.user.id);
+
+  res.json(result);
+});
+
 router.get("/:courseId/:challengeId", auth, async (req, res) => {
   const result = await challengeService.today(req.body.user.id, req.params.courseId, req.params.challengeId);
 
