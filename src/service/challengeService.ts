@@ -12,8 +12,9 @@ export default {
       const user = await User.findOne({ id: token });
       const courses = await Course.find();
       let dummyCourse = await Course.findOne({ id: courseId });
-      const progressCourseId = Number(courseId);
-      const progressChallengeId = Number(challengeId);
+      let progressCourseId = Number(courseId);
+      let progressChallengeId = Number(challengeId);
+      const today = new Date();
 
       // user jwt 토큰으로 유저 식별
       if (!user) {
@@ -21,7 +22,7 @@ export default {
           status: 404,
           message: "유저가 존재하지 않습니다.",
         };
-        return notExistUser
+        return notExistUser;
       }
     
       // 해당 코스가 존재하지 않을 때
@@ -35,20 +36,20 @@ export default {
       
       // 진행 중인 코스가 아닐 경우
       user.courses.forEach((course) => {
-        if (course.situation != 1) {
+        if (course.situation === 0) {
           if (course.id === progressCourseId) {
             const notProgressCourse: IFail = {
               status: 400,
               message: "현재 진행 중인 코스가 아닙니다.",
-            }
+            };
             return notProgressCourse;
           }
         }
       });
       
-      const userCourse = user.courses[progressCourseId - 1];
+      let userCourse = user.courses[progressCourseId - 1];
       // 해당 challenge id가 진행 중이 아닐 경우
-      if (userCourse.challenges[progressChallengeId - 1].situation != 1) {
+      if (userCourse.challenges[progressChallengeId - 1].situation === 0) {
         const notProgressChallenge: IFail = {
           status: 400,
           message: "현재 진행 중인 챌린지가 아닙니다.",
@@ -56,10 +57,36 @@ export default {
         return notProgressChallenge;
       }
 
+      // date가 null
+      if (userCourse.challenges[progressChallengeId - 1].date == null) {
+        user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].date = today;
+      }
+
+      // 완료한 챌린지
+      if ((userCourse.challenges[progressChallengeId - 1].date != today) 
+        && (userCourse.challenges[progressChallengeId - 1].situation === 2) 
+        && (progressCourseId + 1 <= courses.length))
+      {
+        // 해당 코스의 마지막 챌린지
+        if (progressChallengeId != userCourse.challenges.length) {
+          progressChallengeId = progressChallengeId + 1;
+          user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].situation = 1;
+          user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].date = today;
+        }
+      }
+
+      // 진행 중인 챌린지 리셋
+      if ((userCourse.challenges[progressChallengeId - 1].date != today) && (userCourse.challenges[progressChallengeId - 1].situation === 1)) {
+        user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].currentStamp = 0;
+        user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].date = today;
+      }
+
+      await user.save();
+
       // dummy data
       dummyCourse = courses[progressCourseId - 1];
       const dummyChallenge = courses[progressCourseId - 1].challenges;
-      
+
       // response할 challenge 배열 만들어서 저장
       let challengeArray: Array<TodayChallengeDetailResponseDTO> = new Array<TodayChallengeDetailResponseDTO>();
       userCourse.challenges.forEach((challenge) => {
@@ -111,6 +138,7 @@ export default {
       let dummyCourse = await Course.findOne({ id: courseId });
       const progressCourseId = Number(courseId);
       const progressChallengeId = Number(challengeId);
+      const today = new Date();
 
       // user jwt 토큰으로 유저 식별
       if (!user) {
@@ -176,16 +204,31 @@ export default {
       if (currentStamp + 1 === totalStamp) {
         user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].currentStamp = currentStamp + 1;
         user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].situation = 2;
+        user.affinity = user.affinity + 2;
 
-        user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].date = new Date();
         user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].year = getYear();
         user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].month = getMonth();
         user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].day = getDay();
 
+        // 현재 코스의 마지막 챌린지일 때 코스 situation을 진행 완료로 변경
         if (userCourse.challenges.length === progressChallengeId) {
           user.courses[progressCourseId - 1].situation = 2;
         } else {
           user.courses[progressCourseId - 1].challenges[progressChallengeId].situation = 1;
+        }
+
+        // 최근 챌린지 성공 날짜가 어제라면, 연속 count + 1
+        if (user.success.recentDate == new Date(today.setDate(today.getDate() - 1))) {
+          user.success.currentCount = user.success.currentCount + 1;
+        } else {  // 아니면 count = 1
+          user.success.currentCount = 1;
+        }
+
+        user.success.recentDate = today;
+
+        // 현재 연속 성공 횟수가 max보다 많으면, max = current
+        if (user.success.currentCount > user.success.maxCount) {
+          user.success.maxCount = user.success.currentCount;
         }
       }
 
