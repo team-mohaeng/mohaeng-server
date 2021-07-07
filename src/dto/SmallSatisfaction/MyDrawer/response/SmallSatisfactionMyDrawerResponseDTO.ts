@@ -1,10 +1,11 @@
 import { IHashtag } from "../../../../interfaces/IHashtag";
 
 export default interface SmallSatisfactionMyDrawerResponseDTO {
-  smallSatisfactions:[SmallSatisfactionResoponseDTO];
+	status: number;
+	data: [SmallSatisfactionResoponseDTO]
 }
 
-export interface SmallSatisfactionResoponseDTO {
+interface SmallSatisfactionResoponseDTO {
 	postId: number;
 	nickname: string;
 	likeCount: number;
@@ -12,5 +13,8 @@ export interface SmallSatisfactionResoponseDTO {
 	hasLike: boolean;
 	hasImage: boolean;
 	hashtags?: [IHashtag];
+	year: string;
+	month: string;
+	day: string;
 	date: Date;
 }

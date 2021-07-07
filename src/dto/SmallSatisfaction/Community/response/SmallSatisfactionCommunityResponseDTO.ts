@@ -1,9 +1,12 @@
 import { IHashtag } from "../../../../interfaces/IHashtag";
 
-export interface SmallSatisfactionCommunityResponseDTO {
-  hasSmallSatisfaction: boolean;
-  userCount: number;
-  smallSatisfactions: [CommunityResponseDTO];
+export default interface SmallSatisfactionCommunityResponseDTO {
+	status: number;
+	data: {
+		hasSmallSatisfaction: boolean;
+  	userCount: number;
+  	smallSatisfactions: CommunityResponseDTO[];
+	}
 }
 
 export interface CommunityResponseDTO {
@@ -12,7 +15,9 @@ export interface CommunityResponseDTO {
 	likeCount: number; 
 	content: string;
 	hasLike: boolean
-	hasImage: boolean;
 	hashtags?: [IHashtag];
+	year: string;
+	month: string;
+	day: string;
 	date: Date;
 }
