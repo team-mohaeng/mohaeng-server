@@ -62,4 +62,8 @@ router.put("/:id", auth, async (req, res) => {
   res.json(result);
 });
 
+router.get("/complete", auth, async (req, res) => {
+
+});
+
 module.exports = router;
