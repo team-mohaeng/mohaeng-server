@@ -111,7 +111,8 @@ export default {
           userChallenge.push({
             id: challenge.id,
             situation: 0,
-            currentStamp: 0
+            currentStamp: 0,
+            date: null
           });
         });
 
