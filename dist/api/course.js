@@ -57,5 +57,9 @@ router.get("/", auth_1.default, async (req, res) => {
     const result = await courseService_1.default.library(req.body.user.id);
     res.json(result);
 });
+router.put("/:id", auth_1.default, async (req, res) => {
+    const result = await courseService_1.default.progress(req.body.user.id, req.params.id);
+    res.json(result);
+});
 module.exports = router;
 //# sourceMappingURL=course.js.map
