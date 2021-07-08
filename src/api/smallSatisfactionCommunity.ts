@@ -5,7 +5,7 @@ import smallSatisfactionCommunityService from "../service/smallSatisfactionCommu
 const router = express.Router();
 
 /**
- * @api {post} /api/smallSatisfactionCommunity 커뮤니티 소확행 글 조회
+ * @api {get} /api/smallSatisfactionCommunity 커뮤니티 소확행 글 조회
  * 
  * @apiVersion 1.0.0
  * @apiName smallSatisfactionCommunity
