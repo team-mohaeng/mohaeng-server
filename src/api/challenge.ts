@@ -10,8 +10,8 @@ router.get("/", auth, async (req, res) => {
   res.json(result);
 });
 
-router.get("/:courseId/:challengeId", auth, async (req, res) => {
-  const result = await challengeService.today(req.body.user.id, req.params.courseId, req.params.challengeId);
+router.get("/:courseId", auth, async (req, res) => {
+  const result = await challengeService.today(req.body.user.id, req.params.courseId);
 
   res.json(result);
 });

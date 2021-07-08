@@ -8,13 +8,13 @@ import GetChallengeResponseDTO, { ChallengeMapDetailResponseDTO } from "../dto/C
 import { isSameDay } from "../controller/dateController";
 
 export default {
-  today: async (token: String, courseId: String, challengeId: String) => {
+  today: async (token: String, courseId: String) => {
     try {
       const user = await User.findOne({ id: token });
       const courses = await Course.find();
       let dummyCourse = await Course.findOne({ id: courseId });
       let progressCourseId = Number(courseId);
-      let progressChallengeId = Number(challengeId);
+      let progressChallengeId: Number;
       const today = new Date();
 
       // user jwt 토큰으로 유저 식별
@@ -47,55 +47,43 @@ export default {
         return notProgressCourse;
       }
 
-      let userCourse = user.courses[progressCourseId - 1];
-      // 해당 challenge id가 진행 중이 아닐 경우
-      if (
-        user.courses.find((course) => course.id === progressCourseId)
-            .challenges.filter((challenge) => (challenge.situation === 0) && (challenge.id === progressChallengeId))
-            .length > 0
-      ) {
-        const notProgressChallenge: IFail = {
-          status: 400,
-          message: "현재 진행 중인 챌린지가 아닙니다.",
-        };
-        return notProgressChallenge;
-      }
+      let userCourse = user.courses.find((course) => course.id === progressCourseId);
 
-      // date가 null
-      if (
-        user.courses.find((course) => course.id === progressCourseId)
-            .challenges.find((challenge) => challenge.id === progressChallengeId)
-            .date === null
-      ) {
-        user.courses.find((course) => course.id === progressCourseId)
-            .challenges.find((challenge) => challenge.id === progressChallengeId)
-            .date = today;
-      }
+      let challenge = user.courses.find((course) => course.id === progressCourseId)
+                          .challenges.sort((a, b) => (a.situation < b.situation)? -1: Number(a.situation < b.situation))
+                          .find((challenge) => challenge.situation === 2);
 
-      // 완료한 챌린지
-      const challenge = user.courses.find((course) => course.id === progressCourseId)
-                            .challenges.find((challenge) => challenge.id === progressChallengeId);
-      // 해당 코스의 마지막 챌린지
-      if ((isSameDay(today, challenge.date)) && (challenge.situation === 2) && (progressCourseId + 1 <= courses.length)) {
-        progressChallengeId = progressChallengeId + 1;
-        user.courses.find((course) => course.id === progressCourseId)
+      if (challenge) {
+        progressChallengeId = challenge.id;
+        if (!isSameDay(challenge.date, today) && (progressChallengeId <= dummyCourse.challenges.length)) {
+          progressChallengeId = challenge.id + 1;
+          user.courses.find((course) => course.id === progressCourseId)
             .challenges.find((challenge) => challenge.id === progressChallengeId)
             .situation = 1;
-        user.courses.find((course) => course.id === progressCourseId)
+          user.courses.find((course) => course.id === progressCourseId)
             .challenges.find((challenge) => challenge.id === progressChallengeId)
             .date = today;
+        }
       }
 
-      // 진행 중인 챌린지 리셋
-      if ((isSameDay(today, challenge.date)) && (challenge.situation === 1)) {
-        user.courses.find((course) => course.id === progressCourseId)
+      challenge = user.courses.find((course) => course.id === progressCourseId)
+                          .challenges.sort((a, b) => (a.situation < b.situation)? -1: Number(a.situation < b.situation))
+                          .find((challenge) => challenge.situation === 1);
+                          
+      if (challenge) {
+        progressChallengeId = challenge.id;
+        if (!isSameDay(challenge.date, today)) {
+          user.courses.find((course) => course.id === progressCourseId)
             .challenges.find((challenge) => challenge.id === progressChallengeId)
             .currentStamp = 0;
-        user.courses.find((course) => course.id === progressCourseId)
+          user.courses.find((course) => course.id === progressCourseId)
             .challenges.find((challenge) => challenge.id === progressChallengeId)
             .date = today;
+        }
       }
 
+      user.courses.find((course) => course.id === progressCourseId)
+          .challenges.sort((a, b) => (a.id < b.id)? -1: Number(a.id < b.id));
       await user.save();
 
       // dummy data
@@ -107,9 +95,7 @@ export default {
       let challengeArray: Array<TodayChallengeDetailResponseDTO> = new Array<TodayChallengeDetailResponseDTO>();
       userCourse.challenges.forEach((challenge) => {
         let ments: Array<String> = new Array<String>();
-        const currentChallenge = courses.find((course) => course.id === progressCourseId)
-                                        .challenges.find((challenge) => challenge.id === progressChallengeId);
-        currentChallenge
+        dummyChallenge
           .userMents.forEach((ment) => {
             ments.push(ment.ment);
         });
@@ -117,13 +103,13 @@ export default {
         const responseChallenge: TodayChallengeDetailResponseDTO = {
           id: challenge.id,
           situation: challenge.situation,
-          title: currentChallenge.title,
-          description: currentChallenge.description,
+          title: dummyChallenge.title,
+          description: dummyChallenge.description,
           year: challenge.year,
           month: challenge.month,
           day: challenge.day,
           currentStamp: challenge.currentStamp,
-          totalStamp: currentChallenge.totalStamp,
+          totalStamp: dummyChallenge.totalStamp,
           userMents: ments
         };
         challengeArray.push(responseChallenge);
@@ -189,7 +175,6 @@ export default {
         };
         return notProgressCourse;
       }
-      console.log(user.courses.filter((course) => (course.situation === 0) && (course.id === progressCourseId)));
 
       // 해당 challenge id가 진행 중이 아닐 경우
       if (
@@ -203,8 +188,6 @@ export default {
         };
         return notProgressChallenge;
       }
-      console.log(user.courses.find((course) => course.id === progressCourseId)
-      .challenges.filter((challenge) => (challenge.situation === 0) && (challenge.id === progressChallengeId)));
 
       const userCourse = user.courses[progressCourseId - 1];
       // 챌린지가 존재하지 않을 경우
@@ -246,6 +229,7 @@ export default {
         // 현재 코스의 마지막 챌린지일 때 코스 situation을 진행 완료로 변경
         if (userCourse.challenges.length === progressChallengeId) {
           user.courses.find((course) => course.id === progressCourseId).situation = 2;
+          user.situation = 0;
         }
 
         // 최근 챌린지 성공 날짜가 어제라면, 연속 count + 1
