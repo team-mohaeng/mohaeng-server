@@ -52,7 +52,6 @@ const router = express.Router();
  */
 router.get("/", auth, async (req, res) => {
   const result = await courseService.library(req.body.user.id);
-
   res.json(result);
 });
 
