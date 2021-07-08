@@ -179,17 +179,32 @@ export default {
       }
 
       // 진행 중인 코스가 아닐 경우
-      user.courses.forEach((course) => {
-        if (course.situation != 1) {
-          if (course.id === progressCourseId) {
-            const notProgressCourse: IFail = {
-              status: 400,
-              message: "현재 진행 중인 코스가 아닙니다.",
-            }
-            return notProgressCourse;
-          }
-        }
-      });
+      if (
+        user.courses.filter((course) => (course.situation === 0) && (course.id === progressCourseId))
+            .length > 0
+      ) {
+        const notProgressCourse: IFail = {
+          status: 400,
+          message: "현재 진행 중인 코스가 아닙니다.",
+        };
+        return notProgressCourse;
+      }
+      console.log(user.courses.filter((course) => (course.situation === 0) && (course.id === progressCourseId)));
+
+      // 해당 challenge id가 진행 중이 아닐 경우
+      if (
+        user.courses.find((course) => course.id === progressCourseId)
+            .challenges.filter((challenge) => (challenge.situation === 0) && (challenge.id === progressChallengeId))
+            .length > 0
+      ) {
+        const notProgressChallenge: IFail = {
+          status: 400,
+          message: "현재 진행 중인 챌린지가 아닙니다.",
+        };
+        return notProgressChallenge;
+      }
+      console.log(user.courses.find((course) => course.id === progressCourseId)
+      .challenges.filter((challenge) => (challenge.situation === 0) && (challenge.id === progressChallengeId)));
 
       const userCourse = user.courses[progressCourseId - 1];
       // 챌린지가 존재하지 않을 경우
@@ -201,40 +216,36 @@ export default {
         return notExistChallenge;
       }
 
-      // 해당 challenge id가 진행 중이 아닐 경우
-      if (userCourse.challenges[progressChallengeId - 1].situation != 1) {
-        const notProgressChallenge: IFail = {
-          status: 400,
-          message: "현재 진행 중인 챌린지가 아닙니다.",
-        };
-        return notProgressChallenge;
-      }
-
       // dummy data
       dummyCourse = courses[progressCourseId - 1];
       const dummyChallenge = courses[progressCourseId - 1].challenges;
       
       // stamp
-      const currentStamp = userCourse.challenges[progressChallengeId - 1].currentStamp;
-      const totalStamp = dummyChallenge[progressChallengeId - 1].totalStamp;
+      const currentStamp = user.courses.find((course) => course.id === progressCourseId)
+                              .challenges.find((challenge) => challenge.id === progressChallengeId).currentStamp;
+      const totalStamp = courses.find((course) => course.id === progressCourseId)
+                                .challenges.find((challenge) => challenge.id === progressChallengeId).totalStamp;
 
       // stamp 인증 처리
-      user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].currentStamp = currentStamp + 1;
+      user.courses.find((course) => course.id === progressCourseId)
+          .challenges.find((challenge) => challenge.id === progressChallengeId).currentStamp = currentStamp + 1;
 
+      // 인증 완료
       if (currentStamp + 1 === totalStamp) {
-        user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].currentStamp = currentStamp + 1;
-        user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].situation = 2;
+        user.courses.find((course) => course.id === progressCourseId)
+            .challenges.find((challenge) => challenge.id === progressChallengeId).situation = 2;
         user.affinity = user.affinity + 2;
 
-        user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].year = getYear();
-        user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].month = getMonth();
-        user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].day = getDay();
+        user.courses.find((course) => course.id === progressCourseId)
+            .challenges.find((challenge) => challenge.id === progressChallengeId).year = getYear();
+        user.courses.find((course) => course.id === progressCourseId)
+            .challenges.find((challenge) => challenge.id === progressChallengeId).month = getMonth();
+        user.courses.find((course) => course.id === progressCourseId)
+            .challenges.find((challenge) => challenge.id === progressChallengeId).day = getDay();
 
         // 현재 코스의 마지막 챌린지일 때 코스 situation을 진행 완료로 변경
         if (userCourse.challenges.length === progressChallengeId) {
-          user.courses[progressCourseId - 1].situation = 2;
-        } else {
-          user.courses[progressCourseId - 1].challenges[progressChallengeId].situation = 1;
+          user.courses.find((course) => course.id === progressCourseId).situation = 2;
         }
 
         // 최근 챌린지 성공 날짜가 어제라면, 연속 count + 1
@@ -257,20 +268,23 @@ export default {
       let challengeArray: Array<StampChallengeDetailResponseDTO> = new Array<StampChallengeDetailResponseDTO>();
       userCourse.challenges.forEach((challenge) => {
         let ments: Array<String> = new Array<String>();
-        dummyChallenge[challenge.id - 1].userMents.forEach((ment) => {
-          ments.push(ment.ment);
+        const currentChallenge = courses.find((course) => course.id === progressCourseId)
+                                        .challenges.find((challenge) => challenge.id === progressChallengeId);
+        currentChallenge
+          .userMents.forEach((ment) => {
+            ments.push(ment.ment);
         });
 
         const responseChallenge: TodayChallengeDetailResponseDTO = {
           id: challenge.id,
           situation: challenge.situation,
-          title: dummyChallenge[challenge.id - 1].title,
-          description: dummyChallenge[challenge.id - 1].description,
+          title: currentChallenge.title,
+          description: currentChallenge.description,
           year: challenge.year,
           month: challenge.month,
           day: challenge.day,
           currentStamp: challenge.currentStamp,
-          totalStamp: dummyChallenge[challenge.id - 1].totalStamp,
+          totalStamp: currentChallenge.totalStamp,
           userMents: ments
         };
         challengeArray.push(responseChallenge);
@@ -301,7 +315,6 @@ export default {
     try {
       const user = await User.findOne({ id: token });
       const courses = await Course.find();
-      let progressCourseId: number;
       
       // user jwt 토큰으로 유저 식별
       if (!user) {
@@ -313,11 +326,10 @@ export default {
       }
       
       // 진행 중인 코스 id 찾기
-      user.courses.forEach((course) => {
-        if (course.situation === 1) progressCourseId = course.id;
-      });
+      const progressCourseId = user.courses.find((course) => course.situation === 1).id;
+
       // 진행 중인 코스 id가 없는 경우
-      if (progressCourseId === null) {
+      if (!progressCourseId) {
         const notExistsCourseId: IFail = {
           status: 400,
           message: "진행 중인 코스가 없습니다.",
@@ -332,20 +344,23 @@ export default {
       let challengeArray: Array<ChallengeMapDetailResponseDTO> = new Array<ChallengeMapDetailResponseDTO>();
       userCourse.challenges.forEach((challenge) => {
         let ments: Array<String> = new Array<String>();
-        dummyChallenge[challenge.id - 1].userMents.forEach((ment) => {
-          ments.push(ment.ment);
+        const currentChallenge = courses.find((course) => course.id === progressCourseId)
+                                        .challenges.find((c) => c.id === challenge.id);
+        currentChallenge
+          .userMents.forEach((ment) => {
+            ments.push(ment.ment);
         });
 
         const responseChallenge: ChallengeMapDetailResponseDTO = {
           id: challenge.id,
           situation: challenge.situation,
-          title: dummyChallenge[challenge.id - 1].title,
-          description: dummyChallenge[challenge.id - 1].description,
+          title: currentChallenge.title,
+          description: currentChallenge.description,
           year: challenge.year,
           month: challenge.month,
           day: challenge.day,
           currentStamp: challenge.currentStamp,
-          totalStamp: dummyChallenge[challenge.id - 1].totalStamp,
+          totalStamp: currentChallenge.totalStamp,
           userMents: ments
         };
         challengeArray.push(responseChallenge);
