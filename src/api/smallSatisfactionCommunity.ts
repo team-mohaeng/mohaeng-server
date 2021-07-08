@@ -5,11 +5,11 @@ import smallSatisfactionCommunityService from "../service/smallSatisfactionCommu
 const router = express.Router();
 
 /**
- * @api {post} /api/signup 회원가입
+ * @api {post} /api/smallSatisfactionCommunity 커뮤니티 소확행 글 조회
  * 
  * @apiVersion 1.0.0
- * @apiName SignUp
- * @apiGroup User
+ * @apiName smallSatisfactionCommunity
+ * @apiGroup SmallSatisfaction
  * 
  * @apiHeaderExample {json} Header-Example:
  * {
@@ -18,9 +18,6 @@ const router = express.Router();
  * 
  * @apiParamExample {json} Request-Example:
  * {
- *  "userId": "test1@gmail.com",
- *  "userPw": "1234abcd",
- *  // ...
  * }
  *
  * @apiSuccess {String} jwt
@@ -28,21 +25,45 @@ const router = express.Router();
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
  * {
- *  "status": 200,
- *  "data": {
- *    // ...
- *  }
+ *	"status": 200,
+ *	"data": {
+ *			"hasSmallSaisfacion": false
+ *			"userCount": 64
+ *			"smallSatisfactions": [
+ *			{
+ *				"postId": 1
+ *				"moodImage": "무드 이미지.png",
+ *				"hashtags": ["#해쉬태그1", "#해쉬태그2", ... ],
+ *				"content": "맛있는 피자에 시원한 맥주 ... ",
+ *				"likeCount": 72,
+ *				"hasImage": false,
+ *				"hasLike": true,
+ *				"nickname": "시원스쿨"
+ *			},
+ *			{
+ *				"postId": 2
+ *				"moodImage": "무드 이미지",
+ *				"hashtags": ["#해쉬태그1", "#해쉬태그2", ... ],
+ *				"content": "맛있는 피자에 시원한 맥주 ... ",
+ *				"likeCount": 72,
+ *				"hasImage": false,
+ *				"hasLike": true,
+ *				"nickname": "시원스쿨"
+ *			},
+ *		...
+ *		]
+ *	}
  * }
  * 
+ * 
  * @apiErrorExample Error-Response:
- * 400 아이디 중복
+ * 500 서버 에러
  * {
  *  "status": 400,
- *  "message": "이미 사용 중인 아이디입니다."
+ *  "message": "서버 에러입니다."
  * }
  */
 
-//apidoc 작성
 router.get("/:sort", auth, async (req, res) => {
   const result = await smallSatisfactionCommunityService.community(req.body.user.id, req.params.sort);
   res.json(result);

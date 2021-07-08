@@ -1,15 +1,18 @@
 import SmallSatisfaction from "../models/SmallSatisfaction";
 import User from "../models/User";
+import { IFail } from "../interfaces/IFail";
 import SmallSatisfactionCommunityResponseDTO, { CommunityResponseDTO } from "../dto/SmallSatisfaction/Community/response/SmallSatisfactionCommunityResponseDTO";
 
 export default {
   community: async (token: String, sort: String) => {
     const user = await User.findOne({ id: token });
     if (!user) {
-      console.log("유저가 없어여 ㄷ ㄷ");
-      //토큰 다시 들고오삼-
+      const notExistUser: IFail = {
+        status: 400,
+        message: "유저가 존재하지 않습니다.",
+      };
+      return notExistUser
     }
-    //user 하나만 만들어보주앙 ㅋㅋ 
     
     let smallSatisfactionWritten;
     let today = new Date();
@@ -20,13 +23,11 @@ export default {
     let hasSmallSatisfaction = await SmallSatisfaction.findOne({ year: todayYear, month: todayMonth, day: todayDay, user: user._id });
     user.courses.forEach((course) => {
       course.challenges.forEach((challenge) => {
-        if ((challenge.situation === 2) && (hasSmallSatisfaction)) { 
-          if (hasSmallSatisfaction) {
-            smallSatisfactionWritten = true;                               
-          }
-          else {
-            smallSatisfactionWritten = false;
-          }
+        if ((challenge.situation === 2) && (!hasSmallSatisfaction)) {
+          smallSatisfactionWritten = false;                               
+        }
+        else {
+          smallSatisfactionWritten = true;
         }
         });
       });
@@ -43,11 +44,12 @@ export default {
     }
 
     try{  
-      //isPrivate Boolean으로 파싱해줘야함
       let responseSmallSatisfaction: Array<CommunityResponseDTO> = new Array<CommunityResponseDTO>();
       communitySmallSatisfactions.forEach((communitySmallSatisfaction) => {
         let liked;
-        if (SmallSatisfaction.find().populate('likes').populate(user)) {
+        if (communitySmallSatisfaction.likes.filter((like) => like.user.toString() === token)
+            .length > 0
+        ) {
           liked = true;
         }
         else {

@@ -53,58 +53,49 @@ const router = express.Router();
  * }
  */
 
-router.post("/", auth,
+router.post("/", 
   upload.fields([
     { name: 'moodImage', maxCount: 1 },
     { name: 'mainImage', maxCount: 1 },
-  ]), async (req, res) => {
-  try{
+  ]),
+  auth,
+  async (req, res) => {
     let moodImageUrl = (req as any).files['moodImage'][0].location;
     let mainImageUrl;
 
-    //main 이미지만 있을 경우
-    if ((req as any).files['mainImage']) {
-      mainImageUrl = (req as any).files['mainImage'][0].location;
-      }
-    
-    //이미지 없는 경우
-    else {
-      mainImageUrl = "";
-    }
-
-    if (req.body.hashtags) {
-      if ((req.body.hashtags).length>5) {
-        return res.status(404).json({ msg: "해시태그는 5개까지만 넣어주세요!" });
-      }
-
-      req.body.hashtags.forEach((hashtag) => { 
-        if (hashtag.length > 6) {
-          return res.status(404).json({ msg: "해시태그는 6글자 이내로 작성해주세요!" })
-        }
-      });
+  //main 이미지만 있을 경우
+  if ((req as any).files['mainImage']) {
+    mainImageUrl = (req as any).files['mainImage'][0].location;
     }
   
-    const requestDTO: SmallSatisfactionWriteRequestDTO = {
-      content: req.body.content,
-      moodText: req.body.moodText,
-      moodImage: moodImageUrl,
-      mainImage: mainImageUrl,
-      hashtags: req.body.hashtags,
-      isPrivate: req.body.isPrivate,
-    };
-
-    if (req.body.user.id) {
-      console.log("뭐가 문젠데 진자,,,");
-    }
-
-    console.log(req.body.user.id);
-    
-    const result = await writeSmallSatisfactionService.writeSmallSatisfaction(req.body.user.id, requestDTO);
-    res.json(result);
-  
-  } catch (error) {
-    console.log(error);
+  //이미지 없는 경우
+  else {
+    mainImageUrl = "";
   }
+
+  if (req.body.hashtags) {
+    if ((req.body.hashtags).length>5) {
+      return res.status(404).json({ msg: "해시태그는 5개까지만 넣어주세요!" });
+    }
+
+    req.body.hashtags.forEach((hashtag) => { 
+      if (hashtag.length > 7) {
+        return res.status(404).json({ msg: "해시태그는 6글자 이내로 작성해주세요!" });
+      }
+    });
+  }
+
+  const requestDTO: SmallSatisfactionWriteRequestDTO = {
+    content: req.body.content,
+    moodText: req.body.moodText,
+    moodImage: moodImageUrl,
+    mainImage: mainImageUrl,
+    hashtags: req.body.hashtags,
+    isPrivate: req.body.isPrivate,
+  };
+
+  const result = await writeSmallSatisfactionService.writeSmallSatisfaction(req.body.user.id, requestDTO);
+  res.json(result);
 });
 
 module.exports = router;

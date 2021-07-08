@@ -2,6 +2,7 @@ import SmallSatisfaction from "../models/SmallSatisfaction"
 import User from "../models/User";
 import { SmallSatisfactionWriteRequestDTO } from "../dto/SmallSatisfaction/Write/request/SmallSatisfactionWriteDTO"
 import { SmallSatisfactionWriteResponseDTO } from "../dto/SmallSatisfaction/Write/response/SmallSatisfactionWriteDTO"
+import { IFail } from "../interfaces/IFail";
 
 export default {
   writeSmallSatisfaction: async (token: String, dto: SmallSatisfactionWriteRequestDTO) => {
@@ -13,7 +14,13 @@ export default {
 
     const user = await User.findOne({ id: token });
 
-    //token 받아와서 정의해주기
+    if (!user) {
+      const notExistUser: IFail = {
+        status: 400,
+        message: "유저가 존재하지 않습니다.",
+      };
+      return notExistUser
+    }
     
     try{
       const {       
@@ -23,7 +30,7 @@ export default {
         mainImage,
         hashtags,
         isPrivate, } = dto;
-        
+          
       let smallSatisfaction = new SmallSatisfaction({
         user: user._id,
         content,
@@ -36,7 +43,6 @@ export default {
         month: todayMonth,
         day: todayDay,
         postId: smallSatisfactionCount,
-        //초기값 0
         likeCount: 0,
       });
       
