@@ -16,7 +16,7 @@ export default {
       return notExistUser;
     }
 
-    let myDrawerSmallSatisfactions = await SmallSatisfaction.find({ isPrivate: true }).sort({ date: -1 });
+    let myDrawerSmallSatisfactions = await SmallSatisfaction.find({ user: user._id, isPrivate: true }).sort({ date: -1 });
 
     try{  
       let responseSmallSatisfaction: Array<SmallSatisfactionResponseDTO> = new Array<SmallSatisfactionResponseDTO>();
