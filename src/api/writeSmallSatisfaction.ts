@@ -16,6 +16,7 @@ const router = express.Router();
  * @apiHeaderExample {json} Header-Example:
  * {
  *  "Content-Type": "application/json"
+ *  "Bearer": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiZXA0UmhZcmJUSE9uaHpBUldOVFNTMTpBUEE5MWJIS1pGdkJuUkV1dEEtYzQxSmN6dDBITzVJQkNyMFhzM0VadjFFcUZSVl9jY05semtDbFQtaWxmT3FGTUFWTmFPUFYxaVhIQjIybHhrcHZJRWNTNW4tMjQtZzY2SVR1d0o1aW9aWlJtYVd5R1Q3XzZiUDhlR1BOZHd2SkNwUWxZb1daQlhHVCJ9LCJpYXQiOjE2MjU3NjAxOTUsImV4cCI6MTYyNTc5NjE5NX0.jcxHZIN8cT268jCg98674B3rksW7gEb1tkNtfg1SfXU"
  * }
  * 
  * @apiParamExample {json} Request-Example:
@@ -28,7 +29,7 @@ const router = express.Router();
  *	"isPrivate": false 
     }
  *
- * @apiSuccess {String} jwt
+ * @apiSuccess {String} image
  * 
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
