@@ -5,6 +5,7 @@ import TodayChallengeResponseDTO, { TodayChallengeDetailResponseDTO } from "../d
 import StampChallengeResponseDTO, { StampChallengeDetailResponseDTO } from "../dto/Challenge/StampChallenge/StampChallengeResponseDTO";
 import { getDay, getMonth, getYear } from "../formatter/challengeDateFormatter";
 import GetChallengeResponseDTO, { ChallengeMapDetailResponseDTO } from "../dto/Challenge/GetChallenge/GetChallengeResponseDTO";
+import { isSameDay } from "../controller/dateController";
 
 export default {
   today: async (token: String, courseId: String, challengeId: String) => {
@@ -75,7 +76,7 @@ export default {
       const challenge = user.courses.find((course) => course.id === progressCourseId)
                             .challenges.find((challenge) => challenge.id === progressChallengeId);
       // 해당 코스의 마지막 챌린지
-      if ((challenge.date != today) && (challenge.situation === 2) && (progressCourseId + 1 <= courses.length)) {
+      if ((isSameDay(today, challenge.date)) && (challenge.situation === 2) && (progressCourseId + 1 <= courses.length)) {
         progressChallengeId = progressChallengeId + 1;
         user.courses.find((course) => course.id === progressCourseId)
             .challenges.find((challenge) => challenge.id === progressChallengeId)
@@ -86,7 +87,7 @@ export default {
       }
 
       // 진행 중인 챌린지 리셋
-      if ((challenge.date != today) && (challenge.situation === 1)) {
+      if ((isSameDay(today, challenge.date)) && (challenge.situation === 1)) {
         user.courses.find((course) => course.id === progressCourseId)
             .challenges.find((challenge) => challenge.id === progressChallengeId)
             .currentStamp = 0;
