@@ -45,23 +45,13 @@ export default {
         };
         return notProgressCourse;
       }
-      // user.courses.forEach((course) => {
-      //   if (course.situation === 0) {
-      //     if (course.id === progressCourseId) {
-      //       const notProgressCourse: IFail = {
-      //         status: 400,
-      //         message: "현재 진행 중인 코스가 아닙니다.",
-      //       };
-      //       return notProgressCourse;
-      //     }
-      //   }
-      // });
-      
+
       let userCourse = user.courses[progressCourseId - 1];
       // 해당 challenge id가 진행 중이 아닐 경우
       if (
         user.courses.find((course) => course.id === progressCourseId)
-            .challenges.find((challenge) => challenge.situation === 0)
+            .challenges.filter((challenge) => (challenge.situation === 0) && (challenge.id === progressChallengeId))
+            .length > 0
       ) {
         const notProgressChallenge: IFail = {
           status: 400,
@@ -69,13 +59,6 @@ export default {
         };
         return notProgressChallenge;
       }
-      // if (userCourse.challenges[progressChallengeId - 1].situation === 0) {
-      //   const notProgressChallenge: IFail = {
-      //     status: 400,
-      //     message: "현재 진행 중인 챌린지가 아닙니다.",
-      //   };
-      //   return notProgressChallenge;
-      // }
 
       // date가 null
       if (
@@ -87,9 +70,6 @@ export default {
             .challenges.find((challenge) => challenge.id === progressChallengeId)
             .date = today;
       }
-      // if (userCourse.challenges[progressChallengeId - 1].date == null) {
-      //   user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].date = today;
-      // }
 
       // 완료한 챌린지
       const challenge = user.courses.find((course) => course.id === progressCourseId)
@@ -104,17 +84,6 @@ export default {
             .challenges.find((challenge) => challenge.id === progressChallengeId)
             .date = today;
       }
-      // if ((userCourse.challenges[progressChallengeId - 1].date != today) 
-      //   && (userCourse.challenges[progressChallengeId - 1].situation === 2) 
-      //   && (progressCourseId + 1 <= courses.length))
-      // {
-      //   // 해당 코스의 마지막 챌린지
-      //   if (progressChallengeId != userCourse.challenges.length) {
-      //     progressChallengeId = progressChallengeId + 1;
-      //     user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].situation = 1;
-      //     user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].date = today;
-      //   }
-      // }
 
       // 진행 중인 챌린지 리셋
       if ((challenge.date != today) && (challenge.situation === 1)) {
@@ -125,10 +94,6 @@ export default {
             .challenges.find((challenge) => challenge.id === progressChallengeId)
             .date = today;
       }
-      // if ((userCourse.challenges[progressChallengeId - 1].date != today) && (userCourse.challenges[progressChallengeId - 1].situation === 1)) {
-      //   user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].currentStamp = 0;
-      //   user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].date = today;
-      // }
 
       await user.save();
 
@@ -141,25 +106,29 @@ export default {
       let challengeArray: Array<TodayChallengeDetailResponseDTO> = new Array<TodayChallengeDetailResponseDTO>();
       userCourse.challenges.forEach((challenge) => {
         let ments: Array<String> = new Array<String>();
-        dummyChallenge[challenge.id - 1].userMents.forEach((ment) => {
-          ments.push(ment.ment);
+        const currentChallenge = courses.find((course) => course.id === progressCourseId)
+                                        .challenges.find((challenge) => challenge.id === progressChallengeId);
+        currentChallenge
+          .userMents.forEach((ment) => {
+            ments.push(ment.ment);
         });
 
         const responseChallenge: TodayChallengeDetailResponseDTO = {
           id: challenge.id,
           situation: challenge.situation,
-          title: dummyChallenge[challenge.id - 1].title,
-          description: dummyChallenge[challenge.id - 1].description,
+          title: currentChallenge.title,
+          description: currentChallenge.description,
           year: challenge.year,
           month: challenge.month,
           day: challenge.day,
           currentStamp: challenge.currentStamp,
-          totalStamp: dummyChallenge[challenge.id - 1].totalStamp,
+          totalStamp: currentChallenge.totalStamp,
           userMents: ments
         };
         challengeArray.push(responseChallenge);
       });
 
+      
       // 최종 responseDTO
       const responseDTO: TodayChallengeResponseDTO = {
         status: 200,
