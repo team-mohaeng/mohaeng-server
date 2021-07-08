@@ -123,6 +123,7 @@ export default {
       user.situation = 1;
       user.courses[courseId - 1].situation = 1;
       user.courses[courseId - 1].challenges[0].situation = 1;
+      user.courses[courseId - 1].challenges[0].date = new Date();
 
       await user.save();
 
