@@ -111,7 +111,8 @@ export default {
           userChallenge.push({
             id: challenge.id,
             situation: 0,
-            currentStamp: 0
+            currentStamp: 0,
+            date: null
           });
         });
 
@@ -120,8 +121,10 @@ export default {
         await user.save();
       }
 
+      user.situation = 1;
       user.courses[courseId - 1].situation = 1;
       user.courses[courseId - 1].challenges[0].situation = 1;
+      user.courses[courseId - 1].challenges[0].date = new Date();
 
       await user.save();
 
