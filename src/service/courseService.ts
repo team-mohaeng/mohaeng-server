@@ -120,6 +120,7 @@ export default {
         await user.save();
       }
 
+      user.situation = 1;
       user.courses[courseId - 1].situation = 1;
       user.courses[courseId - 1].challenges[0].situation = 1;
 
