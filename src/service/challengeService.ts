@@ -35,57 +35,107 @@ export default {
       } 
       
       // 진행 중인 코스가 아닐 경우
-      user.courses.forEach((course) => {
-        if (course.situation === 0) {
-          if (course.id === progressCourseId) {
-            const notProgressCourse: IFail = {
-              status: 400,
-              message: "현재 진행 중인 코스가 아닙니다.",
-            };
-            return notProgressCourse;
-          }
-        }
-      });
+      if (
+        user.courses.filter((course) => (course.situation === 0) && (course.id === progressCourseId))
+            .length > 0
+      ) {
+        const notProgressCourse: IFail = {
+          status: 400,
+          message: "현재 진행 중인 코스가 아닙니다.",
+        };
+        return notProgressCourse;
+      }
+      // user.courses.forEach((course) => {
+      //   if (course.situation === 0) {
+      //     if (course.id === progressCourseId) {
+      //       const notProgressCourse: IFail = {
+      //         status: 400,
+      //         message: "현재 진행 중인 코스가 아닙니다.",
+      //       };
+      //       return notProgressCourse;
+      //     }
+      //   }
+      // });
       
       let userCourse = user.courses[progressCourseId - 1];
       // 해당 challenge id가 진행 중이 아닐 경우
-      if (userCourse.challenges[progressChallengeId - 1].situation === 0) {
+      if (
+        user.courses.find((course) => course.id === progressCourseId)
+            .challenges.find((challenge) => challenge.situation === 0)
+      ) {
         const notProgressChallenge: IFail = {
           status: 400,
           message: "현재 진행 중인 챌린지가 아닙니다.",
         };
         return notProgressChallenge;
       }
+      // if (userCourse.challenges[progressChallengeId - 1].situation === 0) {
+      //   const notProgressChallenge: IFail = {
+      //     status: 400,
+      //     message: "현재 진행 중인 챌린지가 아닙니다.",
+      //   };
+      //   return notProgressChallenge;
+      // }
 
       // date가 null
-      if (userCourse.challenges[progressChallengeId - 1].date == null) {
-        user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].date = today;
+      if (
+        user.courses.find((course) => course.id === progressCourseId)
+            .challenges.find((challenge) => challenge.id === progressChallengeId)
+            .date === null
+      ) {
+        user.courses.find((course) => course.id === progressCourseId)
+            .challenges.find((challenge) => challenge.id === progressChallengeId)
+            .date = today;
       }
+      // if (userCourse.challenges[progressChallengeId - 1].date == null) {
+      //   user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].date = today;
+      // }
 
       // 완료한 챌린지
-      if ((userCourse.challenges[progressChallengeId - 1].date != today) 
-        && (userCourse.challenges[progressChallengeId - 1].situation === 2) 
-        && (progressCourseId + 1 <= courses.length))
-      {
-        // 해당 코스의 마지막 챌린지
-        if (progressChallengeId != userCourse.challenges.length) {
-          progressChallengeId = progressChallengeId + 1;
-          user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].situation = 1;
-          user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].date = today;
-        }
+      const challenge = user.courses.find((course) => course.id === progressCourseId)
+                            .challenges.find((challenge) => challenge.id === progressChallengeId);
+      // 해당 코스의 마지막 챌린지
+      if ((challenge.date != today) && (challenge.situation === 2) && (progressCourseId + 1 <= courses.length)) {
+        progressChallengeId = progressChallengeId + 1;
+        user.courses.find((course) => course.id === progressCourseId)
+            .challenges.find((challenge) => challenge.id === progressChallengeId)
+            .situation = 1;
+        user.courses.find((course) => course.id === progressCourseId)
+            .challenges.find((challenge) => challenge.id === progressChallengeId)
+            .date = today;
       }
+      // if ((userCourse.challenges[progressChallengeId - 1].date != today) 
+      //   && (userCourse.challenges[progressChallengeId - 1].situation === 2) 
+      //   && (progressCourseId + 1 <= courses.length))
+      // {
+      //   // 해당 코스의 마지막 챌린지
+      //   if (progressChallengeId != userCourse.challenges.length) {
+      //     progressChallengeId = progressChallengeId + 1;
+      //     user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].situation = 1;
+      //     user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].date = today;
+      //   }
+      // }
 
       // 진행 중인 챌린지 리셋
-      if ((userCourse.challenges[progressChallengeId - 1].date != today) && (userCourse.challenges[progressChallengeId - 1].situation === 1)) {
-        user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].currentStamp = 0;
-        user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].date = today;
+      if ((challenge.date != today) && (challenge.situation === 1)) {
+        user.courses.find((course) => course.id === progressCourseId)
+            .challenges.find((challenge) => challenge.id === progressChallengeId)
+            .currentStamp = 0;
+        user.courses.find((course) => course.id === progressCourseId)
+            .challenges.find((challenge) => challenge.id === progressChallengeId)
+            .date = today;
       }
+      // if ((userCourse.challenges[progressChallengeId - 1].date != today) && (userCourse.challenges[progressChallengeId - 1].situation === 1)) {
+      //   user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].currentStamp = 0;
+      //   user.courses[progressCourseId - 1].challenges[progressChallengeId - 1].date = today;
+      // }
 
       await user.save();
 
       // dummy data
-      dummyCourse = courses[progressCourseId - 1];
-      const dummyChallenge = courses[progressCourseId - 1].challenges;
+      dummyCourse = courses.find((course) => course.id === progressCourseId);
+      const dummyChallenge = courses.find((course) => course.id === progressCourseId)
+                                    .challenges.find((challenge) => challenge.id === progressChallengeId);
 
       // response할 challenge 배열 만들어서 저장
       let challengeArray: Array<TodayChallengeDetailResponseDTO> = new Array<TodayChallengeDetailResponseDTO>();
