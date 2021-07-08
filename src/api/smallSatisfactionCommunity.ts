@@ -5,7 +5,7 @@ import smallSatisfactionCommunityService from "../service/smallSatisfactionCommu
 const router = express.Router();
 
 /**
- * @api {post} /api/smallSatisfactionCommunity 커뮤니티 소확행 글 조회
+ * @api {get} /api/smallSatisfactionCommunity 커뮤니티 소확행 글 조회
  * 
  * @apiVersion 1.0.0
  * @apiName smallSatisfactionCommunity
@@ -14,13 +14,20 @@ const router = express.Router();
  * @apiHeaderExample {json} Header-Example:
  * {
  *  "Content-Type": "application/json"
+ *  "Bearer": "jwt"
  * }
  * 
- * @apiParamExample {json} Request-Example:
- * {
- * }
  *
- * @apiSuccess {String} jwt
+ * @apiSuccess {Boolean} hasSmallSatisfaction
+ * @apiSuccess {Number} userCount
+ * @apiSuccess {Array} [smallSatisfactions]
+ * @apiSuccess {Number} postId
+ * @apiSuccess {String} moodImage
+ * @apiSuccess {Array} [hashtags]
+ * @apiSuccess {String} content
+ * @apiSuccess {Number} likeCount
+ * @apiSuccess {Boolean} hasLike
+ * @apiSuccess {String} nickname
  * 
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
@@ -36,7 +43,6 @@ const router = express.Router();
  *				"hashtags": ["#해쉬태그1", "#해쉬태그2", ... ],
  *				"content": "맛있는 피자에 시원한 맥주 ... ",
  *				"likeCount": 72,
- *				"hasImage": false,
  *				"hasLike": true,
  *				"nickname": "시원스쿨"
  *			},
@@ -46,7 +52,6 @@ const router = express.Router();
  *				"hashtags": ["#해쉬태그1", "#해쉬태그2", ... ],
  *				"content": "맛있는 피자에 시원한 맥주 ... ",
  *				"likeCount": 72,
- *				"hasImage": false,
  *				"hasLike": true,
  *				"nickname": "시원스쿨"
  *			},
