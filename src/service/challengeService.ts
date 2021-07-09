@@ -50,7 +50,7 @@ export default {
       let userCourse = user.courses.find((course) => course.id === progressCourseId);
 
       let challenge = user.courses.find((course) => course.id === progressCourseId)
-                          .challenges.sort((a, b) => (a.situation < b.situation)? -1: Number(a.situation < b.situation))
+                          .challenges.sort((a, b) => (a.id > b.id)? -1: Number(a.id > b.id))
                           .find((challenge) => challenge.situation === 2);
 
       if (challenge) {
@@ -67,7 +67,7 @@ export default {
       }
 
       challenge = user.courses.find((course) => course.id === progressCourseId)
-                          .challenges.sort((a, b) => (a.situation < b.situation)? -1: Number(a.situation < b.situation))
+                          .challenges.sort((a, b) => (a.id > b.id)? -1: Number(a.id > b.id))
                           .find((challenge) => challenge.situation === 1);
                           
       if (challenge) {
