@@ -8,7 +8,6 @@ export interface ISmallSatisfaction {
 	likes?: [ILike];
 	content: string;
 	mainImage?: [IImage]; 
-	subImages?: [IImage];
 	moodImage: IImage; 
 	moodText: string;
 	hashtags?: [IHashtag]; 

@@ -1,14 +1,15 @@
 import express, { Request, Response } from "express";
 import auth from "../middleware/auth";
-import smallSatisfactionCommunityService from "../service/smallSatisfactionCommunityService";
+import SmallSatisfactionMyDrawerRequestDTO from "../dto/SmallSatisfaction/MyDrawer/request/SmallSatisfactionMyDrawerRequestDTO";
+import smallSatisfactionMyDrawerService from "../service/smallSatisfactionMyDrawerService";
 
 const router = express.Router();
 
 /**
- * @api {get} /api/smallSatisfactionCommunity 커뮤니티 소확행 글 조회
+ * @api {get} /api/smallSatisfactionMyDrawer 내서랍장 소확행 글 조회
  * 
  * @apiVersion 1.0.0
- * @apiName smallSatisfactionCommunity
+ * @apiName smallSatisfactionCommunityMyDrawer 
  * @apiGroup SmallSatisfaction
  * 
  * @apiHeaderExample {json} Header-Example:
@@ -17,10 +18,13 @@ const router = express.Router();
  *  "Bearer": "jwt"
  * }
  * 
+ * @apiParamExample {json} Request-Example:
+ * {
+ *  "year": 2021,
+ *  "month": 7,
+ * }
  *
- * @apiSuccess {Boolean} hasSmallSatisfaction
- * @apiSuccess {Number} userCount
- * @apiSuccess {Array} [smallSatisfactions]
+ * @apiSuccess {Array} [myDrawerSmallSatisfactions]
  * @apiSuccess {Number} postId
  * @apiSuccess {String} moodImage
  * @apiSuccess {Array} [hashtags]
@@ -34,8 +38,6 @@ const router = express.Router();
  * {
  *	"status": 200,
  *	"data": {
- *			"hasSmallSaisfacion": false
- *			"userCount": 64
  *			"smallSatisfactions": [
  *			{
  *				"postId": 1
@@ -64,13 +66,18 @@ const router = express.Router();
  * @apiErrorExample Error-Response:
  * 500 서버 에러
  * {
- *  "status": 400,
+ *  "status": 500,
  *  "message": "서버 에러입니다."
  * }
  */
 
-router.get("/:sort", auth, async (req, res) => {
-  const result = await smallSatisfactionCommunityService.community(req.body.user.id, req.params.sort);
+router.post("/", auth, async (req, res) => {
+  const requestDTO: SmallSatisfactionMyDrawerRequestDTO = {
+    year: req.body.year,
+    month: req.body.month,
+  };
+
+  const result = await smallSatisfactionMyDrawerService.myDrawer(req.body.user.id, requestDTO);
   res.json(result);
 });
 
