@@ -32,7 +32,7 @@ export default {
       });
     });
       
-    const userCount = await SmallSatisfaction.findOne({ ear: todayYear, month: todayMonth, day: todayDay }).countDocuments();
+    const userCount = await SmallSatisfaction.findOne({ year: todayYear, month: todayMonth, day: todayDay }).countDocuments();
 
     let communitySmallSatisfactions;
     if (sort === "date") {
