@@ -6,7 +6,7 @@ import smallSatisfactionMyDrawerService from "../service/smallSatisfactionMyDraw
 const router = express.Router();
 
 /**
- * @api {get} /api/smallSatisfactionMyDrawer 내서랍장 소확행 글 조회
+ * @api {post} /api/smallSatisfactionMyDrawer 내서랍장 소확행 글 조회
  * 
  * @apiVersion 1.0.0
  * @apiName smallSatisfactionCommunityMyDrawer 
