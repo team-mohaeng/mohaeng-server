@@ -9,7 +9,7 @@ const router = express.Router();
  * 
  * @apiVersion 1.0.0
  * @apiName Home
- * @apiGroup Main
+ * @apiGroup 홈
  * 
  * @apiHeaderExample {json} Header-Example:
  * {
