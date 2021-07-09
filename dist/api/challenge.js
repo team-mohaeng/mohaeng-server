@@ -12,7 +12,7 @@ const router = express_1.default.Router();
  *
  * @apiVersion 1.0.0
  * @apiName GetChallenges
- * @apiGroup Challenge
+ * @apiGroup 챌린지
  *
  * @apiHeaderExample {json} Header-Example:
  * {
@@ -72,7 +72,7 @@ router.get("/", auth_1.default, async (req, res) => {
  *
  * @apiVersion 1.0.0
  * @apiName TodayChallenge
- * @apiGroup Challenge
+ * @apiGroup 챌린지
  *
  * @apiHeaderExample {json} Header-Example:
  * {
@@ -139,7 +139,7 @@ router.get("/:courseId", auth_1.default, async (req, res) => {
  *
  * @apiVersion 1.0.0
  * @apiName StampChallenge
- * @apiGroup Challenge
+ * @apiGroup 챌린지
  *
  * @apiHeaderExample {json} Header-Example:
  * {

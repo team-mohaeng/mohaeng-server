@@ -12,7 +12,7 @@ const router = express_1.default.Router();
  *
  * @apiVersion 1.0.0
  * @apiName GetCourses
- * @apiGroup Course
+ * @apiGroup 코스
  *
  * @apiHeaderExample {json} Header-Example:
  * {
@@ -75,7 +75,7 @@ router.get("/", auth_1.default, async (req, res) => {
  *
  * @apiVersion 1.0.0
  * @apiName ChoiceCourse
- * @apiGroup Course
+ * @apiGroup 코스
  *
  * @apiHeaderExample {json} Header-Example:
  * {
@@ -133,7 +133,7 @@ router.put("/:id", auth_1.default, async (req, res) => {
  *
  * @apiVersion 1.0.0
  * @apiName GetCompleteCourses
- * @apiGroup Course
+ * @apiGroup 코스
  *
  * @apiHeaderExample {json} Header-Example:
  * {

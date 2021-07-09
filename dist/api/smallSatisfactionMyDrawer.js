@@ -12,7 +12,7 @@ const router = express_1.default.Router();
  *
  * @apiVersion 1.0.0
  * @apiName smallSatisfactionCommunityMyDrawer
- * @apiGroup SmallSatisfaction
+ * @apiGroup 소확행
  *
  * @apiHeaderExample {json} Header-Example:
  * {
