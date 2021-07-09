@@ -90,7 +90,7 @@ router.get("/", auth, async (req, res) => {
  *  "data": {
  *    "course": {
  *      "id": 1,
- *      "situation": 2, // 현재 코스 진행 상태
+ *      "situation": 1, // 현재 코스 진행 상태
  *      "title": "뽀득뽀득 세균퇴치",
  *      "description": "나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.",
  *      "totalDays": 6, // 코스가 총 며칠짜리 코스인지
