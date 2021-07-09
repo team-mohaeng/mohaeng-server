@@ -39,6 +39,8 @@ export default {
         const responseDTO: SmallSatisfactionResponseDTO = {
           postId: myDrawerSmallSatisfaction.postId,
           nickname: user.nickname,
+          moodImage: myDrawerSmallSatisfaction.moodImage,
+          mainImage: myDrawerSmallSatisfaction.mainImage,
           likeCount: myDrawerSmallSatisfaction.likes.length,
           content: myDrawerSmallSatisfaction.content,
           hasLike: liked,
