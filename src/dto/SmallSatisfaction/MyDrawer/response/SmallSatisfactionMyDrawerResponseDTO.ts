@@ -2,10 +2,12 @@ import { IHashtag } from "../../../../interfaces/IHashtag";
 
 export default interface SmallSatisfactionMyDrawerResponseDTO {
 	status: number;
-	data: [SmallSatisfactionResponseDTO]
+	data: {
+		myDrawerSmallSatisfaction: SmallSatisfactionResponseDTO[];
+	}
 }
 
-interface SmallSatisfactionResponseDTO {
+export interface SmallSatisfactionResponseDTO {
 	postId: number;
 	nickname: string;
 	likeCount: number;
