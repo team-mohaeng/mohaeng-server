@@ -1,4 +1,5 @@
 import CourseLibraryResponseDTO, { ChallengeResponseDTO, CourseResponseDTO, TotalCourseResponseDTO } from "../dto/Course/CourseLibrary/CourseLibraryResponseDTO";
+import CourseMedalResponseDTO, { MedalChallengeResponseDTO, MedalCourseResponseDTO } from "../dto/Course/CourseMedal/CourseMedalResponseDTO";
 import CourseProgressResponseDTO, { ChallengeDetailProgressResponseDTO } from "../dto/Course/CourseProgress/CourseProgressResponseDTO";
 import { IFail } from "../interfaces/IFail";
 import { IUserCourse } from "../interfaces/IUserCourse";
@@ -9,7 +10,7 @@ import User from "../models/User";
 export default {
   library: async (token: String) => {
     try {
-      let user = await User.findOne({ id: token });
+      const user = await User.findOne({ id: token });
       let courses = await Course.find({});
       let progressCourseId: Number;
 
@@ -18,7 +19,7 @@ export default {
           status: 404,
           message: "유저가 존재하지 않습니다.",
         };
-        return notExistUser
+        return notExistUser;
       }
 
       user.courses.forEach((course) => {
@@ -160,6 +161,70 @@ export default {
             challenges: challengeProgressArray
           }
         }
+      };
+
+      return responseDTO;
+    } catch (err) {
+      console.error(err.message);
+    }
+  },
+  medal: async (token: String) => {
+    try {
+      const user = await User.findOne({ id: token });
+      const courses = await Course.find();
+
+      if (!user) {
+        const notExistUser: IFail = {
+          status: 404,
+          message: "유저가 존재하지 않습니다.",
+        };
+        return notExistUser;
+      }
+
+      const userCourses = user.courses.filter((course) => course.situation === 2);
+
+      let courseMedalArray: Array<MedalCourseResponseDTO> = new Array<MedalCourseResponseDTO>();
+      userCourses.forEach((course) => {
+        let challengeMedalArray: Array<MedalChallengeResponseDTO> = new Array<MedalChallengeResponseDTO>();
+        const dummyCourse = courses.find((c) => c.id === course.id);
+
+        course.challenges.forEach((challenge) => {
+          const dummyChallenge = dummyCourse.challenges.find((c) => c.id === challenge.id);
+          let ments: Array<String> = new Array<String>();
+          dummyChallenge.userMents.forEach((ment) => {
+            ments.push(ment.ment);
+          });
+
+          challengeMedalArray.push({
+            id: challenge.id,
+            situation: challenge.situation,
+            title: dummyChallenge.title,
+            description: dummyChallenge.description,
+            year: challenge.year,
+            month: challenge.month,
+            day: challenge.day,
+            currentStamp: challenge.currentStamp,
+            totalStamp: dummyChallenge.totalStamp,
+            userMents: ments
+          });
+        });
+
+        courseMedalArray.push({
+          id: course.id,
+          situation: course.situation,
+          title: dummyCourse.title,
+          description: dummyCourse.description,
+          totalDays: dummyCourse.totalDays,
+          property: dummyCourse.property,
+          challenges: challengeMedalArray
+        });
+      });
+
+      const responseDTO: CourseMedalResponseDTO = {
+        status: 200,
+        data: {
+          courses: courseMedalArray,
+        },
       };
 
       return responseDTO;
