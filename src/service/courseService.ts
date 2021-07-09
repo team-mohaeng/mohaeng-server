@@ -63,7 +63,7 @@ export default {
           challenges: challengeLibraryArray
         });
       });
-      courseLibraryArray = courseLibraryArray.sort((a, b) => (a.situation > b.situation)? -1: Number(a.situation > b.situation));
+      courseLibraryArray = courseLibraryArray.sort((a, b) => (a.situation < b.situation)? -1: Number(a.situation < b.situation));
 
       const responseDTO: CourseLibraryResponseDTO = {
         status: 200,
