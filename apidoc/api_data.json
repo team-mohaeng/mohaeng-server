@@ -1,418 +1,11 @@
 [
   {
     "type": "get",
-    "url": "/api/challenges",
-    "title": "진행 중인 코스의 챌린지 지도 조회",
-    "version": "1.0.0",
-    "name": "GetChallenges",
-    "group": "Challenge",
-    "header": {
-      "examples": [
-        {
-          "title": "Header-Example:",
-          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "courses",
-            "description": "<p>포함 속성은 하단 코드 참조</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "challenges",
-            "description": "<p>포함 속성은 하단 코드 참조</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"courses\": {\n     \"id\": 1,\n     \"situation\": 1, // 현재 코스 진행 상태\n     \"title\": \"뽀득뽀득 세균퇴치\",\n     \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n     \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n     \"property\": \"water\", // 코스 속성\n     \"challenges\": [\n       {\n         \"id\": 1,\n         \"situation\": 1, // 챌린지 진행 상태\n         \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n         \"year\": \"\", // 챌린지를 완료하면, year month day를 보냄.\n         \"month\": \"\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n         \"day\": \"\",\n         \"currentStamp\": 2, // 현재 유저 인증 횟수\n         \"totalStamp\": 3, // 인증해야할 총 횟수\n         \"userMents\": [ // 수정될 수 있지만, 0번 인덱스는 인증 팝업 멘트 1번 인덱스는 인증 완료 시 하단 멘트\n           \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n           \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n         ]\n       },\n       // ...\n     ]\n   }\n }\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "400 진행 중인 코스가 없는 경우\n{\n \"status\": 400,\n \"message\": \"진행 중인 코스가 없습니다.\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "src/api/challenge.ts",
-    "groupTitle": "Challenge"
-  },
-  {
-    "type": "put",
-    "url": "/api/challenges/:courseId/:challengeId",
-    "title": "챌린지 인증하기",
-    "version": "1.0.0",
-    "name": "StampChallenge",
-    "group": "Challenge",
-    "header": {
-      "examples": [
-        {
-          "title": "Header-Example:",
-          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "course",
-            "description": "<p>포함 속성은 하단 코드 참조</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "challenges",
-            "description": "<p>포함 속성은 하단 코드 참조</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"course\": {\n     \"id\": 1,\n     \"situation\": 1, // 현재 코스 진행 상태\n     \"title\": \"뽀득뽀득 세균퇴치\",\n     \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n     \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n     \"property\": \"water\", // 코스 속성\n     \"challenges\": [\n       { // 오늘 완료한 챌린지가 있다면, situation이 1인 챌린지는 없다\n         \"id\": 1,\n         \"situation\": 1, // 챌린지 진행 상태\n         \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n         \"year\": \"\", // 챌린지를 완료하면, year month day를 보냄.\n         \"month\": \"\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n         \"day\": \"\",\n         \"currentStamp\": 2, // 현재 유저 인증 횟수\n         \"totalStamp\": 3, // 인증해야할 총 횟수\n         \"userMents\": [ // 수정될 수 있지만, 0번 인덱스는 인증 팝업 멘트 1번 인덱스는 인증 완료 시 하단 멘트\n           \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n           \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n         ]\n       },\n       // ...\n     ]\n   }\n }\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "404 코스(챌린지) id가 유효하지 않을 경우\n{\n \"status\": 404,\n \"message\": \"해당 id의 코스(챌린지)가 존재하지 않습니다\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "Error-Response:",
-          "content": "400 현재 진행 중인 코스(챌린지)가 아닌 경우\n{\n \"status\": 400,\n \"message\": \"현재 진행 중인 코스(챌린지)가 아닙니다.\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "src/api/challenge.ts",
-    "groupTitle": "Challenge"
-  },
-  {
-    "type": "get",
-    "url": "/api/challenges/:courseId",
-    "title": "오늘의 챌린지 조회",
-    "version": "1.0.0",
-    "name": "TodayChallenge",
-    "group": "Challenge",
-    "header": {
-      "examples": [
-        {
-          "title": "Header-Example:",
-          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "course",
-            "description": "<p>포함 속성은 하단 코드 참조</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "challenges",
-            "description": "<p>포함 속성은 하단 코드 참조</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"course\": {\n     \"id\": 1,\n     \"situation\": 1, // 현재 코스 진행 상태\n     \"title\": \"뽀득뽀득 세균퇴치\",\n     \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n     \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n     \"property\": \"water\", // 코스 속성\n     \"challenges\": [\n       { // 오늘 완료한 챌린지가 있다면, situation이 1인 챌린지는 없다\n         \"id\": 1,\n         \"situation\": 1, // 챌린지 진행 상태\n         \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n         \"year\": \"\", // 챌린지를 완료하면, year month day를 보냄.\n         \"month\": \"\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n         \"day\": \"\",\n         \"currentStamp\": 2, // 현재 유저 인증 횟수\n         \"totalStamp\": 3, // 인증해야할 총 횟수\n         \"userMents\": [ // 수정될 수 있지만, 0번 인덱스는 인증 팝업 멘트 1번 인덱스는 인증 완료 시 하단 멘트\n           \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n           \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n         ]\n       },\n       // ...\n     ]\n   }\n }\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "404 코스 id가 유효하지 않을 경우\n{\n \"status\": 404,\n \"message\": \"해당 id의 코스가 존재하지 않습니다\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "Error-Response:",
-          "content": "400 현재 진행 중인 코스가 아닌 경우\n{\n \"status\": 400,\n \"message\": \"현재 진행 중인 코스가 아닙니다.\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "src/api/challenge.ts",
-    "groupTitle": "Challenge"
-  },
-  {
-    "type": "put",
-    "url": "/api/courses/:id",
-    "title": "코스 진행하기",
-    "version": "1.0.0",
-    "name": "ChoiceCourse",
-    "group": "Course",
-    "header": {
-      "examples": [
-        {
-          "title": "Header-Example:",
-          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "course",
-            "description": "<p>포함 속성은 하단 코드 참조</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "200 진행하는 코스 하나만 response\n{\n \"status\": 200,\n \"data\": {\n   \"course\": {\n     \"id\": 1,\n     \"situation\": 1, // 현재 코스 진행 상태\n     \"title\": \"뽀득뽀득 세균퇴치\",\n     \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n     \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n     \"property\": \"water\", // 코스 속성\n     \"challenges\": [\n       {\n         \"id\": 1,\n         \"situation\": 2, // 챌린지 진행 상태\n         \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n         \"year\": \"2021\", // 챌린지를 완료하면, year month day를 보냄.\n         \"month\": \"07\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n         \"day\": \"03\",\n         \"currentStamp\": 3, // 현재 유저 인증 횟수\n         \"totalStamp\": 3, // 인증해야할 총 횟수\n         \"userMents\": [ // 수정될 수 있지만, 0번 인덱스는 인증 팝업 멘트 1번 인덱스는 인증 완료 시 하단 멘트\n           \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n           \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n         ]\n       },\n       // ...\n   }\n }\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "404 코스 아이디 오류\n{\n \"status\": 404,\n \"message\": \"해당 id의 코스가 존재하지 않습니다\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "src/api/course.ts",
-    "groupTitle": "Course"
-  },
-  {
-    "type": "get",
-    "url": "/api/courses/complete",
-    "title": "완료한 코스 메달 조회",
-    "version": "1.0.0",
-    "name": "GetCompleteCourses",
-    "group": "Course",
-    "header": {
-      "examples": [
-        {
-          "title": "Header-Example:",
-          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "courses",
-            "description": "<p>포함 속성은 하단 코드 참조</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "challenges",
-            "description": "<p>포함 속성은 하단 코드 참조</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "200 완료한 코스가 있는 경우\n{\n \"status\": 200,\n \"data\": {\n   \"courses\": [\n     {\n       \"id\": 1,\n       \"situation\": 2, // 현재 코스 진행 상태\n       \"title\": \"뽀득뽀득 세균퇴치\",\n       \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n       \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n       \"property\": \"water\", // 코스 속성\n       \"challenges\": [\n         {\n           \"id\": 1,\n           \"situation\": 2, // 챌린지 진행 상태\n           \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n           \"year\": \"2021\", // 챌린지를 완료하면, year month day를 보냄.\n           \"month\": \"07\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n           \"day\": \"03\",\n           \"currentStamp\": 3, // 현재 유저 인증 횟수\n           \"totalStamp\": 3, // 인증해야할 총 횟수\n           \"userMents\": [ // 수정될 수 있지만, 0번 인덱스는 인증 팝업 멘트 1번 인덱스는 인증 완료 시 하단 멘트\n             \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n             \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n           ]\n         },\n         // ...\n       ]\n     },\n     // ...\n   ]\n }\n}",
-          "type": "json"
-        },
-        {
-          "title": "Success-Response:",
-          "content": "200 완료한 코스가 없는 경우 -> 에러로 처리 필요하면 말씀해주세요\n{\n \"status\": 200,\n \"data\": {\n   \"courses\": []\n }\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "403 만료된 토큰\n{\n \"status\": 403,\n \"message\": \"만료된 토큰입니다. 우리 아기 고앵이 토큰 하나 더 받아와 쪽-\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "src/api/course.ts",
-    "groupTitle": "Course"
-  },
-  {
-    "type": "get",
-    "url": "/api/courses",
-    "title": "코스 라이브러리 조회",
-    "version": "1.0.0",
-    "name": "GetCourses",
-    "group": "Course",
-    "header": {
-      "examples": [
-        {
-          "title": "Header-Example:",
-          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "courses",
-            "description": "<p>포함 속성은 하단 코드 참조</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "challenges",
-            "description": "<p>포함 속성은 하단 코드 참조</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "200 진행 중인 코스는 뜨지 않고, situation 0 부터 정렬해서 response\n{\n \"status\": 200,\n \"data\": {\n   \"courses\": [\n     {\n       \"id\": 1,\n       \"situation\": 0, // 현재 코스 진행 상태\n       \"title\": \"뽀득뽀득 세균퇴치\",\n       \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n       \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n       \"property\": \"water\", // 코스 속성\n       \"challenges\": [\n         {\n           \"id\": 1,\n           \"situation\": 0, // 챌린지 진행 상태\n           \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n           \"year\": \"\", // 챌린지를 완료하면, year month day를 보냄.\n           \"month\": \"\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n           \"day\": \"\",\n           \"currentStamp\": 0, // 현재 유저 인증 횟수\n           \"totalStamp\": 3, // 인증해야할 총 횟수\n           \"userMents\": [ // 수정될 수 있지만, 0번 인덱스는 인증 팝업 멘트 1번 인덱스는 인증 완료 시 하단 멘트\n             \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n             \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n           ]\n         },\n         // ...\n       ]\n     },\n     // ...\n   ]\n }\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "403 만료된 토큰\n{\n \"status\": 403,\n \"message\": \"만료된 토큰입니다. 우리 아기 고앵이 토큰 하나 더 받아와 쪽-\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "src/api/course.ts",
-    "groupTitle": "Course"
-  },
-  {
-    "type": "get",
-    "url": "/api/home",
-    "title": "메인홈",
-    "version": "1.0.0",
-    "name": "Home",
-    "group": "Main",
-    "header": {
-      "examples": [
-        {
-          "title": "Header-Example:",
-          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "situation",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "affinity",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "courses",
-            "description": "<p>포함 속성은 하단 코드 참조</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "challenges",
-            "description": "<p>포함 속성은 하단 코드 참조</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "200 챌린지 진행 여부는 가장 상위 situation 참고\n{\n \"status\": 200,\n \"data\": {\n   \"situation\": 0, // 유저가 현재 코스를 진행하고 있는지 여부\n   \"affinity\": 42, // 쟈니와의 애정도\n   \"courses\": [\n     {\n       \"id\": 1,\n       \"situation\": 2, // 현재 코스 진행 상태\n       \"title\": \"뽀득뽀득 세균퇴치\",\n       \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n       \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n       \"property\": \"water\", // 코스 속성\n       \"challenges\": [\n         {\n           \"id\": 1,\n           \"situation\": 2, // 챌린지 진행 상태\n           \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n           \"year\": \"2021\", // 챌린지를 완료하면, year month day를 보냄.\n           \"month\": \"07\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n           \"day\": \"03\",\n           \"currentStamp\": 3, // 현재 유저 인증 횟수\n           \"totalStamp\": 3, // 인증해야할 총 횟수\n           \"userMents\": [ // 수정될 수 있지만, 0번 인덱스는 인증 팝업 멘트 1번 인덱스는 인증 완료 시 하단 멘트\n             \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n             \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n           ]\n         },\n         // ...\n       ]\n     },\n     // ...\n   ]\n }\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "403 만료된 토큰\n{\n \"status\": 403,\n \"message\": \"만료된 토큰입니다. 우리 아기 고앵이 토큰 하나 더 받아와 쪽-\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "src/api/home.ts",
-    "groupTitle": "Main"
-  },
-  {
-    "type": "get",
     "url": "/api/smallSatisfactionCommunity",
     "title": "커뮤니티 소확행 글 조회",
     "version": "1.0.0",
     "name": "smallSatisfactionCommunity",
-    "group": "SmallSatisfaction",
+    "group": "소확행",
     "header": {
       "examples": [
         {
@@ -515,7 +108,7 @@
       ]
     },
     "filename": "src/api/smallSatisfactionCommunity.ts",
-    "groupTitle": "SmallSatisfaction"
+    "groupTitle": "소확행"
   },
   {
     "type": "get",
@@ -523,7 +116,7 @@
     "title": "내서랍장 소확행 글 조회",
     "version": "1.0.0",
     "name": "smallSatisfactionCommunityMyDrawer",
-    "group": "SmallSatisfaction",
+    "group": "소확행",
     "header": {
       "examples": [
         {
@@ -621,7 +214,7 @@
       ]
     },
     "filename": "src/api/smallSatisfactionMyDrawer.ts",
-    "groupTitle": "SmallSatisfaction"
+    "groupTitle": "소확행"
   },
   {
     "type": "post",
@@ -629,7 +222,7 @@
     "title": "소확행 작성",
     "version": "1.0.0",
     "name": "writeSmallSatisfaction",
-    "group": "SmallSatisfaction",
+    "group": "소확행",
     "header": {
       "examples": [
         {
@@ -678,7 +271,7 @@
       ]
     },
     "filename": "src/api/writeSmallSatisfaction.ts",
-    "groupTitle": "SmallSatisfaction"
+    "groupTitle": "소확행"
   },
   {
     "type": "post",
@@ -686,7 +279,7 @@
     "title": "로그인",
     "version": "1.0.0",
     "name": "SignIn",
-    "group": "User",
+    "group": "유저",
     "header": {
       "examples": [
         {
@@ -735,7 +328,7 @@
       ]
     },
     "filename": "src/api/user.ts",
-    "groupTitle": "User"
+    "groupTitle": "유저"
   },
   {
     "type": "post",
@@ -743,7 +336,7 @@
     "title": "회원가입",
     "version": "1.0.0",
     "name": "SignUp",
-    "group": "User",
+    "group": "유저",
     "header": {
       "examples": [
         {
@@ -792,6 +385,413 @@
       ]
     },
     "filename": "src/api/auth.ts",
-    "groupTitle": "User"
+    "groupTitle": "유저"
+  },
+  {
+    "type": "get",
+    "url": "/api/challenges",
+    "title": "진행 중인 코스의 챌린지 지도 조회",
+    "version": "1.0.0",
+    "name": "GetChallenges",
+    "group": "챌린지",
+    "header": {
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "courses",
+            "description": "<p>포함 속성은 하단 코드 참조</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "challenges",
+            "description": "<p>포함 속성은 하단 코드 참조</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"courses\": {\n     \"id\": 1,\n     \"situation\": 1, // 현재 코스 진행 상태\n     \"title\": \"뽀득뽀득 세균퇴치\",\n     \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n     \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n     \"property\": \"water\", // 코스 속성\n     \"challenges\": [\n       {\n         \"id\": 1,\n         \"situation\": 1, // 챌린지 진행 상태\n         \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n         \"year\": \"\", // 챌린지를 완료하면, year month day를 보냄.\n         \"month\": \"\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n         \"day\": \"\",\n         \"currentStamp\": 2, // 현재 유저 인증 횟수\n         \"totalStamp\": 3, // 인증해야할 총 횟수\n         \"userMents\": [ // 수정될 수 있지만, 0번 인덱스는 인증 팝업 멘트 1번 인덱스는 인증 완료 시 하단 멘트\n           \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n           \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n         ]\n       },\n       // ...\n     ]\n   }\n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "400 진행 중인 코스가 없는 경우\n{\n \"status\": 400,\n \"message\": \"진행 중인 코스가 없습니다.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/api/challenge.ts",
+    "groupTitle": "챌린지"
+  },
+  {
+    "type": "put",
+    "url": "/api/challenges/:courseId/:challengeId",
+    "title": "챌린지 인증하기",
+    "version": "1.0.0",
+    "name": "StampChallenge",
+    "group": "챌린지",
+    "header": {
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "course",
+            "description": "<p>포함 속성은 하단 코드 참조</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "challenges",
+            "description": "<p>포함 속성은 하단 코드 참조</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"course\": {\n     \"id\": 1,\n     \"situation\": 1, // 현재 코스 진행 상태\n     \"title\": \"뽀득뽀득 세균퇴치\",\n     \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n     \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n     \"property\": \"water\", // 코스 속성\n     \"challenges\": [\n       { // 오늘 완료한 챌린지가 있다면, situation이 1인 챌린지는 없다\n         \"id\": 1,\n         \"situation\": 1, // 챌린지 진행 상태\n         \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n         \"year\": \"\", // 챌린지를 완료하면, year month day를 보냄.\n         \"month\": \"\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n         \"day\": \"\",\n         \"currentStamp\": 2, // 현재 유저 인증 횟수\n         \"totalStamp\": 3, // 인증해야할 총 횟수\n         \"userMents\": [ // 수정될 수 있지만, 0번 인덱스는 인증 팝업 멘트 1번 인덱스는 인증 완료 시 하단 멘트\n           \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n           \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n         ]\n       },\n       // ...\n     ]\n   }\n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "404 코스(챌린지) id가 유효하지 않을 경우\n{\n \"status\": 404,\n \"message\": \"해당 id의 코스(챌린지)가 존재하지 않습니다\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "400 현재 진행 중인 코스(챌린지)가 아닌 경우\n{\n \"status\": 400,\n \"message\": \"현재 진행 중인 코스(챌린지)가 아닙니다.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/api/challenge.ts",
+    "groupTitle": "챌린지"
+  },
+  {
+    "type": "get",
+    "url": "/api/challenges/:courseId",
+    "title": "오늘의 챌린지 조회",
+    "version": "1.0.0",
+    "name": "TodayChallenge",
+    "group": "챌린지",
+    "header": {
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "course",
+            "description": "<p>포함 속성은 하단 코드 참조</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "challenges",
+            "description": "<p>포함 속성은 하단 코드 참조</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"course\": {\n     \"id\": 1,\n     \"situation\": 1, // 현재 코스 진행 상태\n     \"title\": \"뽀득뽀득 세균퇴치\",\n     \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n     \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n     \"property\": \"water\", // 코스 속성\n     \"challenges\": [\n       { // 오늘 완료한 챌린지가 있다면, situation이 1인 챌린지는 없다\n         \"id\": 1,\n         \"situation\": 1, // 챌린지 진행 상태\n         \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n         \"year\": \"\", // 챌린지를 완료하면, year month day를 보냄.\n         \"month\": \"\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n         \"day\": \"\",\n         \"currentStamp\": 2, // 현재 유저 인증 횟수\n         \"totalStamp\": 3, // 인증해야할 총 횟수\n         \"userMents\": [ // 수정될 수 있지만, 0번 인덱스는 인증 팝업 멘트 1번 인덱스는 인증 완료 시 하단 멘트\n           \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n           \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n         ]\n       },\n       // ...\n     ]\n   }\n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "404 코스 id가 유효하지 않을 경우\n{\n \"status\": 404,\n \"message\": \"해당 id의 코스가 존재하지 않습니다\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "400 현재 진행 중인 코스가 아닌 경우\n{\n \"status\": 400,\n \"message\": \"현재 진행 중인 코스가 아닙니다.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/api/challenge.ts",
+    "groupTitle": "챌린지"
+  },
+  {
+    "type": "put",
+    "url": "/api/courses/:id",
+    "title": "코스 진행하기",
+    "version": "1.0.0",
+    "name": "ChoiceCourse",
+    "group": "코스",
+    "header": {
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "course",
+            "description": "<p>포함 속성은 하단 코드 참조</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "200 진행하는 코스 하나만 response\n{\n \"status\": 200,\n \"data\": {\n   \"course\": {\n     \"id\": 1,\n     \"situation\": 1, // 현재 코스 진행 상태\n     \"title\": \"뽀득뽀득 세균퇴치\",\n     \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n     \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n     \"property\": \"water\", // 코스 속성\n     \"challenges\": [\n       {\n         \"id\": 1,\n         \"situation\": 2, // 챌린지 진행 상태\n         \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n         \"year\": \"2021\", // 챌린지를 완료하면, year month day를 보냄.\n         \"month\": \"07\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n         \"day\": \"03\",\n         \"currentStamp\": 3, // 현재 유저 인증 횟수\n         \"totalStamp\": 3, // 인증해야할 총 횟수\n         \"userMents\": [ // 수정될 수 있지만, 0번 인덱스는 인증 팝업 멘트 1번 인덱스는 인증 완료 시 하단 멘트\n           \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n           \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n         ]\n       },\n       // ...\n   }\n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "404 코스 아이디 오류\n{\n \"status\": 404,\n \"message\": \"해당 id의 코스가 존재하지 않습니다\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/api/course.ts",
+    "groupTitle": "코스"
+  },
+  {
+    "type": "get",
+    "url": "/api/courses/complete",
+    "title": "완료한 코스 메달 조회",
+    "version": "1.0.0",
+    "name": "GetCompleteCourses",
+    "group": "코스",
+    "header": {
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "courses",
+            "description": "<p>포함 속성은 하단 코드 참조</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "challenges",
+            "description": "<p>포함 속성은 하단 코드 참조</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "200 완료한 코스가 있는 경우\n{\n \"status\": 200,\n \"data\": {\n   \"courses\": [\n     {\n       \"id\": 1,\n       \"situation\": 2, // 현재 코스 진행 상태\n       \"title\": \"뽀득뽀득 세균퇴치\",\n       \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n       \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n       \"property\": \"water\", // 코스 속성\n       \"challenges\": [\n         {\n           \"id\": 1,\n           \"situation\": 2, // 챌린지 진행 상태\n           \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n           \"year\": \"2021\", // 챌린지를 완료하면, year month day를 보냄.\n           \"month\": \"07\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n           \"day\": \"03\",\n           \"currentStamp\": 3, // 현재 유저 인증 횟수\n           \"totalStamp\": 3, // 인증해야할 총 횟수\n           \"userMents\": [ // 수정될 수 있지만, 0번 인덱스는 인증 팝업 멘트 1번 인덱스는 인증 완료 시 하단 멘트\n             \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n             \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n           ]\n         },\n         // ...\n       ]\n     },\n     // ...\n   ]\n }\n}",
+          "type": "json"
+        },
+        {
+          "title": "Success-Response:",
+          "content": "200 완료한 코스가 없는 경우 -> 에러로 처리 필요하면 말씀해주세요\n{\n \"status\": 200,\n \"data\": {\n   \"courses\": []\n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "403 만료된 토큰\n{\n \"status\": 403,\n \"message\": \"만료된 토큰입니다. 우리 아기 고앵이 토큰 하나 더 받아와 쪽-\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/api/course.ts",
+    "groupTitle": "코스"
+  },
+  {
+    "type": "get",
+    "url": "/api/courses",
+    "title": "코스 라이브러리 조회",
+    "version": "1.0.0",
+    "name": "GetCourses",
+    "group": "코스",
+    "header": {
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "courses",
+            "description": "<p>포함 속성은 하단 코드 참조</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "challenges",
+            "description": "<p>포함 속성은 하단 코드 참조</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "200 진행 중인 코스는 뜨지 않고, situation 0 부터 정렬해서 response\n{\n \"status\": 200,\n \"data\": {\n   \"courses\": [\n     {\n       \"id\": 1,\n       \"situation\": 0, // 현재 코스 진행 상태\n       \"title\": \"뽀득뽀득 세균퇴치\",\n       \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n       \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n       \"property\": \"water\", // 코스 속성\n       \"challenges\": [\n         {\n           \"id\": 1,\n           \"situation\": 0, // 챌린지 진행 상태\n           \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n           \"year\": \"\", // 챌린지를 완료하면, year month day를 보냄.\n           \"month\": \"\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n           \"day\": \"\",\n           \"currentStamp\": 0, // 현재 유저 인증 횟수\n           \"totalStamp\": 3, // 인증해야할 총 횟수\n           \"userMents\": [ // 수정될 수 있지만, 0번 인덱스는 인증 팝업 멘트 1번 인덱스는 인증 완료 시 하단 멘트\n             \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n             \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n           ]\n         },\n         // ...\n       ]\n     },\n     // ...\n   ]\n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "403 만료된 토큰\n{\n \"status\": 403,\n \"message\": \"만료된 토큰입니다. 우리 아기 고앵이 토큰 하나 더 받아와 쪽-\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/api/course.ts",
+    "groupTitle": "코스"
+  },
+  {
+    "type": "get",
+    "url": "/api/home",
+    "title": "메인홈",
+    "version": "1.0.0",
+    "name": "Home",
+    "group": "홈",
+    "header": {
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "situation",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "affinity",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "courses",
+            "description": "<p>포함 속성은 하단 코드 참조</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "challenges",
+            "description": "<p>포함 속성은 하단 코드 참조</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "200 챌린지 진행 여부는 가장 상위 situation 참고\n{\n \"status\": 200,\n \"data\": {\n   \"situation\": 0, // 유저가 현재 코스를 진행하고 있는지 여부\n   \"affinity\": 42, // 쟈니와의 애정도\n   \"courses\": [\n     {\n       \"id\": 1,\n       \"situation\": 2, // 현재 코스 진행 상태\n       \"title\": \"뽀득뽀득 세균퇴치\",\n       \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n       \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n       \"property\": \"water\", // 코스 속성\n       \"challenges\": [\n         {\n           \"id\": 1,\n           \"situation\": 2, // 챌린지 진행 상태\n           \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n           \"year\": \"2021\", // 챌린지를 완료하면, year month day를 보냄.\n           \"month\": \"07\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n           \"day\": \"03\",\n           \"currentStamp\": 3, // 현재 유저 인증 횟수\n           \"totalStamp\": 3, // 인증해야할 총 횟수\n           \"userMents\": [ // 수정될 수 있지만, 0번 인덱스는 인증 팝업 멘트 1번 인덱스는 인증 완료 시 하단 멘트\n             \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n             \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n           ]\n         },\n         // ...\n       ]\n     },\n     // ...\n   ]\n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "403 만료된 토큰\n{\n \"status\": 403,\n \"message\": \"만료된 토큰입니다. 우리 아기 고앵이 토큰 하나 더 받아와 쪽-\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/api/home.ts",
+    "groupTitle": "홈"
   }
 ]
