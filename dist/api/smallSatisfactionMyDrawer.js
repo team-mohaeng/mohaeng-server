@@ -5,13 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const auth_1 = __importDefault(require("../middleware/auth"));
-const smallSatisfactionCommunityService_1 = __importDefault(require("../service/smallSatisfactionCommunityService"));
+const smallSatisfactionMyDrawerService_1 = __importDefault(require("../service/smallSatisfactionMyDrawerService"));
 const router = express_1.default.Router();
 /**
- * @api {get} /api/smallSatisfactionCommunity 커뮤니티 소확행 글 조회
+ * @api {get} /api/smallSatisfactionMyDrawer 내서랍장 소확행 글 조회
  *
  * @apiVersion 1.0.0
- * @apiName smallSatisfactionCommunity
+ * @apiName smallSatisfactionCommunityMyDrawer
  * @apiGroup SmallSatisfaction
  *
  * @apiHeaderExample {json} Header-Example:
@@ -20,10 +20,13 @@ const router = express_1.default.Router();
  *  "Bearer": "jwt"
  * }
  *
+ * @apiParamExample {json} Request-Example:
+ * {
+ *  "year": 2021,
+ *  "month": 7,
+ * }
  *
- * @apiSuccess {Boolean} hasSmallSatisfaction
- * @apiSuccess {Number} userCount
- * @apiSuccess {Array} [smallSatisfactions]
+ * @apiSuccess {Array} [myDrawerSmallSatisfactions]
  * @apiSuccess {Number} postId
  * @apiSuccess {String} moodImage
  * @apiSuccess {Array} [hashtags]
@@ -37,8 +40,6 @@ const router = express_1.default.Router();
  * {
  *	"status": 200,
  *	"data": {
- *			"hasSmallSaisfacion": false
- *			"userCount": 64
  *			"smallSatisfactions": [
  *			{
  *				"postId": 1
@@ -67,13 +68,17 @@ const router = express_1.default.Router();
  * @apiErrorExample Error-Response:
  * 500 서버 에러
  * {
- *  "status": 400,
+ *  "status": 500,
  *  "message": "서버 에러입니다."
  * }
  */
-router.get("/:sort", auth_1.default, async (req, res) => {
-    const result = await smallSatisfactionCommunityService_1.default.community(req.body.user.id, req.params.sort);
+router.post("/", auth_1.default, async (req, res) => {
+    const requestDTO = {
+        year: req.body.year,
+        month: req.body.month,
+    };
+    const result = await smallSatisfactionMyDrawerService_1.default.myDrawer(req.body.user.id, requestDTO);
     res.json(result);
 });
 module.exports = router;
-//# sourceMappingURL=smallSatisfactionCommunity.js.map
+//# sourceMappingURL=smallSatisfactionMyDrawer.js.map

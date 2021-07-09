@@ -18,6 +18,7 @@ const router = express_1.default.Router();
  * @apiHeaderExample {json} Header-Example:
  * {
  *  "Content-Type": "application/json"
+ *  "Bearer": "jwt"
  * }
  *
  * @apiParamExample {json} Request-Example:
@@ -30,7 +31,7 @@ const router = express_1.default.Router();
  *	"isPrivate": false
     }
  *
- * @apiSuccess {String} jwt
+ * @apiSuccess {String} image
  *
  * @apiSuccessExample {json} Success-Response:
  * 200 OK

@@ -8,7 +8,7 @@ const User_1 = __importDefault(require("../models/User"));
 exports.default = {
     library: async (token) => {
         try {
-            let user = await User_1.default.findOne({ id: token });
+            const user = await User_1.default.findOne({ id: token });
             let courses = await Course_1.default.find({});
             let progressCourseId;
             if (!user) {
@@ -100,14 +100,17 @@ exports.default = {
                     userChallenge.push({
                         id: challenge.id,
                         situation: 0,
-                        currentStamp: 0
+                        currentStamp: 0,
+                        date: null
                     });
                 });
                 user.courses[progressCourseId - 1].challenges = userChallenge;
                 await user.save();
             }
+            user.situation = 1;
             user.courses[courseId - 1].situation = 1;
             user.courses[courseId - 1].challenges[0].situation = 1;
+            user.courses[courseId - 1].challenges[0].date = new Date();
             await user.save();
             let challengeProgressArray = new Array();
             user.courses[courseId - 1].challenges.forEach((challenge) => {
@@ -142,6 +145,63 @@ exports.default = {
                         challenges: challengeProgressArray
                     }
                 }
+            };
+            return responseDTO;
+        }
+        catch (err) {
+            console.error(err.message);
+        }
+    },
+    medal: async (token) => {
+        try {
+            const user = await User_1.default.findOne({ id: token });
+            const courses = await Course_1.default.find();
+            if (!user) {
+                const notExistUser = {
+                    status: 404,
+                    message: "유저가 존재하지 않습니다.",
+                };
+                return notExistUser;
+            }
+            const userCourses = user.courses.filter((course) => course.situation === 2);
+            let courseMedalArray = new Array();
+            userCourses.forEach((course) => {
+                let challengeMedalArray = new Array();
+                const dummyCourse = courses.find((c) => c.id === course.id);
+                course.challenges.forEach((challenge) => {
+                    const dummyChallenge = dummyCourse.challenges.find((c) => c.id === challenge.id);
+                    let ments = new Array();
+                    dummyChallenge.userMents.forEach((ment) => {
+                        ments.push(ment.ment);
+                    });
+                    challengeMedalArray.push({
+                        id: challenge.id,
+                        situation: challenge.situation,
+                        title: dummyChallenge.title,
+                        description: dummyChallenge.description,
+                        year: challenge.year,
+                        month: challenge.month,
+                        day: challenge.day,
+                        currentStamp: challenge.currentStamp,
+                        totalStamp: dummyChallenge.totalStamp,
+                        userMents: ments
+                    });
+                });
+                courseMedalArray.push({
+                    id: course.id,
+                    situation: course.situation,
+                    title: dummyCourse.title,
+                    description: dummyCourse.description,
+                    totalDays: dummyCourse.totalDays,
+                    property: dummyCourse.property,
+                    challenges: challengeMedalArray
+                });
+            });
+            const responseDTO = {
+                status: 200,
+                data: {
+                    courses: courseMedalArray,
+                },
             };
             return responseDTO;
         }
