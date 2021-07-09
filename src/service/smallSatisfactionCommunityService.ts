@@ -11,7 +11,7 @@ export default {
         status: 400,
         message: "유저가 존재하지 않습니다.",
       };
-      return notExistUser
+      return notExistUser;
     }
     
     let smallSatisfactionWritten;
@@ -29,8 +29,8 @@ export default {
         else {
           smallSatisfactionWritten = true;
         }
-        });
       });
+    });
       
     const userCount = await SmallSatisfaction.findOne({ year: todayYear, month: todayMonth, day: todayDay }).countDocuments();
 

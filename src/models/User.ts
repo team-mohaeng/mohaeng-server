@@ -37,6 +37,19 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: 20,
   },
+  success: {
+    maxCount: {
+      type: Number,
+      default: 0,
+    },
+    currentCount: {
+      type: Number,
+      default: 0,
+    },
+    recentDate: {
+      type: Date,
+    },
+  },
   messages: [
     {
       jouneyMessages: [
