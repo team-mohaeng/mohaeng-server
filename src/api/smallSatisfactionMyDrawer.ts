@@ -15,6 +15,7 @@ const router = express.Router();
  * @apiHeaderExample {json} Header-Example:
  * {
  *  "Content-Type": "application/json"
+ *  "Bearer": "jwt"
  * }
  * 
  * @apiParamExample {json} Request-Example:
@@ -23,7 +24,14 @@ const router = express.Router();
  *  "month": 7,
  * }
  *
- * @apiSuccess {String} jwt
+ * @apiSuccess {Array} [myDrawerSmallSatisfactions]
+ * @apiSuccess {Number} postId
+ * @apiSuccess {String} moodImage
+ * @apiSuccess {Array} [hashtags]
+ * @apiSuccess {String} content
+ * @apiSuccess {Number} likeCount
+ * @apiSuccess {Boolean} hasLike
+ * @apiSuccess {String} nickname
  * 
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
@@ -37,7 +45,6 @@ const router = express.Router();
  *				"hashtags": ["#해쉬태그1", "#해쉬태그2", ... ],
  *				"content": "맛있는 피자에 시원한 맥주 ... ",
  *				"likeCount": 72,
- *				"hasImage": false,
  *				"hasLike": true,
  *				"nickname": "시원스쿨"
  *			},
@@ -47,7 +54,6 @@ const router = express.Router();
  *				"hashtags": ["#해쉬태그1", "#해쉬태그2", ... ],
  *				"content": "맛있는 피자에 시원한 맥주 ... ",
  *				"likeCount": 72,
- *				"hasImage": false,
  *				"hasLike": true,
  *				"nickname": "시원스쿨"
  *			},
@@ -60,7 +66,7 @@ const router = express.Router();
  * @apiErrorExample Error-Response:
  * 500 서버 에러
  * {
- *  "status": 400,
+ *  "status": 500,
  *  "message": "서버 에러입니다."
  * }
  */
