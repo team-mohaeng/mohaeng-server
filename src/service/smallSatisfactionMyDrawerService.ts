@@ -2,8 +2,7 @@ import SmallSatisfaction from "../models/SmallSatisfaction";
 import User from "../models/User";
 import { IFail } from "../interfaces/IFail";
 import SmallSatisfactionMyDrawerRequestDTO from "../dto/SmallSatisfaction/MyDrawer/request/SmallSatisfactionMyDrawerRequestDTO";
-import SmallSatisfactionMyDrawerResponseDTO from "../dto/SmallSatisfaction/MyDrawer/response/SmallSatisfactionMyDrawerResponseDTO";
-import SmallSatisfactionResponseDTO from "../dto/SmallSatisfaction/MyDrawer/response/SmallSatisfactionMyDrawerResponseDTO";
+import SmallSatisfactionMyDrawerResponseDTO, { SmallSatisfactionResponseDTO } from "../dto/SmallSatisfaction/MyDrawer/response/SmallSatisfactionMyDrawerResponseDTO";
 
 export default {
   myDrawer: async (token: String, dto: SmallSatisfactionMyDrawerRequestDTO) => {
@@ -16,9 +15,15 @@ export default {
       return notExistUser;
     }
 
-    let myDrawerSmallSatisfactions = await SmallSatisfaction.find({ user: user._id, isPrivate: true }).sort({ date: -1 });
-
     try{  
+      const {
+        year,
+        month
+      } = dto;
+
+      let myDrawerSmallSatisfactions;
+      myDrawerSmallSatisfactions = await SmallSatisfaction.find({ user: user._id, year: year, month: month, isPrivate: true }).sort({ date: -1 });
+  
       let responseSmallSatisfaction: Array<SmallSatisfactionResponseDTO> = new Array<SmallSatisfactionResponseDTO>();
       myDrawerSmallSatisfactions.forEach((myDrawerSmallSatisfaction) => {
         let liked;
@@ -43,20 +48,17 @@ export default {
           day: myDrawerSmallSatisfaction.day,
           date: myDrawerSmallSatisfaction.date,
         }
-        
         responseSmallSatisfaction.push(responseDTO);
       });
-    
-      const responseDTO: SmallSatisfactionCommunityResponseDTO = {
+  
+      const responseDTO: SmallSatisfactionMyDrawerResponseDTO = {
         status: 200,
         data: {
-          hasSmallSatisfaction: smallSatisfactionWritten,
-          userCount: userCount,
-          smallSatisfactions: responseSmallSatisfaction,
+          myDrawerSmallSatisfaction: responseSmallSatisfaction,
         }
       };
-      return responseDTO;
-
+      return responseDTO; 
+      
     } catch (err) {
       console.error(err.message);
     }
