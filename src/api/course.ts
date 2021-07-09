@@ -63,7 +63,9 @@ router.put("/:id", auth, async (req, res) => {
 });
 
 router.get("/complete", auth, async (req, res) => {
+  const result = await courseService.medal(req.body.user.id);
 
+  res.json(result);
 });
 
 module.exports = router;
