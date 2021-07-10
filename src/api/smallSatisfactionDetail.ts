@@ -5,10 +5,10 @@ import smallSatisfactionDetailService from "../service/smallSatisfactionDetailSe
 const router = express.Router();
 
 /**
- * @api {get} /api/smallSatisfactionDetail 소확행 게시글 상세보기 조회
+ * @api {get} /api/smallSatisfactionDetail 소확행 상세보기 조회
  * 
  * @apiVersion 1.0.0
- * @apiName smallSatisfactionDetail 
+ * @apiName smallSatisfactionDetail
  * @apiGroup SmallSatisfaction
  * 
  * @apiHeaderExample {json} Header-Example:
@@ -33,22 +33,22 @@ const router = express.Router();
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
  * {
- *	"status": 200,
- *	"data": {
- *		"nickname": "할미 기연",
- *    "postId": 3,
- *		"mainImage": "mainImageUrl",
- *		"moodImage": "",
- *		"hashtags":  ["#맥주1", "#여름2", ... ],
- *		"content": "맛있는 피자에 시원한 맥주 ...",
- *		"likeCount": 72
- *		"hasLike": false
- *		"date": "2021.06.29",
+ *  "status": 200,
+ *  "data": {
+ *    "nickname": "시원스쿨",
+ *    "postId": 4,
+ *    "mainImage": "mainImageUrl",
+ *    "moodImage": "moodImageUrl",
+ *    "hashtags": ["#맥주", "#여름"],
+ *    "content": "맛있는 피자에 시원한 맥주 ...",
+ *    "likeCount": 72,
+ *    "hasLike": false,
+ *    "date": "2021.06.29",
  *    "year": "2021",
- *    "month": "7",
- *    "day": "9",
- *	}
- *}
+ *    "month": "6",
+ *    "day": "29",
+ *  }
+ * }
  * 
  * 
  * @apiErrorExample Error-Response:
