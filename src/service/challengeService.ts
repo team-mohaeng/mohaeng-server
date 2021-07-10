@@ -233,7 +233,7 @@ export default {
         }
 
         // 최근 챌린지 성공 날짜가 어제라면, 연속 count + 1
-        if (user.success.recentDate == new Date(today.setDate(today.getDate() - 1))) {
+        if (isSameDay(user.success.recentDate, new Date(today.setDate(today.getDate() - 1)))) {
           user.success.currentCount = user.success.currentCount + 1;
         } else {  // 아니면 count = 1
           user.success.currentCount = 1;
