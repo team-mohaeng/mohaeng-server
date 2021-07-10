@@ -6,12 +6,85 @@ import passwordService from "../service/passwordService";
 
 const router = express.Router();
 
-router.get("/userId/:userId", async (req, res) => {
+/**
+ * @api {get} /api/password/:userId 이메일 인증
+ * 
+ * @apiVersion 1.0.0
+ * @apiName CheckEmail
+ * @apiGroup 유저
+ * 
+ * @apiHeaderExample {json} Header-Example:
+ * {
+ *  "Content-Type": "application/json"
+ * }
+ * 
+ * @apiSuccess {Number} number 랜덤 인증번호
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * 200 OK
+ * {
+ *   "status": 200,
+ *   "data": {
+ *     "number": 1111
+ *   }
+ * }
+ * 
+ * @apiErrorExample {json} Error-Response:
+ * 404 가입하지 않은 이메일
+ * {
+ *   "status": 404,
+ *   "message": "유저가 존재하지 않습니다."
+ * }
+ * 
+ * @apiErrorExample {json} Error-Response:
+ * 400 이메일 전송 실패
+ * {
+ *   "status": 400,
+ *   "message": "유효하지 않은 이메일입니다."
+ * }
+ */
+router.get("/:userId", async (req, res) => {
   const result = await passwordService.user(req.params.userId);
 
   res.json(result);
 });
 
+/**
+ * @api {put} /api/password 비밀번호 변경
+ * 
+ * @apiVersion 1.0.0
+ * @apiName ChangePassword
+ * @apiGroup 유저
+ * 
+ * @apiHeaderExample {json} Header-Example:
+ * {
+ *  "Content-Type": "application/json"
+ * }
+ * 
+ * @apiParamExample {json} Request-Example:
+ * {
+ *  "userId": "test1@gmail.com",
+ *  "userPw": "1234abcd"
+ * }
+ * 
+ * @apiSuccess {String} jwt
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * 200 OK
+ * {
+ *  "status": 200,
+ *  "data": {
+ *    "jwt": "jwt토큰"
+ *  }
+ * }
+ * 
+ * @apiErrorExample {json} Error-Response:
+ * 404 가입하지 않은 이메일
+ * {
+ *   "status": 404,
+ *   "message": "유저가 존재하지 않습니다."
+ * }
+ */
 router.put(
   "/", 
   [
