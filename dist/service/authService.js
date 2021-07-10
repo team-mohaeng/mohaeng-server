@@ -62,7 +62,7 @@ exports.default = {
                     id: user.id,
                 },
             };
-            const jwtToken = jsonwebtoken_1.default.sign(payload, config_1.default.jwtSecret, { expiresIn: 36000 });
+            const jwtToken = jsonwebtoken_1.default.sign(payload, config_1.default.jwtSecret);
             const responseDTO = {
                 status: 200,
                 data: {

@@ -53,6 +53,8 @@ exports.default = {
                 const responseDTO = {
                     postId: communitySmallSatisfaction.postId,
                     nickname: user.nickname,
+                    moodImage: communitySmallSatisfaction.moodImage,
+                    mainImage: communitySmallSatisfaction.mainImage,
                     likeCount: communitySmallSatisfaction.likes.length,
                     content: communitySmallSatisfaction.content,
                     hasLike: liked,

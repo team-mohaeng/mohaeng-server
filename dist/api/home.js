@@ -17,7 +17,7 @@ const router = express_1.default.Router();
  * @apiHeaderExample {json} Header-Example:
  * {
  *  "Content-Type": "application/json",
- *  "Authorization": "Bearer {jwt}"
+ *  "Bearer": "{jwt}"
  * }
  *
  * @apiSuccess {Number} situation
