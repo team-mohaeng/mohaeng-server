@@ -5,10 +5,10 @@ import smallSatisfactionDetailService from "../service/smallSatisfactionDetailSe
 const router = express.Router();
 
 /**
- * @api {get} /api/smallSatisfactionMyDrawer 내서랍장 소확행 글 조회
+ * @api {get} /api/smallSatisfactionDetail 소확행 게시글 상세보기 조회
  * 
  * @apiVersion 1.0.0
- * @apiName smallSatisfactionCommunityMyDrawer 
+ * @apiName smallSatisfactionDetail 
  * @apiGroup SmallSatisfaction
  * 
  * @apiHeaderExample {json} Header-Example:
@@ -21,7 +21,7 @@ const router = express.Router();
  * @apiSuccess {Number} postId
  * @apiSuccess {String} mainImage
  * @apiSuccess {String} moodImage
- * @apiSuccess {Array} [hashtags]
+ * @apiSuccess {Array} hashtags
  * @apiSuccess {String} content
  * @apiSuccess {Number} likeCount
  * @apiSuccess {Boolean} hasLike
