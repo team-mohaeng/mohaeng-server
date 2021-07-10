@@ -35,6 +35,7 @@ const router = express.Router();
  *      "challenges": [
  *        {
  *          "id": 1,
+ *          "title": "깨끗하게 손 씻기 3회",
  *          "situation": 1, // 챌린지 진행 상태
  *          "description": "손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.",
  *          "year": "", // 챌린지를 완료하면, year month day를 보냄.
@@ -97,6 +98,7 @@ router.get("/", auth, async (req, res) => {
  *      "challenges": [
  *        { // 오늘 완료한 챌린지가 있다면, situation이 1인 챌린지는 없다
  *          "id": 1,
+ *          "title": "깨끗하게 손 씻기 3회",
  *          "situation": 1, // 챌린지 진행 상태
  *          "description": "손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.",
  *          "year": "", // 챌린지를 완료하면, year month day를 보냄.
@@ -166,6 +168,7 @@ router.get("/:courseId", auth, async (req, res) => {
  *      "challenges": [
  *        { // 오늘 완료한 챌린지가 있다면, situation이 1인 챌린지는 없다
  *          "id": 1,
+ *          "title": "깨끗하게 손 씻기 3회",
  *          "situation": 1, // 챌린지 진행 상태
  *          "description": "손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.",
  *          "year": "", // 챌린지를 완료하면, year month day를 보냄.
