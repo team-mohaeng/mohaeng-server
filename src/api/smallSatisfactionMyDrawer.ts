@@ -6,7 +6,7 @@ import smallSatisfactionMyDrawerService from "../service/smallSatisfactionMyDraw
 const router = express.Router();
 
 /**
- * @api {get} /api/smallSatisfactionMyDrawer 내서랍장 소확행 글 조회
+ * @api {get} /api/smallSatisfactionMyDrawer/:year/:month 내서랍장 소확행 글 조회
  * 
  * @apiVersion 1.0.0
  * @apiName smallSatisfactionMyDrawer 
@@ -47,7 +47,7 @@ const router = express.Router();
  *			},
  *			{
  *				"postId": 2
- *				"moodImage": "무드 이미지",
+ *				"moodImage": "moodImage.png",
  *        "mainImage": "mainImage.png"
  *				"hashtags": ["#해쉬태그1", "#해쉬태그2", ... ],
  *				"content": "맛있는 피자에 시원한 맥주 ... ",
