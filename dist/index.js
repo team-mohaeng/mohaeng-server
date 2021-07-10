@@ -17,6 +17,7 @@ app.use("/api/signin", require("./api/user"));
 app.use("/api/home", require("./api/home"));
 app.use("/api/courses", require("./api/course"));
 app.use("/api/challenges", require("./api/challenge"));
+app.use("/api/password", require("./api/password"));
 // app.use("/api/message", require("./controller/messageController"));
 app.use("/api/writeSmallSatisfaction", require("./api/writeSmallSatisfaction"));
 app.use("/api/smallSatisfactionCommunity", require("./api/smallSatisfactionCommunity"));
