@@ -179,7 +179,7 @@ export default {
       // 해당 challenge id가 진행 중이 아닐 경우
       if (
         user.courses.find((course) => course.id === progressCourseId)
-            .challenges.filter((challenge) => (challenge.situation === 0) && (challenge.id === progressChallengeId))
+            .challenges.filter((challenge) => (challenge.situation != 1) && (challenge.id === progressChallengeId))
             .length > 0
       ) {
         const notProgressChallenge: IFail = {
