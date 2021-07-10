@@ -6,10 +6,10 @@ import smallSatisfactionMyDrawerService from "../service/smallSatisfactionMyDraw
 const router = express.Router();
 
 /**
- * @api {get} /api/smallSatisfactionMyDrawer 내서랍장 소확행 글 조회
+ * @api {get} /api/smallSatisfactionMyDrawer/:year/:month 내서랍장 소확행 글 조회
  * 
  * @apiVersion 1.0.0
- * @apiName smallSatisfactionCommunityMyDrawer 
+ * @apiName smallSatisfactionMyDrawer 
  * @apiGroup 소확행
  * 
  * @apiHeaderExample {json} Header-Example:
@@ -18,15 +18,11 @@ const router = express.Router();
  *  "Bearer": "jwt"
  * }
  * 
- * @apiParamExample {json} Request-Example:
- * {
- *  "year": 2021,
- *  "month": 7,
- * }
  *
  * @apiSuccess {Array} [myDrawerSmallSatisfactions]
  * @apiSuccess {Number} postId
  * @apiSuccess {String} moodImage
+ * @apiSuccess {String} mainImage
  * @apiSuccess {Array} [hashtags]
  * @apiSuccess {String} content
  * @apiSuccess {Number} likeCount
@@ -41,7 +37,8 @@ const router = express.Router();
  *			"smallSatisfactions": [
  *			{
  *				"postId": 1
- *				"moodImage": "무드 이미지.png",
+ *				"moodImage": "moodImage.png",
+ *        "mainImage": "mainImage.png"
  *				"hashtags": ["#해쉬태그1", "#해쉬태그2", ... ],
  *				"content": "맛있는 피자에 시원한 맥주 ... ",
  *				"likeCount": 72,
@@ -50,7 +47,8 @@ const router = express.Router();
  *			},
  *			{
  *				"postId": 2
- *				"moodImage": "무드 이미지",
+ *				"moodImage": "moodImage.png",
+ *        "mainImage": "mainImage.png"
  *				"hashtags": ["#해쉬태그1", "#해쉬태그2", ... ],
  *				"content": "맛있는 피자에 시원한 맥주 ... ",
  *				"likeCount": 72,
@@ -71,13 +69,9 @@ const router = express.Router();
  * }
  */
 
-router.post("/", auth, async (req, res) => {
-  const requestDTO: SmallSatisfactionMyDrawerRequestDTO = {
-    year: req.body.year,
-    month: req.body.month,
-  };
+router.get("/:year/:month", auth, async (req, res) => {
 
-  const result = await smallSatisfactionMyDrawerService.myDrawer(req.body.user.id, requestDTO);
+  const result = await smallSatisfactionMyDrawerService.myDrawer(req.body.user.id, req.params.year, req.params.month);
   res.json(result);
 });
 
