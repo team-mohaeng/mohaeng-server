@@ -21,6 +21,7 @@ app.use("/api/challenges", require("./api/challenge"));
 app.use("/api/writeSmallSatisfaction", require("./api/writeSmallSatisfaction"));
 app.use("/api/smallSatisfactionCommunity", require("./api/smallSatisfactionCommunity"));
 app.use("/api/smallSatisfactionMyDrawer", require("./api/smallSatisfactionMyDrawer"));
+app.use("/api/smallSatisfactionDetail", require("./api/smallSatisfactionDetail"));
 
 
 // error handler
