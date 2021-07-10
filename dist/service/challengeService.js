@@ -202,6 +202,9 @@ exports.default = {
                     user.courses.find((course) => course.id === progressCourseId).situation = 2;
                     user.situation = 0;
                 }
+                if (!user.success.recentDate) {
+                    user.success.recentDate = today;
+                }
                 // 최근 챌린지 성공 날짜가 어제라면, 연속 count + 1
                 if (dateController_1.isSameDay(user.success.recentDate, new Date(today.setDate(today.getDate() - 1)))) {
                     user.success.currentCount = user.success.currentCount + 1;
