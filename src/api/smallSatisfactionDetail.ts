@@ -5,7 +5,7 @@ import smallSatisfactionDetailService from "../service/smallSatisfactionDetailSe
 const router = express.Router();
 
 /**
- * @api {get} /api/smallSatisfactionDetail 소확행 상세보기 조회
+ * @api {get} /api/smallSatisfactionDetail/:postId 소확행 상세보기 조회
  * 
  * @apiVersion 1.0.0
  * @apiName smallSatisfactionDetail
