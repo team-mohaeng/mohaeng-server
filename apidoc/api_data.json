@@ -112,25 +112,16 @@
   },
   {
     "type": "get",
-    "url": "/api/smallSatisfactionMyDrawer",
+    "url": "/api/smallSatisfactionMyDrawer/:year/:month",
     "title": "내서랍장 소확행 글 조회",
     "version": "1.0.0",
-    "name": "smallSatisfactionCommunityMyDrawer",
+    "name": "smallSatisfactionMyDrawer",
     "group": "소확행",
     "header": {
       "examples": [
         {
           "title": "Header-Example:",
           "content": "{\n \"Content-Type\": \"application/json\"\n \"Bearer\": \"jwt\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "parameter": {
-      "examples": [
-        {
-          "title": "Request-Example:",
-          "content": "{\n \"year\": 2021,\n \"month\": 7,\n}",
           "type": "json"
         }
       ]
@@ -157,6 +148,13 @@
             "type": "String",
             "optional": false,
             "field": "moodImage",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "mainImage",
             "description": ""
           },
           {
@@ -199,7 +197,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "200 OK\n{\n\t\"status\": 200,\n\t\"data\": {\n\t\t\t\"smallSatisfactions\": [\n\t\t\t{\n\t\t\t\t\"postId\": 1\n\t\t\t\t\"moodImage\": \"무드 이미지.png\",\n\t\t\t\t\"hashtags\": [\"#해쉬태그1\", \"#해쉬태그2\", ... ],\n\t\t\t\t\"content\": \"맛있는 피자에 시원한 맥주 ... \",\n\t\t\t\t\"likeCount\": 72,\n\t\t\t\t\"hasLike\": true,\n\t\t\t\t\"nickname\": \"시원스쿨\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"postId\": 2\n\t\t\t\t\"moodImage\": \"무드 이미지\",\n\t\t\t\t\"hashtags\": [\"#해쉬태그1\", \"#해쉬태그2\", ... ],\n\t\t\t\t\"content\": \"맛있는 피자에 시원한 맥주 ... \",\n\t\t\t\t\"likeCount\": 72,\n\t\t\t\t\"hasLike\": true,\n\t\t\t\t\"nickname\": \"시원스쿨\"\n\t\t\t},\n\t\t...\n\t\t]\n\t}\n}",
+          "content": "200 OK\n{\n\t\"status\": 200,\n\t\"data\": {\n\t\t\t\"smallSatisfactions\": [\n\t\t\t{\n\t\t\t\t\"postId\": 1\n\t\t\t\t\"moodImage\": \"moodImage.png\",\n       \"mainImage\": \"mainImage.png\"\n\t\t\t\t\"hashtags\": [\"#해쉬태그1\", \"#해쉬태그2\", ... ],\n\t\t\t\t\"content\": \"맛있는 피자에 시원한 맥주 ... \",\n\t\t\t\t\"likeCount\": 72,\n\t\t\t\t\"hasLike\": true,\n\t\t\t\t\"nickname\": \"시원스쿨\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"postId\": 2\n\t\t\t\t\"moodImage\": \"moodImage.png\",\n       \"mainImage\": \"mainImage.png\"\n\t\t\t\t\"hashtags\": [\"#해쉬태그1\", \"#해쉬태그2\", ... ],\n\t\t\t\t\"content\": \"맛있는 피자에 시원한 맥주 ... \",\n\t\t\t\t\"likeCount\": 72,\n\t\t\t\t\"hasLike\": true,\n\t\t\t\t\"nickname\": \"시원스쿨\"\n\t\t\t},\n\t\t...\n\t\t]\n\t}\n}",
           "type": "json"
         }
       ]
@@ -272,6 +270,116 @@
     },
     "filename": "src/api/writeSmallSatisfaction.ts",
     "groupTitle": "소확행"
+  },
+  {
+    "type": "put",
+    "url": "/api/password",
+    "title": "비밀번호 변경",
+    "version": "1.0.0",
+    "name": "ChangePassword",
+    "group": "유저",
+    "header": {
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n \"userId\": \"test1@gmail.com\",\n \"userPw\": \"1234abcd\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "jwt",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"jwt\": \"jwt토큰\"\n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "404 가입하지 않은 이메일\n{\n  \"status\": 404,\n  \"message\": \"유저가 존재하지 않습니다.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/api/password.ts",
+    "groupTitle": "유저"
+  },
+  {
+    "type": "get",
+    "url": "/api/password/:userId",
+    "title": "이메일 인증",
+    "version": "1.0.0",
+    "name": "CheckEmail",
+    "group": "유저",
+    "header": {
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n \"Content-Type\": \"application/json\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "number",
+            "description": "<p>랜덤 인증번호</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "200 OK\n{\n  \"status\": 200,\n  \"data\": {\n    \"number\": 1111\n  }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "404 가입하지 않은 이메일\n{\n  \"status\": 404,\n  \"message\": \"유저가 존재하지 않습니다.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "400 이메일 전송 실패\n{\n  \"status\": 400,\n  \"message\": \"유효하지 않은 이메일입니다.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/api/password.ts",
+    "groupTitle": "유저"
   },
   {
     "type": "post",
