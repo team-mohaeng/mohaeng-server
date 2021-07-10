@@ -14,7 +14,7 @@ const router = express.Router();
  * @apiHeaderExample {json} Header-Example:
  * {
  *  "Content-Type": "application/json",
- *  "Authorization": "Bearer {jwt}"
+ *  "Bearer": "{jwt}"
  * }
  * 
  * @apiSuccess {Object} courses 포함 속성은 하단 코드 참조
@@ -78,7 +78,7 @@ router.get("/", auth, async (req, res) => {
  * @apiHeaderExample {json} Header-Example:
  * {
  *  "Content-Type": "application/json",
- *  "Authorization": "Bearer {jwt}"
+ *  "Bearer": "{jwt}"
  * }
  * 
  * @apiSuccess {Object} course 포함 속성은 하단 코드 참조
@@ -138,7 +138,7 @@ router.put("/:id", auth, async (req, res) => {
  * @apiHeaderExample {json} Header-Example:
  * {
  *  "Content-Type": "application/json",
- *  "Authorization": "Bearer {jwt}"
+ *  "Bearer": "{jwt}"
  * }
  * 
  * @apiSuccess {Object} courses 포함 속성은 하단 코드 참조
