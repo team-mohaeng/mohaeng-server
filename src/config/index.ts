@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import nodemailer from "nodemailer";
 
 // Set the NODE_ENV to 'development' by default
 process.env.NODE_ENV = process.env.NODE_ENV || "development";
@@ -36,3 +37,15 @@ export default {
   awsS3AccessKey: process.env.AWS_ACCESS_KEY,
   awsS3SecretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 };
+
+export const smtpTransport = nodemailer.createTransport({
+  service: "Naver",
+  host: "smtp.naver.com",
+  auth: {
+    user: process.env.EMAIL_ID,
+    pass: process.env.EMAIL_PW,
+  },
+  tls: {
+    rejectUnauthorized: false
+  }
+});

@@ -1,6 +1,8 @@
 import { ISuccess } from "../interfaces/ISuccess";
 import { IFail } from "../interfaces/IFail";
 import User from "../models/User";
+import password from "../controller/password";
+import CheckEmailResponseDTO from "../dto/Password/CheckEmailResponseDTO";
 
 export default {
   user: async (id: string) => {
@@ -15,10 +17,23 @@ export default {
         return notExistUser;
       }
 
-      const response: ISuccess = {
+      const number = await password.email(id);
+
+      if (!number) {
+        const notValidationEmail: IFail = {
+          status: 400,
+          message: "유효하지 않은 이메일입니다."
+        }
+        return notValidationEmail;
+      }
+
+      const response: CheckEmailResponseDTO = {
         status: 200,
-        message: "유저가 존재합니다.",
+        data: {
+          number: number,
+        }
       };
+
       return response;
     } catch (err) {
       console.error(err.message);
