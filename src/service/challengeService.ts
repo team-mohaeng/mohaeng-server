@@ -37,8 +37,8 @@ export default {
       
       // 진행 중인 코스가 아닐 경우
       if (
-        user.courses.filter((course) => (course.situation === 0) && (course.id === progressCourseId))
-            .length > 0
+        user.courses.filter((course) => course.situation != 0)
+            .pop().id != progressCourseId
       ) {
         const notProgressCourse: IFail = {
           status: 400,
@@ -50,24 +50,7 @@ export default {
       let userCourse = user.courses.find((course) => course.id === progressCourseId);
 
       let challenge = user.courses.find((course) => course.id === progressCourseId)
-                          .challenges.sort((a, b) => (a.situation < b.situation)? -1: Number(a.situation < b.situation))
-                          .find((challenge) => challenge.situation === 2);
-
-      if (challenge) {
-        progressChallengeId = challenge.id;
-        if (!isSameDay(challenge.date, today) && (progressChallengeId <= dummyCourse.challenges.length)) {
-          progressChallengeId = challenge.id + 1;
-          user.courses.find((course) => course.id === progressCourseId)
-            .challenges.find((challenge) => challenge.id === progressChallengeId)
-            .situation = 1;
-          user.courses.find((course) => course.id === progressCourseId)
-            .challenges.find((challenge) => challenge.id === progressChallengeId)
-            .date = today;
-        }
-      }
-
-      challenge = user.courses.find((course) => course.id === progressCourseId)
-                          .challenges.sort((a, b) => (a.situation < b.situation)? -1: Number(a.situation < b.situation))
+                          .challenges.sort((a, b) => (a.id > b.id)? -1: Number(a.id > b.id))
                           .find((challenge) => challenge.situation === 1);
                           
       if (challenge) {
@@ -79,6 +62,23 @@ export default {
           user.courses.find((course) => course.id === progressCourseId)
             .challenges.find((challenge) => challenge.id === progressChallengeId)
             .date = today;
+        }
+      } else {
+        challenge = user.courses.find((course) => course.id === progressCourseId)
+                          .challenges.sort((a, b) => (a.id > b.id)? -1: Number(a.id > b.id))
+                          .find((challenge) => challenge.situation === 2);
+
+        if (challenge) {
+          progressChallengeId = challenge.id;
+          if (!isSameDay(challenge.date, today) && (progressChallengeId <= dummyCourse.challenges.length)) {
+            progressChallengeId = challenge.id + 1;
+            user.courses.find((course) => course.id === progressCourseId)
+              .challenges.find((challenge) => challenge.id === progressChallengeId)
+              .situation = 1;
+            user.courses.find((course) => course.id === progressCourseId)
+              .challenges.find((challenge) => challenge.id === progressChallengeId)
+              .date = today;
+          }
         }
       }
 
@@ -179,7 +179,7 @@ export default {
       // 해당 challenge id가 진행 중이 아닐 경우
       if (
         user.courses.find((course) => course.id === progressCourseId)
-            .challenges.filter((challenge) => (challenge.situation === 0) && (challenge.id === progressChallengeId))
+            .challenges.filter((challenge) => (challenge.situation != 1) && (challenge.id === progressChallengeId))
             .length > 0
       ) {
         const notProgressChallenge: IFail = {
@@ -232,8 +232,12 @@ export default {
           user.situation = 0;
         }
 
+        if (!user.success.recentDate) {
+          user.success.recentDate = today;
+        }
+
         // 최근 챌린지 성공 날짜가 어제라면, 연속 count + 1
-        if (user.success.recentDate == new Date(today.setDate(today.getDate() - 1))) {
+        if (isSameDay(user.success.recentDate, new Date(today.setDate(today.getDate() - 1)))) {
           user.success.currentCount = user.success.currentCount + 1;
         } else {  // 아니면 count = 1
           user.success.currentCount = 1;

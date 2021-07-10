@@ -1,3 +1,4 @@
+import { IImage } from "../../../../interfaces/IImage";
 import { IHashtag } from "../../../../interfaces/IHashtag";
 
 export default interface SmallSatisfactionCommunityResponseDTO {
@@ -12,6 +13,8 @@ export default interface SmallSatisfactionCommunityResponseDTO {
 export interface CommunityResponseDTO {
 	postId: number;
 	nickname: string;
+	moodImage: IImage;
+	mainImage: IImage;
 	likeCount: number; 
 	content: string;
 	hasLike: boolean

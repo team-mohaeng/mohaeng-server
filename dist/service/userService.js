@@ -12,7 +12,6 @@ exports.default = {
         try {
             const { userId, userPw, userToken } = dto;
             let user = await User_1.default.findOne({ userId });
-            console.log(user);
             if (!user) {
                 const notExistUser = {
                     status: 404,
@@ -35,7 +34,7 @@ exports.default = {
                     id: user.id,
                 },
             };
-            const jwtToken = jsonwebtoken_1.default.sign(payload, config_1.default.jwtSecret, { expiresIn: 36000 });
+            const jwtToken = jsonwebtoken_1.default.sign(payload, config_1.default.jwtSecret);
             const responseDTO = {
                 status: 200,
                 data: {
