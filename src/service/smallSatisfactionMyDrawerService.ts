@@ -22,7 +22,7 @@ export default {
       } = dto;
 
       let myDrawerSmallSatisfactions;
-      myDrawerSmallSatisfactions = await SmallSatisfaction.find({ user: user._id, year: year, month: month, isPrivate: true }).sort({ date: -1 });
+      myDrawerSmallSatisfactions = await SmallSatisfaction.find({ user: user._id, year: year, month: month }).sort({ date: -1 });
   
       let responseSmallSatisfaction: Array<SmallSatisfactionResponseDTO> = new Array<SmallSatisfactionResponseDTO>();
       myDrawerSmallSatisfactions.forEach((myDrawerSmallSatisfaction) => {
@@ -39,6 +39,8 @@ export default {
         const responseDTO: SmallSatisfactionResponseDTO = {
           postId: myDrawerSmallSatisfaction.postId,
           nickname: user.nickname,
+          moodImage: myDrawerSmallSatisfaction.moodImage,
+          mainImage: myDrawerSmallSatisfaction.mainImage,
           likeCount: myDrawerSmallSatisfaction.likes.length,
           content: myDrawerSmallSatisfaction.content,
           hasLike: liked,
