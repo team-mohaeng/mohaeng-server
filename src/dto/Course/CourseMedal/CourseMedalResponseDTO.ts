@@ -4,6 +4,8 @@ export default interface CourseMedalResponseDTO {
 }
 
 export interface TotalMedalCourseResponseDTO {
+  totalIncreasedAffinity: number;
+  maxSuccessCount: number;
   courses: MedalCourseResponseDTO[];
 }
 
