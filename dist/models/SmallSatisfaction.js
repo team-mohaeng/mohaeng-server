@@ -4,9 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const dateFormatter_1 = require("../formatter/dateFormatter");
 const SmallSatisfactionSchema = new mongoose_1.default.Schema({
     user: {
+        //_id user object id 값이 들어옴
         type: mongoose_1.default.Types.ObjectId,
         ref: "User",
     },
@@ -18,6 +18,15 @@ const SmallSatisfactionSchema = new mongoose_1.default.Schema({
             },
         },
     ],
+    likeCount: {
+        type: Number,
+        required: true,
+        default: 0,
+    },
+    postId: {
+        type: String,
+        required: true,
+    },
     content: {
         type: String,
         required: true,
@@ -25,14 +34,13 @@ const SmallSatisfactionSchema = new mongoose_1.default.Schema({
     mainImage: {
         type: String,
     },
-    subImages: {
-        type: [String],
-    },
     moodImage: {
         type: String,
+        required: true,
     },
     moodText: {
         type: String,
+        required: true,
     },
     hashtags: {
         type: [String],
@@ -42,8 +50,21 @@ const SmallSatisfactionSchema = new mongoose_1.default.Schema({
         required: true,
     },
     date: {
+        type: Date,
+        required: true,
+        default: Date.now,
+    },
+    year: {
         type: String,
-        default: dateFormatter_1.dateFormatter(),
+        required: true,
+    },
+    month: {
+        type: String,
+        required: true,
+    },
+    day: {
+        type: String,
+        required: true,
     },
 });
 exports.default = mongoose_1.default.model("SmallSatisfaction", SmallSatisfactionSchema);

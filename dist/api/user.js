@@ -12,7 +12,7 @@ const router = express_1.default.Router();
  *
  * @apiVersion 1.0.0
  * @apiName SignIn
- * @apiGroup User
+ * @apiGroup 유저
  *
  * @apiHeaderExample {json} Header-Example:
  * {
@@ -22,7 +22,7 @@ const router = express_1.default.Router();
  * @apiParamExample {json} Request-Example:
  * {
  *  "userId": "test1@gmail.com",
- *  "userPw": "1234abcd",
+ *  "userPw": "abcd1234",
  *  "userToken": "fcm token"
  * }
  *
