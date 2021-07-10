@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const SmallSatisfaction_1 = __importDefault(require("../models/SmallSatisfaction"));
 const User_1 = __importDefault(require("../models/User"));
 exports.default = {
-    myDrawer: async (token, dto) => {
+    myDrawer: async (token, year, month) => {
         const user = await User_1.default.findOne({ id: token });
         if (!user) {
             const notExistUser = {
@@ -16,7 +16,6 @@ exports.default = {
             return notExistUser;
         }
         try {
-            const { year, month } = dto;
             let myDrawerSmallSatisfactions;
             myDrawerSmallSatisfactions = await SmallSatisfaction_1.default.find({ user: user._id, year: year, month: month }).sort({ date: -1 });
             let responseSmallSatisfaction = new Array();
