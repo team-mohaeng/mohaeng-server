@@ -398,7 +398,7 @@
       "examples": [
         {
           "title": "Header-Example:",
-          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
+          "content": "{\n \"Content-Type\": \"application/json\",\n \"Bearer\": \"{jwt}\"\n}",
           "type": "json"
         }
       ]
@@ -453,7 +453,7 @@
       "examples": [
         {
           "title": "Header-Example:",
-          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
+          "content": "{\n \"Content-Type\": \"application/json\",\n \"Bearer\": \"{jwt}\"\n}",
           "type": "json"
         }
       ]
@@ -513,7 +513,7 @@
       "examples": [
         {
           "title": "Header-Example:",
-          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
+          "content": "{\n \"Content-Type\": \"application/json\",\n \"Bearer\": \"{jwt}\"\n}",
           "type": "json"
         }
       ]
@@ -573,7 +573,7 @@
       "examples": [
         {
           "title": "Header-Example:",
-          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
+          "content": "{\n \"Content-Type\": \"application/json\",\n \"Bearer\": \"{jwt}\"\n}",
           "type": "json"
         }
       ]
@@ -621,7 +621,7 @@
       "examples": [
         {
           "title": "Header-Example:",
-          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
+          "content": "{\n \"Content-Type\": \"application/json\",\n \"Bearer\": \"{jwt}\"\n}",
           "type": "json"
         }
       ]
@@ -681,7 +681,7 @@
       "examples": [
         {
           "title": "Header-Example:",
-          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
+          "content": "{\n \"Content-Type\": \"application/json\",\n \"Bearer\": \"{jwt}\"\n}",
           "type": "json"
         }
       ]
@@ -736,7 +736,7 @@
       "examples": [
         {
           "title": "Header-Example:",
-          "content": "{\n \"Content-Type\": \"application/json\",\n \"Authorization\": \"Bearer {jwt}\"\n}",
+          "content": "{\n \"Content-Type\": \"application/json\",\n \"Bearer\": \"{jwt}\"\n}",
           "type": "json"
         }
       ]
