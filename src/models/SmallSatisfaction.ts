@@ -21,7 +21,7 @@ const SmallSatisfactionSchema = new mongoose.Schema({
     default: 0,
   },
   postId: {
-    type: String,
+    type: Number,
     required: true,
   },
   content: {
