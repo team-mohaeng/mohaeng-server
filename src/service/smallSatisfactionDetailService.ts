@@ -17,6 +17,15 @@ export default {
 
     try {
       let detailSmallSatisfaction = await SmallSatisfaction.findOne({ postId: postNumber });
+      if (!detailSmallSatisfaction) {
+          const notExistSatisfaction: IFail = {
+            status: 400,
+            message: "소확행이 존재하지 않습니다.",
+          };
+          return notExistSatisfaction;
+      }
+
+
       let liked;
       if (detailSmallSatisfaction.likes.filter((like) => like.user.toString() === token)
           .length > 0
