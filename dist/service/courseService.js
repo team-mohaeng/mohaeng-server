@@ -200,6 +200,8 @@ exports.default = {
             const responseDTO = {
                 status: 200,
                 data: {
+                    totalIncreasedAffinity: user.affinity - 20,
+                    maxSuccessCount: user.success.maxCount,
                     courses: courseMedalArray,
                 },
             };
