@@ -15,6 +15,5 @@ export default interface SmallSatisfactionDetailResponseDTO {
 		year: string;
 		month: string;
 		day: string;
-		date: Date;
 	}
 }

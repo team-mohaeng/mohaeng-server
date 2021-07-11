@@ -20,5 +20,4 @@ export interface myDrawerResponseDTO {
 	year: string;
 	month: string;
 	day: string;
-	date: Date;
 }
