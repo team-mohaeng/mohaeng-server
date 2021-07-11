@@ -6,6 +6,7 @@ import StampChallengeResponseDTO, { StampChallengeDetailResponseDTO } from "../d
 import { getDay, getMonth, getYear } from "../formatter/challengeDateFormatter";
 import GetChallengeResponseDTO, { ChallengeMapDetailResponseDTO } from "../dto/Challenge/GetChallenge/GetChallengeResponseDTO";
 import { isSameDay } from "../controller/dateController";
+import { SERVER_ERROR_MESSAGE } from "../constant";
 
 export default {
   today: async (token: String, courseId: String) => {
@@ -135,6 +136,11 @@ export default {
       return responseDTO;
     } catch (err) {
       console.error(err.message);
+      const serverError: IFail = {
+        status: 500,
+        message: SERVER_ERROR_MESSAGE,
+      };
+      return serverError;
     }
   },
   stamp: async (token: String, courseId: String, challengeId: String) => {
@@ -297,6 +303,11 @@ export default {
       return responseDTO;
     } catch (err) {
       console.error(err.message);
+      const serverError: IFail = {
+        status: 500,
+        message: SERVER_ERROR_MESSAGE,
+      };
+      return serverError;
     }
   },
   challenges: async (token: String) => {
@@ -373,6 +384,11 @@ export default {
       return responseDTO;
     } catch (err) {
       console.error(err.message);
+      const serverError: IFail = {
+        status: 500,
+        message: SERVER_ERROR_MESSAGE,
+      };
+      return serverError;
     }
   }
 }

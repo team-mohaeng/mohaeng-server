@@ -9,6 +9,7 @@ import UserSignUpResponseDTO from "../dto/SignUp/UserSignUpResponseDTO";
 import Course from "../models/Course";
 import { IUserCourse } from "../interfaces/IUserCourse";
 import { IUserChallenge } from "../interfaces/IUsrChallenge";
+import { SERVER_ERROR_MESSAGE } from "../constant";
 
 export default {
   signup: async (dto: UserSignUpRequestDTO) => {
@@ -94,6 +95,11 @@ export default {
       return responseDTO;
     } catch (err) {
       console.error(err.message);
+      const serverError: IFail = {
+        status: 500,
+        message: SERVER_ERROR_MESSAGE,
+      };
+      return serverError;
     }
   }
 }

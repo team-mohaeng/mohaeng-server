@@ -6,6 +6,7 @@ import { IUserCourse } from "../interfaces/IUserCourse";
 import { IUserChallenge } from "../interfaces/IUsrChallenge";
 import Course from "../models/Course";
 import User from "../models/User";
+import { SERVER_ERROR_MESSAGE } from "../constant";
 
 export default {
   library: async (token: String) => {
@@ -75,6 +76,11 @@ export default {
       return responseDTO;
     } catch (err) {
       console.error(err.message);
+      const serverError: IFail = {
+        status: 500,
+        message: SERVER_ERROR_MESSAGE,
+      };
+      return serverError;
     }
   },
   progress: async (token: String, id: String) => {
@@ -169,6 +175,11 @@ export default {
       return responseDTO;
     } catch (err) {
       console.error(err.message);
+      const serverError: IFail = {
+        status: 500,
+        message: SERVER_ERROR_MESSAGE,
+      };
+      return serverError;
     }
   },
   medal: async (token: String) => {
@@ -235,6 +246,11 @@ export default {
       return responseDTO;
     } catch (err) {
       console.error(err.message);
+      const serverError: IFail = {
+        status: 500,
+        message: SERVER_ERROR_MESSAGE,
+      };
+      return serverError;
     }
   }
 }

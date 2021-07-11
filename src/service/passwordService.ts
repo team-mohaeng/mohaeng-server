@@ -8,6 +8,7 @@ import password from "../controller/password";
 import CheckEmailResponseDTO from "../dto/Password/CheckEmailResponseDTO";
 import ChangePasswordRequestDTO from "../dto/Password/ChangePasswordRequestDTO";
 import ChangePasswordResponseDTO from "../dto/Password/ChangePasswordResponseDTO";
+import { SERVER_ERROR_MESSAGE } from "../constant";
 
 export default {
   user: async (id: string) => {
@@ -42,6 +43,11 @@ export default {
       return response;
     } catch (err) {
       console.error(err.message);
+      const serverError: IFail = {
+        status: 500,
+        message: SERVER_ERROR_MESSAGE,
+      };
+      return serverError;
     }
   },
   change: async (dto: ChangePasswordRequestDTO) => {
@@ -85,6 +91,11 @@ export default {
       return responseDTO;
     } catch (err) {
       console.error(err.message);
+      const serverError: IFail = {
+        status: 500,
+        message: SERVER_ERROR_MESSAGE,
+      };
+      return serverError;
     }
   }
 }
