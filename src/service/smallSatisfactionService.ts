@@ -36,6 +36,7 @@ export default {
           
       let smallSatisfaction = new SmallSatisfaction({
         user: user._id,
+        nickname: user.nickname,
         content,
         moodText,
         moodImage,
@@ -75,10 +76,8 @@ export default {
       return notExistUser;
     }
 
-    //SmallSatisfactionMyDrawerResponseDTO, myDrawerResponseDTO
-
-    let myDrawerSmallSatisfactions = await SmallSatisfaction.find({ user: user._id, year: year, month: month }, {}, {}).sort({ date: -1 });
     try{
+      let myDrawerSmallSatisfactions = await SmallSatisfaction.find({ user: user._id, year: year, month: month }, {}, {}).sort({ date: -1 });
       let myDrawers: Array<myDrawerResponseDTO> =  new Array<myDrawerResponseDTO>();
       myDrawerSmallSatisfactions.forEach((myDrawerSmallSatisfaction) => {
         let liked;
@@ -131,77 +130,74 @@ export default {
       return notExistUser;
     }
     
-    let smallSatisfactionWritten;
-    let today = new Date();
-    let todayYear = today.getFullYear().toString();
-    let todayMonth = (today.getMonth() + 1).toString();
-    let todayDay = today.getDate().toString();
+    try {
+      let smallSatisfactionWritten;
+      let today = new Date();
+      let todayYear = today.getFullYear().toString();
+      let todayMonth = (today.getMonth() + 1).toString();
+      let todayDay = today.getDate().toString();
 
-    let hasSmallSatisfaction = await SmallSatisfaction.findOne({ year: todayYear, month: todayMonth, day: todayDay, user: user._id });
-    user.courses.forEach((course) => {
-      course.challenges.forEach((challenge) => {
-        if ((challenge.situation === 2) && (!hasSmallSatisfaction)) {
-          smallSatisfactionWritten = false;                               
-        }
-        else {
-          smallSatisfactionWritten = true;
-        }
+      let hasSmallSatisfaction = await SmallSatisfaction.findOne({ year: todayYear, month: todayMonth, day: todayDay, user: user._id });
+      user.courses.forEach((course) => {
+        course.challenges.forEach((challenge) => {
+          if ((challenge.situation === 2) && (!hasSmallSatisfaction)) {
+            smallSatisfactionWritten = false;                               
+          }
+          else {
+            smallSatisfactionWritten = true;
+          }
+        });
       });
-    });
-      
-    const userCount = await SmallSatisfaction.findOne({ year: todayYear, month: todayMonth, day: todayDay }).countDocuments();
-
-    let communitySmallSatisfactions;
-    if (sort === "date") {
-      communitySmallSatisfactions = await SmallSatisfaction.find({ isPrivate: false }).sort({ date: -1 });
-    }
-
-    if (sort === "like") {
-      communitySmallSatisfactions = await SmallSatisfaction.find({ isPrivate: false }).sort({ likeCount: -1 });
-    }
-
-    try{  
-      let responseSmallSatisfaction: Array<CommunityResponseDTO> = new Array<CommunityResponseDTO>();
-      communitySmallSatisfactions.forEach((communitySmallSatisfaction) => {
         
-        let userNickname = "투명견";
+      const userCount = await SmallSatisfaction.findOne({ year: todayYear, month: todayMonth, day: todayDay }).countDocuments();
 
+      let communitySmallSatisfactions;
+      if (sort === "date") {
+        communitySmallSatisfactions = await SmallSatisfaction.find({ isPrivate: false }).sort({ date: -1 });
+      }
+
+      if (sort === "like") {
+        communitySmallSatisfactions = await SmallSatisfaction.find({ isPrivate: false }).sort({ likeCount: -1 });
+      }
+
+      let communityPosts: Array<CommunityResponseDTO> = new Array<CommunityResponseDTO>();
+      communitySmallSatisfactions.forEach((communitySmallSatisfaction) => {
         let liked;
         if (communitySmallSatisfaction.likes.filter((like) => like.user.toString() === token)
             .length > 0
-        ) {
-          liked = true;
-        }
-        else {
-          liked = false;
-        }
+      ) {
+        liked = true;
+      }
+      else {
+        liked = false;
+      }
 
-        const responseDTO: CommunityResponseDTO = {
-          postId: communitySmallSatisfaction.postId,
-          nickname: userNickname,
-          moodImage: communitySmallSatisfaction.moodImage,
-          mainImage: communitySmallSatisfaction.mainImage,
-          likeCount: communitySmallSatisfaction.likes.length,
-          content: communitySmallSatisfaction.content,
-          hasLike: liked,
-          hashtags: communitySmallSatisfaction.hashtags,
-          year: todayYear,
-          month: todayMonth,
-          day: todayDay,
-          date: communitySmallSatisfaction.date,
-        }
-        responseSmallSatisfaction.push(responseDTO);
-      });
+      const responseDTO: CommunityResponseDTO = {
+        postId: communitySmallSatisfaction.postId,
+        nickname: communitySmallSatisfaction.nickname,
+        moodImage: communitySmallSatisfaction.moodImage,
+        mainImage: communitySmallSatisfaction.mainImage,
+        likeCount: communitySmallSatisfaction.likes.length,
+        content: communitySmallSatisfaction.content,
+        hasLike: liked,
+        hashtags: communitySmallSatisfaction.hashtags,
+        year: communitySmallSatisfaction.year,
+        month: communitySmallSatisfaction.month,
+        day: communitySmallSatisfaction.day,
+        date: communitySmallSatisfaction.date,
+      }
+      communityPosts.push(responseDTO);
+    });
     
-      const responseDTO: SmallSatisfactionCommunityResponseDTO = {
-        status: 200,
-        data: {
-          hasSmallSatisfaction: smallSatisfactionWritten,
-          userCount: userCount,
-          smallSatisfactions: responseSmallSatisfaction,
-        }
-      };
-      return responseDTO;
+    const responseDTO: SmallSatisfactionCommunityResponseDTO = {
+      status: 200,
+      data: {
+        hasSmallSatisfaction: smallSatisfactionWritten,
+        userCount: userCount,
+        community: communityPosts
+      }
+    };
+    return responseDTO;
     } catch (err) {
       console.error(err.message);
     }
@@ -238,8 +234,8 @@ export default {
         liked = false;
       }
   
-      let smallSatisfactionUser = await User.findOne({ _id: detailSmallSatisfaction.user });
-      let userNickname = smallSatisfactionUser.nickname;
+      let myDrawerUser = await User.findOne({ _id: detailSmallSatisfaction.user });
+      let userNickname = myDrawerUser.nickname;
     
       const responseDTO: SmallSatisfactionDetailResponseDTO = {
         status: 200,
