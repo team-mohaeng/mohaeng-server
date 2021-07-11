@@ -8,6 +8,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = __importDefault(require("../config"));
 const User_1 = __importDefault(require("../models/User"));
 const password_1 = __importDefault(require("../controller/password"));
+const constant_1 = require("../constant");
 exports.default = {
     user: async (id) => {
         try {
@@ -37,6 +38,11 @@ exports.default = {
         }
         catch (err) {
             console.error(err.message);
+            const serverError = {
+                status: 500,
+                message: constant_1.SERVER_ERROR_MESSAGE,
+            };
+            return serverError;
         }
     },
     change: async (dto) => {
@@ -70,6 +76,11 @@ exports.default = {
         }
         catch (err) {
             console.error(err.message);
+            const serverError = {
+                status: 500,
+                message: constant_1.SERVER_ERROR_MESSAGE,
+            };
+            return serverError;
         }
     }
 };

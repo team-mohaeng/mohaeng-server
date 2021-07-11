@@ -26,7 +26,7 @@ const router = express_1.default.Router();
  * @apiSuccess {Object} challenges 포함 속성은 하단 코드 참조
  *
  * @apiSuccessExample {json} Success-Response:
- * 200 챌린지 진행 여부는 가장 상위 situation 참고
+ * 200 챌린지 진행 중
  * {
  *  "status": 200,
  *  "data": {
@@ -62,6 +62,16 @@ const router = express_1.default.Router();
  *      // ...
  *    ]
  *  }
+ * }
+ *
+ * @apiSuccessExample {json} Success-Response:
+ * 200 챌린지 진행 전
+ * {
+ *  "status": 200,
+ *  "data": {
+ *    "situation": 0, // 유저가 현재 코스를 진행하고 있는지 여부
+ *    "affinity": 42, // 쟈니와의 애정도
+ *   }
  * }
  *
  * @apiErrorExample Error-Response:
