@@ -126,7 +126,6 @@ router.post("/write",
  * @apiSuccess {String} year
  * @apiSuccess {String} month
  * @apiSuccess {String} day
- * @apiSuccess {Date} date
  * 
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
@@ -146,7 +145,6 @@ router.post("/write",
  *				"year": "2021",
  *        "month": "7",
  *        "day": "11",
- *        "date": 2021.07.11
  *			},
  *			{
  *				"postId": 1,
@@ -160,7 +158,6 @@ router.post("/write",
  *				"year": "2021",
  *        "month": "7",
  *        "day": "11",
- *        "date": 2021.07.11
  *			},
  *		...
  *		]
@@ -210,7 +207,6 @@ router.get("/myDrawer/:year/:month", auth, async (req, res) => {
  * @apiSuccess {String} year
  * @apiSuccess {String} month
  * @apiSuccess {String} day
- * @apiSuccess {Date} date
  * 
  * 
  * @apiSuccessExample {json} Success-Response:
@@ -233,7 +229,6 @@ router.get("/myDrawer/:year/:month", auth, async (req, res) => {
  *				"year": "2021",
  *        "month": "7",
  *        "day": "11",
- *        "date": 2021.07.11
  *			},
  *			{
  *				"postId": 1,
@@ -247,7 +242,6 @@ router.get("/myDrawer/:year/:month", auth, async (req, res) => {
  *				"year": "2021",
  *        "month": "7",
  *        "day": "11",
- *        "date": 2021.07.11
  *			},
  *		...
  *		]
@@ -290,7 +284,6 @@ router.get("/community/:sort", auth, async (req, res) => {
  * @apiSuccess {String} content
  * @apiSuccess {Number} likeCount
  * @apiSuccess {Boolean} hasLike
- * @apiSuccess {Date} date
  * @apiSuccess {String} year
  * @apiSuccess {String} month
  * @apiSuccess {String} day
@@ -308,7 +301,6 @@ router.get("/community/:sort", auth, async (req, res) => {
  *    "content": "맛있는 피자에 시원한 맥주 ...",
  *    "likeCount": 72,
  *    "hasLike": false,
- *    "date": "2021.06.29",
  *    "year": "2021",
  *    "month": "6",
  *    "day": "29",
