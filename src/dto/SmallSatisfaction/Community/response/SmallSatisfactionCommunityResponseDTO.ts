@@ -6,7 +6,7 @@ export default interface SmallSatisfactionCommunityResponseDTO {
 	data: {
 		hasSmallSatisfaction: boolean;
   	userCount: number;
-  	smallSatisfactions: CommunityResponseDTO[];
+  	community: CommunityResponseDTO[];
 	}
 }
 
