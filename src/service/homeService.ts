@@ -2,6 +2,7 @@ import HomeResponseDTO, { HomeChallengeResponseDTO, HomeCourseResponseDTO } from
 import { IFail } from "../interfaces/IFail";
 import Course from "../models/Course";
 import User from "../models/User"
+import { SERVER_ERROR_MESSAGE } from "../constant";
 
 export default {
   home: async (token: String) => {
@@ -16,57 +17,69 @@ export default {
         return notExistUser;
       }
 
-      let userCourseArray: Array<HomeCourseResponseDTO> = new Array<HomeCourseResponseDTO>();
+      const userCourse = user.courses.find((course) => course.situation === 1);
+
+      if (!userCourse) {
+        const notProgressUser: HomeResponseDTO = {
+          status: 200,
+          data: {
+            situation: user.situation,
+            affinity: user.affinity
+          }
+        };
+        return notProgressUser;
+      }
+
       const dummyCourseList = await Course.find();
-      user.courses.forEach((course) => {
-        let userChallengeArray: Array<HomeChallengeResponseDTO> = new Array<HomeChallengeResponseDTO>();
-        const dummyCourse = dummyCourseList[course.id - 1];
+      const dummyCourse = dummyCourseList.find((course) => course.id === userCourse.id);
 
-        course.challenges.forEach((challenge) => {
-          const dummyChallenge = dummyCourse.challenges[challenge.id - 1];
-          let ments: Array<String> = new Array<String>();
-          dummyChallenge.userMents.forEach((ment) => {
-            ments.push(ment.ment);
-          });
-
-          userChallengeArray.push({
-            id: challenge.id,
-            situation: challenge.situation,
-            title: dummyChallenge.title,
-            description: dummyChallenge.description,
-            year: challenge.year,
-            month: challenge.month,
-            day: challenge.day,
-            currentStamp: challenge.currentStamp,
-            totalStamp: dummyChallenge.totalStamp,
-            userMents: ments
-          });
-        });
-        
-        userCourseArray.push({
-          id: course.id,
-          situation: course.situation,
-          title: dummyCourse.title,
-          description: dummyCourse.description,
-          totalDays: dummyCourse.totalDays,
-          property: dummyCourse.property,
-          challenges: userChallengeArray
+      let userChallengeArray: Array<HomeChallengeResponseDTO> = new Array<HomeChallengeResponseDTO>();
+      userCourse.challenges.forEach((challenge) => {
+        const dummyChallenge = dummyCourse.challenges.find((c) => c.id === challenge.id);
+        let ments: Array<String> = new Array<String>();
+        dummyChallenge.userMents.forEach((ment) => {
+          ments.push(ment.ment);
         });
 
-      });
+        userChallengeArray.push({
+          id: challenge.id,
+          situation: challenge.situation,
+          title: dummyChallenge.title,
+          description: dummyChallenge.description,
+          year: challenge.year,
+          month: challenge.month,
+          day: challenge.day,
+          currentStamp: challenge.currentStamp,
+          totalStamp: dummyChallenge.totalStamp,
+          userMents: ments
+        });
+      })
 
       const responseDTO: HomeResponseDTO = {
         status: 200,
         data: {
           situation: user.situation,
           affinity: user.affinity,
-          courses: userCourseArray
+          course: {
+            id: userCourse.id,
+            situation: userCourse.situation,
+            title: dummyCourse.title,
+            description: dummyCourse.title,
+            totalDays: dummyCourse.totalDays,
+            property: dummyCourse.property,
+            challenges: userChallengeArray
+          }
         }
       };
 
       return responseDTO;
     } catch (err) {
       console.error(err.message);
+      const serverError: IFail = {
+        status: 500,
+        message: SERVER_ERROR_MESSAGE,
+      };
+      return serverError;
     }
   }
 }

@@ -6,6 +6,7 @@ import User from "../models/User";
 import { IFail } from "../interfaces/IFail";
 import UserSignInRequestDTO from "../dto/SignIn/UserSignInRequestDTO";
 import UserSignInResponseDTO from "../dto/SignIn/UserSignInResponseDTO";
+import { SERVER_ERROR_MESSAGE } from "../constant";
 
 export default {
   signin: async (dto: UserSignInRequestDTO) => {
@@ -55,6 +56,11 @@ export default {
       return responseDTO;
     } catch (err) {
       console.error(err.message);
+      const serverError: IFail = {
+        status: 500,
+        message: SERVER_ERROR_MESSAGE,
+      };
+      return serverError;
     }
   }
 }

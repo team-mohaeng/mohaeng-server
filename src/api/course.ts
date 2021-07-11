@@ -190,6 +190,8 @@ router.put("/:id", auth, async (req, res) => {
  * {
  *  "status": 200,
  *  "data": {
+ *    "totalIncreasedAffinity": 26, // 총 증가시킨 쟈니와의 애정도
+ *    "maxSuccessCount": 2, // 최대 챌린지 연속 성공 횟수
  *    "courses": []
  *  }
  * }

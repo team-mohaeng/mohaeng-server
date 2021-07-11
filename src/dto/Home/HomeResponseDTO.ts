@@ -8,7 +8,7 @@ export default interface HomeResponseDTO {
 interface HomeUserResponseDTO {
   situation: number;
   affinity: number;
-  courses: HomeCourseResponseDTO[];
+  course?: HomeCourseResponseDTO;
 }
 
 export interface HomeCourseResponseDTO {
