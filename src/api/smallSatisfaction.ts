@@ -2,7 +2,6 @@ import express, { Request, Response } from "express";
 import upload from "../modules/upload";
 import auth from "../middleware/auth";
 import { SmallSatisfactionWriteRequestDTO } from "../dto/SmallSatisfaction/Write/request/SmallSatisfactionWriteDTO";
-import smallSatisfactionMyDrawerService from "../service/smallSatisfactionMyDrawerService";
 import smallSatisfactionService from "../service/smallSatisfactionService";
 
 
@@ -23,7 +22,7 @@ const router = express.Router();
  * 
  * @apiParamExample {json} Request-Example:
  * {
- *	"moodImage": "moodUrl",
+ *	"moodImage": "moodImageUrl",
  *	"moodText": "그저 그런 하루",
  *	"content": "소확행 내용",
  *	"hashtags": ["#해시태그1", "#해시태그2", ... ],
@@ -124,6 +123,10 @@ router.post("/write",
  * @apiSuccess {Number} likeCount
  * @apiSuccess {Boolean} hasLike
  * @apiSuccess {String} nickname
+ * @apiSuccess {String} year
+ * @apiSuccess {String} month
+ * @apiSuccess {String} day
+ * @apiSuccess {Date} date
  * 
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
@@ -198,11 +201,17 @@ router.get("/myDrawer/:year/:month", auth, async (req, res) => {
  * @apiSuccess {Array} [smallSatisfactions]
  * @apiSuccess {Number} postId
  * @apiSuccess {String} moodImage
+ * @apiSuccess {String} mainImage
  * @apiSuccess {Array} [hashtags]
  * @apiSuccess {String} content
  * @apiSuccess {Number} likeCount
  * @apiSuccess {Boolean} hasLike
  * @apiSuccess {String} nickname
+ * @apiSuccess {String} year
+ * @apiSuccess {String} month
+ * @apiSuccess {String} day
+ * @apiSuccess {Date} date
+ * 
  * 
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
@@ -319,9 +328,5 @@ router.get("/detail/:postId", auth, async (req, res) => {
   const result = await smallSatisfactionService.detail(req.body.user.id, req.params.postId);
   res.json(result);
 });
-
-
-
-
 
 module.exports = router;
