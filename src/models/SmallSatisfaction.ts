@@ -7,6 +7,10 @@ const SmallSatisfactionSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "User",
   },
+  nickname: {
+    type: String,
+    required: true,
+  },
   likes: [
     {
       user: {
