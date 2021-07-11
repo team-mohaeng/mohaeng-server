@@ -103,7 +103,6 @@ export default {
         year: myDrawerSmallSatisfaction.year,
         month: myDrawerSmallSatisfaction.month,
         day: myDrawerSmallSatisfaction.day,
-        date: myDrawerSmallSatisfaction.date,
       }
       myDrawers.push(responseDTO);
     });
@@ -184,7 +183,6 @@ export default {
         year: communitySmallSatisfaction.year,
         month: communitySmallSatisfaction.month,
         day: communitySmallSatisfaction.day,
-        date: communitySmallSatisfaction.date,
       }
       communityPosts.push(responseDTO);
     });
@@ -251,7 +249,6 @@ export default {
           year: detailSmallSatisfaction.year,
           month: detailSmallSatisfaction.month,
           day: detailSmallSatisfaction.day,
-          date: detailSmallSatisfaction.date
         }
       }
   
