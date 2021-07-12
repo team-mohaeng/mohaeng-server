@@ -326,7 +326,7 @@ router.get("/detail/:postId", auth, async (req, res) => {
  * 
  * @apiVersion 1.0.0
  * @apiName smallSatisfactionLike
- * @apiGroup SmallSatisfaction
+ * @apiGroup 소확행
  * 
  * @apiHeaderExample {json} Header-Example:
  * {
@@ -360,7 +360,7 @@ router.put("/like/:postId", auth, async (req, res) => {
  * 
  * @apiVersion 1.0.0
  * @apiName smallSatisfactionUnlike
- * @apiGroup SmallSatisfaction
+ * @apiGroup 소확행
  * 
  * @apiHeaderExample {json} Header-Example:
  * {
