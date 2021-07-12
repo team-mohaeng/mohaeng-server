@@ -6,7 +6,7 @@ export default interface SmallSatisfactionCommunityResponseDTO {
 	data: {
 		hasSmallSatisfaction: boolean;
   	userCount: number;
-  	smallSatisfactions: CommunityResponseDTO[];
+  	community: CommunityResponseDTO[];
 	}
 }
 
@@ -22,5 +22,4 @@ export interface CommunityResponseDTO {
 	year: string;
 	month: string;
 	day: string;
-	date: Date;
 }
