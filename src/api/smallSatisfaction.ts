@@ -164,6 +164,14 @@ router.post("/write",
  *	}
  * }
  * 
+  * @apiErrorExample Eroor-Response:
+ * 404 유저가 유효하지 않은 경우
+ * {
+ *  "status": 404,
+ *  "message": "유저가 존재하지 않습니다."
+ * }
+ * 
+ * 
  * 
  * @apiErrorExample Error-Response:
  * 500 서버 에러
@@ -249,6 +257,16 @@ router.get("/myDrawer/:year/:month", auth, async (req, res) => {
  * }
  * 
  * 
+ * 
+ * @apiErrorExample Eroor-Response:
+ * 404 유저가 유효하지 않은 경우
+ * {
+ *  "status": 404,
+ *  "message": "유저가 존재하지 않습니다."
+ * }
+ * 
+ * 
+ * 
  * @apiErrorExample Error-Response:
  * 500 서버 에러
  * {
@@ -308,6 +326,15 @@ router.get("/community/:sort", auth, async (req, res) => {
  * }
  * 
  * 
+  * @apiErrorExample Eroor-Response:
+ * 404 유저가 유효하지 않은 경우
+ * {
+ *  "status": 404,
+ *  "message": "유저가 존재하지 않습니다."
+ * }
+ * 
+ * 
+ * 
  * @apiErrorExample Error-Response:
  * 500 서버 에러
  * {
@@ -342,6 +369,21 @@ router.get("/detail/:postId", auth, async (req, res) => {
  * }
  * 
  * 
+ * @apiErrorExample Eroor-Response:
+ * 404 유저가 유효하지 않은 경우
+ * {
+ *  "status": 404,
+ *  "message": "유저가 존재하지 않습니다."
+ * }
+ * 
+ * 
+ * @apiErrorExample Error-Response:
+ * 404 소확행 게시글이 존재하지 않는 경우
+ * {
+ *  "status": 404,
+ *  "message": "글을 불러올 수 없습니다!"
+ * }
+ * 
  * @apiErrorExample Error-Response:
  * 500 서버 에러
  * {
@@ -373,6 +415,22 @@ router.put("/like/:postId", auth, async (req, res) => {
  * 200 OK
  * {
  *  "status": 200
+ * }
+ * 
+ * 
+ * @apiErrorExample Eroor-Response:
+ * 404 유저가 유효하지 않은 경우
+ * {
+ *  "status": 404,
+ *  "message": "유저가 존재하지 않습니다."
+ * }
+ * 
+ * 
+ * @apiErrorExample Error-Response:
+ * 404 소확행 게시글이 존재하지 않는 경우
+ * {
+ *  "status": 404,
+ *  "message": "글을 불러올 수 없습니다!"
  * }
  * 
  * 
