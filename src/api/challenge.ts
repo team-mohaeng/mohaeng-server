@@ -64,7 +64,7 @@ const router = express.Router();
 router.get("/", auth, async (req, res) => {
   const result = await challengeService.challenges(req.body.user.id);
 
-  res.json(result);
+  res.status(result.status).json(result);
 });
 
 /**
@@ -134,7 +134,7 @@ router.get("/", auth, async (req, res) => {
 router.get("/:courseId", auth, async (req, res) => {
   const result = await challengeService.today(req.body.user.id, req.params.courseId);
 
-  res.json(result);
+  res.status(result.status).json(result);
 });
 
 /**
@@ -204,7 +204,7 @@ router.get("/:courseId", auth, async (req, res) => {
 router.put("/:courseId/:challengeId", auth, async (req, res) => {
   const result = await challengeService.stamp(req.body.user.id, req.params.courseId, req.params.challengeId);
 
-  res.json(result);
+  res.status(result.status).json(result);
 });
 
 module.exports = router;

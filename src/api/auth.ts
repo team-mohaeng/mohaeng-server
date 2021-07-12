@@ -72,7 +72,7 @@ router.post(
     };
 
     const result = await authService.signup(requestDTO);
-    res.json(result);
+    res.status(result.status).json(result);
   }
 );
 

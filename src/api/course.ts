@@ -66,7 +66,7 @@ const router = express.Router();
  */
 router.get("/", auth, async (req, res) => {
   const result = await courseService.library(req.body.user.id);
-  res.json(result);
+  res.status(result.status).json(result);
 });
 
 /**
@@ -127,7 +127,7 @@ router.get("/", auth, async (req, res) => {
 router.put("/:id", auth, async (req, res) => {
   const result = await courseService.progress(req.body.user.id, req.params.id);
 
-  res.json(result);
+  res.status(result.status).json(result);
 });
 
 /**
@@ -206,7 +206,7 @@ router.put("/:id", auth, async (req, res) => {
 router.get("/complete", auth, async (req, res) => {
   const result = await courseService.medal(req.body.user.id);
 
-  res.json(result);
+  res.status(result.status).json(result);
 });
 
 module.exports = router;

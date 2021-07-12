@@ -66,7 +66,7 @@ router.post(
 
     const result = await userService.signin(requestDTO);
 
-    res.json(result);
+    res.status(result.status).json(result);
   }
 );
 

@@ -97,7 +97,7 @@ router.post("/write",
   };
 
   const result = await smallSatisfactionService.write(req.body.user.id, requestDTO);
-  res.json(result);
+  res.status(result.status).json(result);
 });
 
 /**
@@ -175,7 +175,7 @@ router.post("/write",
 
 router.get("/myDrawer/:year/:month", auth, async (req, res) => {
   const result = await smallSatisfactionService.myDrawer(req.body.user.id, req.params.year, req.params.month);
-  res.json(result);
+  res.status(result.status).json(result);
 });
 
 
@@ -259,7 +259,7 @@ router.get("/myDrawer/:year/:month", auth, async (req, res) => {
 
 router.get("/community/:sort", auth, async (req, res) => {
   const result = await smallSatisfactionService.community(req.body.user.id, req.params.sort);
-  res.json(result);
+  res.status(result.status).json(result);
 });
 
 
@@ -318,7 +318,7 @@ router.get("/community/:sort", auth, async (req, res) => {
 
 router.get("/detail/:postId", auth, async (req, res) => {
   const result = await smallSatisfactionService.detail(req.body.user.id, req.params.postId);
-  res.json(result);
+  res.status(result.status).json(result);
 });
 
 module.exports = router;
