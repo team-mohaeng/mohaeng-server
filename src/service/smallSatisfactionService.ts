@@ -20,7 +20,7 @@ export default {
 
     if (!user) {
       const notExistUser: IFail = {
-        status: 400,
+        status: 404,
         message: "유저가 존재하지 않습니다.",
       };
       return notExistUser
@@ -34,6 +34,14 @@ export default {
         mainImage,
         hashtags,
         isPrivate, } = dto;
+
+      if (content == "") {
+        const notExistContent: IFail = {
+          status: 400,
+          message: "소확행 내용을 작성해주세요.",
+        };
+        return notExistContent;
+      }
           
       let smallSatisfaction = new SmallSatisfaction({
         user: user._id,
@@ -71,7 +79,7 @@ export default {
     const user = await User.findOne({ id: token });
     if (!user) {
       const notExistUser: IFail = {
-        status: 400,
+        status: 404,
         message: "유저가 존재하지 않습니다.",
       };
       return notExistUser;
@@ -123,7 +131,7 @@ export default {
     const user = await User.findOne({ id: token });
     if (!user) {
       const notExistUser: IFail = {
-        status: 400,
+        status: 404,
         message: "유저가 존재하지 않습니다.",
       };
       return notExistUser;
@@ -205,7 +213,7 @@ export default {
     const user = await User.findOne({ id: token });
     if (!user) {
       const notExistUser: IFail = {
-        status: 400,
+        status: 404,
         message: "유저가 존재하지 않습니다.",
       };
       return notExistUser;
@@ -215,8 +223,8 @@ export default {
       let detailSmallSatisfaction = await SmallSatisfaction.findOne({ postId: postNumber });
       if (!detailSmallSatisfaction) {
           const notExistSatisfaction: IFail = {
-            status: 400,
-            message: "소확행이 존재하지 않습니다.",
+            status: 404,
+            message: "글을 불러올 수 없습니다!",
           };
           return notExistSatisfaction;
       }
@@ -264,7 +272,7 @@ export default {
 
       if (!user) {
         const notExistUser: IFail = {
-          status: 400,
+          status: 404,
           message: "유저가 존재하지 않습니다.",
         };
         return notExistUser
@@ -274,7 +282,7 @@ export default {
       
       if (!smallSatisfaction) {
         const notExistSmallSatisfaction: IFail = {
-          status: 400,
+          status: 404,
           message: "소확행이 존재하지 않습니다.",
         };
         return notExistSmallSatisfaction;
@@ -294,7 +302,8 @@ export default {
       await smallSatisfaction.save();
 
       const responseDTO : LikeResponseDTO = {
-        status: 200
+        status: 200,
+        message: "좋아요 성공!"
       }
 
       return responseDTO;
@@ -309,7 +318,7 @@ export default {
 
       if (!user) {
         const notExistUser: IFail = {
-          status: 400,
+          status: 404,
           message: "유저가 존재하지 않습니다.",
         };
         return notExistUser
@@ -319,7 +328,7 @@ export default {
 
       if (!smallSatisfaction) {
         const notExistSmallSatisfaction: IFail = {
-          status: 400,
+          status: 404,
           message: "소확행이 존재하지 않습니다.",
         };
         return notExistSmallSatisfaction;
@@ -343,7 +352,8 @@ export default {
       await smallSatisfaction.save();
       
       const responseDTO: LikeResponseDTO = {
-        status: 200
+        status: 200,
+        message: "좋아요 취소 성공!"
       }
       return responseDTO;
 
