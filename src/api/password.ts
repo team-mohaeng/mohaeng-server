@@ -46,7 +46,7 @@ const router = express.Router();
 router.get("/:userId", async (req, res) => {
   const result = await passwordService.user(req.params.userId);
 
-  res.json(result);
+  res.status(result.status).json(result);
 });
 
 /**
@@ -107,8 +107,7 @@ router.put(
 
     const result = await passwordService.change(requestDTO);
 
-    res.json(result);
-  }
-  )
+    res.status(result.status).json(result);
+  });
 
 module.exports = router;

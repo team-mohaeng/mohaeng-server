@@ -69,7 +69,7 @@ const router = express_1.default.Router();
  */
 router.get("/", auth_1.default, async (req, res) => {
     const result = await courseService_1.default.library(req.body.user.id);
-    res.json(result);
+    res.status(result.status).json(result);
 });
 /**
  * @api {put} /api/courses/:id 코스 진행하기
@@ -128,7 +128,7 @@ router.get("/", auth_1.default, async (req, res) => {
  */
 router.put("/:id", auth_1.default, async (req, res) => {
     const result = await courseService_1.default.progress(req.body.user.id, req.params.id);
-    res.json(result);
+    res.status(result.status).json(result);
 });
 /**
  * @api {get} /api/courses/complete 완료한 코스 메달 조회
@@ -205,7 +205,7 @@ router.put("/:id", auth_1.default, async (req, res) => {
  */
 router.get("/complete", auth_1.default, async (req, res) => {
     const result = await courseService_1.default.medal(req.body.user.id);
-    res.json(result);
+    res.status(result.status).json(result);
 });
 module.exports = router;
 //# sourceMappingURL=course.js.map

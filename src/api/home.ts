@@ -80,7 +80,7 @@ const router = express.Router();
  */
 router.get("/", auth, async(req, res) => {
   const result = await homeService.home(req.body.user.id);
-  res.json(result);
+  res.status(result.status).json(result);
 });
 
 module.exports = router;

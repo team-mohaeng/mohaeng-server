@@ -62,7 +62,7 @@ router.post("/", [
         userToken: req.body.userToken,
     };
     const result = await userService_1.default.signin(requestDTO);
-    res.json(result);
+    res.status(result.status).json(result);
 });
 module.exports = router;
 //# sourceMappingURL=user.js.map

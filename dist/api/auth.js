@@ -68,7 +68,7 @@ router.post("/", [
         birthYear: req.body.birthYear
     };
     const result = await authService_1.default.signup(requestDTO);
-    res.json(result);
+    res.status(result.status).json(result);
 });
 module.exports = router;
 //# sourceMappingURL=auth.js.map

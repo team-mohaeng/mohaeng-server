@@ -66,7 +66,7 @@ const router = express_1.default.Router();
  */
 router.get("/", auth_1.default, async (req, res) => {
     const result = await challengeService_1.default.challenges(req.body.user.id);
-    res.json(result);
+    res.status(result.status).json(result);
 });
 /**
  * @api {get} /api/challenges/:courseId 오늘의 챌린지 조회
@@ -134,7 +134,7 @@ router.get("/", auth_1.default, async (req, res) => {
  */
 router.get("/:courseId", auth_1.default, async (req, res) => {
     const result = await challengeService_1.default.today(req.body.user.id, req.params.courseId);
-    res.json(result);
+    res.status(result.status).json(result);
 });
 /**
  * @api {put} /api/challenges/:courseId/:challengeId 챌린지 인증하기
@@ -202,7 +202,7 @@ router.get("/:courseId", auth_1.default, async (req, res) => {
  */
 router.put("/:courseId/:challengeId", auth_1.default, async (req, res) => {
     const result = await challengeService_1.default.stamp(req.body.user.id, req.params.courseId, req.params.challengeId);
-    res.json(result);
+    res.status(result.status).json(result);
 });
 module.exports = router;
 //# sourceMappingURL=challenge.js.map
