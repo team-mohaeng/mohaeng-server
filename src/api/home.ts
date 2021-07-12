@@ -83,4 +83,10 @@ router.get("/", auth, async(req, res) => {
   res.status(result.status).json(result);
 });
 
+router.get("/refactoring", auth, async(req, res) => {
+  const result = await homeService.reHome(req.body.user.id);
+  console.log(result);
+  res.json(result);
+})
+
 module.exports = router;

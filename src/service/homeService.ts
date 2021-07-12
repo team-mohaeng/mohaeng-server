@@ -5,6 +5,92 @@ import User from "../models/User"
 import { SERVER_ERROR_MESSAGE } from "../constant";
 
 export default {
+  reHome: async (token: String) => {
+    let user, userCourse, dummyCourse;
+
+    const userPromise = new Promise( async (resolve, reject) => {
+      const userP = await User.findOne({ id: token });
+      if (!userP) {
+        const notExistUser: IFail = {
+          status: 404,
+          message: "유저가 존재하지 않습니다.",
+        };
+        reject(notExistUser);
+      }
+      user = userP;
+
+      const userCourseP = user.courses.find((course) => course.situation === 1);
+      if (!userCourseP) {
+        const notProgressUser: HomeResponseDTO = {
+          status: 200,
+          data: {
+            situation: user.situation,
+            affinity: user.affinity
+          }
+        };
+        reject(notProgressUser);
+      }
+      userCourse = userCourseP;
+
+      resolve("success");
+    } );
+
+    let userChallengeArray: Array<HomeChallengeResponseDTO> = new Array<HomeChallengeResponseDTO>();
+    const coursePromise = new Promise ( async (resolve, reject) => {
+      const courseP = await Course.find();
+      const dummyCourseP = courseP.find((course) => course.id === userCourse.id);
+      dummyCourse = dummyCourseP;
+
+      userCourse.challenges.forEach((challenge) => {
+        const dummyChallengeP = dummyCourseP.challenges.find((c) => c.id === challenge.id);
+        let ments: Array<String> = new Array<String>();
+        dummyChallengeP.userMents.forEach((ment) => {
+          ments.push(ment.ment);
+        });
+
+        userChallengeArray.push({
+          id: challenge.id,
+          situation: challenge.situation,
+          title: dummyChallengeP.title,
+          description: dummyChallengeP.description,
+          year: challenge.year,
+          month: challenge.month,
+          day: challenge.day,
+          currentStamp: challenge.currentStamp,
+          totalStamp: dummyChallengeP.totalStamp,
+          userMents: ments
+        });
+      });
+      resolve("success");
+    } );
+
+    let response;
+    await Promise.all([userPromise, coursePromise])
+          .then((data) => {
+            const responseDTO: HomeResponseDTO = {
+              status: 200,
+              data: {
+                situation: user.situation,
+                affinity: user.affinity,
+                course: {
+                  id: userCourse.id,
+                  situation: userCourse.situation,
+                  title: dummyCourse.title,
+                  description: dummyCourse.title,
+                  totalDays: dummyCourse.totalDays,
+                  property: dummyCourse.property,
+                  challenges: userChallengeArray
+                }
+              }
+            };
+            response = responseDTO;
+          })
+          .catch((err) => {
+            response = err;
+            console.log(err);
+          });
+    return response;
+  },
   home: async (token: String) => {
     try {
       let user = await User.findOne({ id: token });
