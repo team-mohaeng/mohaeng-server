@@ -5,6 +5,7 @@ import { SmallSatisfactionWriteResponseDTO } from "../dto/SmallSatisfaction/Writ
 import SmallSatisfactionMyDrawerResponseDTO, { myDrawerResponseDTO } from "../dto/SmallSatisfaction/MyDrawer/response/SmallSatisfactionMyDrawerResponseDTO";
 import SmallSatisfactionCommunityResponseDTO, { CommunityResponseDTO } from "../dto/SmallSatisfaction/Community/response/SmallSatisfactionCommunityResponseDTO";
 import SmallSatisfactionDetailResponseDTO from "../dto/SmallSatisfaction/Detail/response/SmallSatisfactionDetailResponseDTO";
+import { LikeResponseDTO } from "../dto/SmallSatisfaction/Like/response/LikeResponseDTO";
 import { IFail } from "../interfaces/IFail";
 
 export default {
@@ -116,9 +117,8 @@ export default {
     return responseDTO;
   } catch (err) {
     console.error(err);
-  }
-},
-  
+    }
+  },
   community: async (token: String, sort: String) => {
     const user = await User.findOne({ id: token });
     if (!user) {
@@ -154,7 +154,7 @@ export default {
       if (sort === "date") {
         communitySmallSatisfactions = await SmallSatisfaction.find({ isPrivate: false }).sort({ date: -1 });
       }
-
+      
       if (sort === "like") {
         communitySmallSatisfactions = await SmallSatisfaction.find({ isPrivate: false }).sort({ likeCount: -1 });
       }
@@ -223,7 +223,7 @@ export default {
 
 
       let liked;
-      if (detailSmallSatisfaction.likes.filter((like) => like.user.toString() === token)
+      if (detailSmallSatisfaction.likes.filter((like) => like.user.toString() === user._id)
           .length > 0
       ) {
         liked = true;
@@ -256,5 +256,99 @@ export default {
     } catch (err) {
     console.error(err.message);
     }
-  }
+  },
+  like: async (token: String, postId: string) => {
+    try {
+      let postNumber = parseInt(postId);
+      const user = await User.findOne({ id: token });
+
+      if (!user) {
+        const notExistUser: IFail = {
+          status: 400,
+          message: "유저가 존재하지 않습니다.",
+        };
+        return notExistUser
+      }
+
+      const smallSatisfaction = await SmallSatisfaction.findOne({ postId: postNumber });
+      
+      if (!smallSatisfaction) {
+        const notExistSmallSatisfaction: IFail = {
+          status: 400,
+          message: "소확행이 존재하지 않습니다.",
+        };
+        return notExistSmallSatisfaction;
+      }
+
+      if (
+        smallSatisfaction.likes.filter((like) => like.user.toString() == user._id.toString())
+          .length > 0
+      ) {
+        const alreadyLiked: IFail = {
+          status: 400,
+          message: "이미 좋아요를 눌렀습니다.",
+        }
+        return alreadyLiked;
+      }
+      await smallSatisfaction.likes.unshift({ user: user._id });
+      await smallSatisfaction.save();
+
+      const responseDTO : LikeResponseDTO = {
+        status: 200
+      }
+
+      return responseDTO;
+    } catch (error) {
+      console.error(error.message);
+    }
+  },
+  unlike: async (token: String, postId: string) => {
+    try {
+      let postNumber = parseInt(postId);
+      const user = await User.findOne({ id: token });
+
+      if (!user) {
+        const notExistUser: IFail = {
+          status: 400,
+          message: "유저가 존재하지 않습니다.",
+        };
+        return notExistUser
+      }
+
+      const smallSatisfaction = await SmallSatisfaction.findOne({ postId: postNumber });
+
+      if (!smallSatisfaction) {
+        const notExistSmallSatisfaction: IFail = {
+          status: 400,
+          message: "소확행이 존재하지 않습니다.",
+        };
+        return notExistSmallSatisfaction;
+      }
+
+      if (
+        smallSatisfaction.likes.filter((like) => like.user.toString() == user._id.toString())
+          .length === 0
+      ) {
+        const notExsitLike: IFail = {
+          status: 400,
+          message: "좋아요를 누르지 않았습니다.",
+        }
+        return notExsitLike;
+      }
+      const removeIndex = smallSatisfaction.likes
+        .map((like) => like.user)
+        .indexOf(user._id);
+  
+      smallSatisfaction.likes.splice(removeIndex, 1);
+      await smallSatisfaction.save();
+      
+      const responseDTO: LikeResponseDTO = {
+        status: 200
+      }
+      return responseDTO;
+
+    } catch (error) {
+      console.error(error.message);
+    }
+  },
 }
