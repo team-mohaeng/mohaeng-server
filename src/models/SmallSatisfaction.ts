@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
+import autoincrement from "mongoose-auto-increment";
 import { ISmallSatisfaction } from "../interfaces/ISmallSatisfaction";
+
+mongoose.set('useFindAndModify', false);
 
 const SmallSatisfactionSchema = new mongoose.Schema({
   user: {
@@ -25,7 +28,7 @@ const SmallSatisfactionSchema = new mongoose.Schema({
     default: 0,
   },
   postId: {
-    type: String,
+    type: Number,
     required: true,
   },
   content: {
@@ -67,6 +70,14 @@ const SmallSatisfactionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+});
+
+autoincrement.initialize(mongoose.connection);
+SmallSatisfactionSchema.plugin(autoincrement.plugin, {
+  model: 'smallSatisfaction',
+  field: 'postId',
+  startAt: 1,
+  increment: 1
 });
 
 export default mongoose.model<ISmallSatisfaction & mongoose.Document>("SmallSatisfaction", SmallSatisfactionSchema);
