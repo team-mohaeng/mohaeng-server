@@ -7,6 +7,8 @@ import SmallSatisfactionCommunityResponseDTO, { CommunityResponseDTO } from "../
 import SmallSatisfactionDetailResponseDTO from "../dto/SmallSatisfaction/Detail/response/SmallSatisfactionDetailResponseDTO";
 import { LikeResponseDTO } from "../dto/SmallSatisfaction/Like/response/LikeResponseDTO";
 import { IFail } from "../interfaces/IFail";
+import { SERVER_ERROR_MESSAGE } from "../constant";
+
 
 export default {
   write: async (token: String, dto: SmallSatisfactionWriteRequestDTO) => {
@@ -72,6 +74,11 @@ export default {
     }
     catch (err) {
       console.error(err.message);
+      const serverError: IFail = {
+        status: 500,
+        message: SERVER_ERROR_MESSAGE,
+      };
+      return serverError;
     }
   },
   
@@ -125,6 +132,11 @@ export default {
     return responseDTO;
   } catch (err) {
     console.error(err);
+    const serverError: IFail = {
+      status: 500,
+      message: SERVER_ERROR_MESSAGE,
+    };
+    return serverError;
     }
   },
   community: async (token: String, sort: String) => {
@@ -206,6 +218,11 @@ export default {
     return responseDTO;
     } catch (err) {
       console.error(err.message);
+      const serverError: IFail = {
+        status: 500,
+        message: SERVER_ERROR_MESSAGE,
+      };
+      return serverError;
     }
   },
   detail: async (token: String, postId: string) => {
@@ -263,6 +280,11 @@ export default {
       return responseDTO; 
     } catch (err) {
     console.error(err.message);
+    const serverError: IFail = {
+      status: 500,
+      message: SERVER_ERROR_MESSAGE,
+    };
+    return serverError;
     }
   },
   like: async (token: String, postId: string) => {
@@ -309,6 +331,11 @@ export default {
       return responseDTO;
     } catch (error) {
       console.error(error.message);
+      const serverError: IFail = {
+        status: 500,
+        message: SERVER_ERROR_MESSAGE,
+      };
+      return serverError;
     }
   },
   unlike: async (token: String, postId: string) => {
@@ -359,6 +386,11 @@ export default {
 
     } catch (error) {
       console.error(error.message);
+      const serverError: IFail = {
+        status: 500,
+        message: SERVER_ERROR_MESSAGE,
+      };
+      return serverError;
     }
   },
 }
