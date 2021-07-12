@@ -38,6 +38,7 @@ const router = express_1.default.Router();
  *      "challenges": [
  *        {
  *          "id": 1,
+ *          "title": "깨끗하게 손 씻기 3회",
  *          "situation": 1, // 챌린지 진행 상태
  *          "description": "손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.",
  *          "year": "", // 챌린지를 완료하면, year month day를 보냄.
@@ -65,7 +66,7 @@ const router = express_1.default.Router();
  */
 router.get("/", auth_1.default, async (req, res) => {
     const result = await challengeService_1.default.challenges(req.body.user.id);
-    res.json(result);
+    res.status(result.status).json(result);
 });
 /**
  * @api {get} /api/challenges/:courseId 오늘의 챌린지 조회
@@ -98,6 +99,7 @@ router.get("/", auth_1.default, async (req, res) => {
  *      "challenges": [
  *        { // 오늘 완료한 챌린지가 있다면, situation이 1인 챌린지는 없다
  *          "id": 1,
+ *          "title": "깨끗하게 손 씻기 3회",
  *          "situation": 1, // 챌린지 진행 상태
  *          "description": "손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.",
  *          "year": "", // 챌린지를 완료하면, year month day를 보냄.
@@ -132,7 +134,7 @@ router.get("/", auth_1.default, async (req, res) => {
  */
 router.get("/:courseId", auth_1.default, async (req, res) => {
     const result = await challengeService_1.default.today(req.body.user.id, req.params.courseId);
-    res.json(result);
+    res.status(result.status).json(result);
 });
 /**
  * @api {put} /api/challenges/:courseId/:challengeId 챌린지 인증하기
@@ -165,6 +167,7 @@ router.get("/:courseId", auth_1.default, async (req, res) => {
  *      "challenges": [
  *        { // 오늘 완료한 챌린지가 있다면, situation이 1인 챌린지는 없다
  *          "id": 1,
+ *          "title": "깨끗하게 손 씻기 3회",
  *          "situation": 1, // 챌린지 진행 상태
  *          "description": "손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.",
  *          "year": "", // 챌린지를 완료하면, year month day를 보냄.
@@ -199,7 +202,7 @@ router.get("/:courseId", auth_1.default, async (req, res) => {
  */
 router.put("/:courseId/:challengeId", auth_1.default, async (req, res) => {
     const result = await challengeService_1.default.stamp(req.body.user.id, req.params.courseId, req.params.challengeId);
-    res.json(result);
+    res.status(result.status).json(result);
 });
 module.exports = router;
 //# sourceMappingURL=challenge.js.map

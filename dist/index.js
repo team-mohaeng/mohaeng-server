@@ -19,9 +19,7 @@ app.use("/api/courses", require("./api/course"));
 app.use("/api/challenges", require("./api/challenge"));
 app.use("/api/password", require("./api/password"));
 // app.use("/api/message", require("./controller/messageController"));
-app.use("/api/writeSmallSatisfaction", require("./api/writeSmallSatisfaction"));
-app.use("/api/smallSatisfactionCommunity", require("./api/smallSatisfactionCommunity"));
-app.use("/api/smallSatisfactionMyDrawer", require("./api/smallSatisfactionMyDrawer"));
+app.use("/api/smallSatisfaction", require("./api/smallSatisfaction"));
 // error handler
 app.use(function (err, req, res, next) {
     // set locals, only providing error in development

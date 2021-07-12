@@ -39,6 +39,7 @@ const router = express_1.default.Router();
  *        "challenges": [
  *          {
  *            "id": 1,
+ *            "title": "깨끗하게 손 씻기 3회",
  *            "situation": 0, // 챌린지 진행 상태
  *            "description": "손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.",
  *            "year": "", // 챌린지를 완료하면, year month day를 보냄.
@@ -68,7 +69,7 @@ const router = express_1.default.Router();
  */
 router.get("/", auth_1.default, async (req, res) => {
     const result = await courseService_1.default.library(req.body.user.id);
-    res.json(result);
+    res.status(result.status).json(result);
 });
 /**
  * @api {put} /api/courses/:id 코스 진행하기
@@ -100,6 +101,7 @@ router.get("/", auth_1.default, async (req, res) => {
  *      "challenges": [
  *        {
  *          "id": 1,
+ *          "title": "깨끗하게 손 씻기 3회",
  *          "situation": 2, // 챌린지 진행 상태
  *          "description": "손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.",
  *          "year": "2021", // 챌린지를 완료하면, year month day를 보냄.
@@ -126,7 +128,7 @@ router.get("/", auth_1.default, async (req, res) => {
  */
 router.put("/:id", auth_1.default, async (req, res) => {
     const result = await courseService_1.default.progress(req.body.user.id, req.params.id);
-    res.json(result);
+    res.status(result.status).json(result);
 });
 /**
  * @api {get} /api/courses/complete 완료한 코스 메달 조회
@@ -162,6 +164,7 @@ router.put("/:id", auth_1.default, async (req, res) => {
  *        "challenges": [
  *          {
  *            "id": 1,
+ *            "title": "깨끗하게 손 씻기 3회",
  *            "situation": 2, // 챌린지 진행 상태
  *            "description": "손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.",
  *            "year": "2021", // 챌린지를 완료하면, year month day를 보냄.
@@ -187,6 +190,8 @@ router.put("/:id", auth_1.default, async (req, res) => {
  * {
  *  "status": 200,
  *  "data": {
+ *    "totalIncreasedAffinity": 26, // 총 증가시킨 쟈니와의 애정도
+ *    "maxSuccessCount": 2, // 최대 챌린지 연속 성공 횟수
  *    "courses": []
  *  }
  * }
@@ -200,7 +205,7 @@ router.put("/:id", auth_1.default, async (req, res) => {
  */
 router.get("/complete", auth_1.default, async (req, res) => {
     const result = await courseService_1.default.medal(req.body.user.id);
-    res.json(result);
+    res.status(result.status).json(result);
 });
 module.exports = router;
 //# sourceMappingURL=course.js.map

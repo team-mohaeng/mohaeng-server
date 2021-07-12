@@ -7,6 +7,7 @@ const User_1 = __importDefault(require("../models/User"));
 const Course_1 = __importDefault(require("../models/Course"));
 const challengeDateFormatter_1 = require("../formatter/challengeDateFormatter");
 const dateController_1 = require("../controller/dateController");
+const constant_1 = require("../constant");
 exports.default = {
     today: async (token, courseId) => {
         try {
@@ -121,6 +122,11 @@ exports.default = {
         }
         catch (err) {
             console.error(err.message);
+            const serverError = {
+                status: 500,
+                message: constant_1.SERVER_ERROR_MESSAGE,
+            };
+            return serverError;
         }
     },
     stamp: async (token, courseId, challengeId) => {
@@ -261,6 +267,11 @@ exports.default = {
         }
         catch (err) {
             console.error(err.message);
+            const serverError = {
+                status: 500,
+                message: constant_1.SERVER_ERROR_MESSAGE,
+            };
+            return serverError;
         }
     },
     challenges: async (token) => {
@@ -330,6 +341,11 @@ exports.default = {
         }
         catch (err) {
             console.error(err.message);
+            const serverError = {
+                status: 500,
+                message: constant_1.SERVER_ERROR_MESSAGE,
+            };
+            return serverError;
         }
     }
 };

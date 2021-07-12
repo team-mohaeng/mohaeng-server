@@ -26,7 +26,7 @@ const router = express_1.default.Router();
  * @apiSuccess {Object} challenges 포함 속성은 하단 코드 참조
  *
  * @apiSuccessExample {json} Success-Response:
- * 200 챌린지 진행 여부는 가장 상위 situation 참고
+ * 200 챌린지 진행 중
  * {
  *  "status": 200,
  *  "data": {
@@ -43,6 +43,7 @@ const router = express_1.default.Router();
  *        "challenges": [
  *          {
  *            "id": 1,
+ *            "title": "깨끗하게 손 씻기 3회",
  *            "situation": 2, // 챌린지 진행 상태
  *            "description": "손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.",
  *            "year": "2021", // 챌린지를 완료하면, year month day를 보냄.
@@ -63,6 +64,16 @@ const router = express_1.default.Router();
  *  }
  * }
  *
+ * @apiSuccessExample {json} Success-Response:
+ * 200 챌린지 진행 전
+ * {
+ *  "status": 200,
+ *  "data": {
+ *    "situation": 0, // 유저가 현재 코스를 진행하고 있는지 여부
+ *    "affinity": 42, // 쟈니와의 애정도
+ *   }
+ * }
+ *
  * @apiErrorExample Error-Response:
  * 403 만료된 토큰
  * {
@@ -72,7 +83,7 @@ const router = express_1.default.Router();
  */
 router.get("/", auth_1.default, async (req, res) => {
     const result = await homeService_1.default.home(req.body.user.id);
-    res.json(result);
+    res.status(result.status).json(result);
 });
 module.exports = router;
 //# sourceMappingURL=home.js.map

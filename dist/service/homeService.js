@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Course_1 = __importDefault(require("../models/Course"));
 const User_1 = __importDefault(require("../models/User"));
+const constant_1 = require("../constant");
 exports.default = {
     home: async (token) => {
         try {
@@ -16,38 +17,37 @@ exports.default = {
                 };
                 return notExistUser;
             }
-            let userCourseArray = new Array();
+            const userCourse = user.courses.find((course) => course.situation === 1);
+            if (!userCourse) {
+                const notProgressUser = {
+                    status: 200,
+                    data: {
+                        situation: user.situation,
+                        affinity: user.affinity
+                    }
+                };
+                return notProgressUser;
+            }
             const dummyCourseList = await Course_1.default.find();
-            user.courses.forEach((course) => {
-                let userChallengeArray = new Array();
-                const dummyCourse = dummyCourseList[course.id - 1];
-                course.challenges.forEach((challenge) => {
-                    const dummyChallenge = dummyCourse.challenges[challenge.id - 1];
-                    let ments = new Array();
-                    dummyChallenge.userMents.forEach((ment) => {
-                        ments.push(ment.ment);
-                    });
-                    userChallengeArray.push({
-                        id: challenge.id,
-                        situation: challenge.situation,
-                        title: dummyChallenge.title,
-                        description: dummyChallenge.description,
-                        year: challenge.year,
-                        month: challenge.month,
-                        day: challenge.day,
-                        currentStamp: challenge.currentStamp,
-                        totalStamp: dummyChallenge.totalStamp,
-                        userMents: ments
-                    });
+            const dummyCourse = dummyCourseList.find((course) => course.id === userCourse.id);
+            let userChallengeArray = new Array();
+            userCourse.challenges.forEach((challenge) => {
+                const dummyChallenge = dummyCourse.challenges.find((c) => c.id === challenge.id);
+                let ments = new Array();
+                dummyChallenge.userMents.forEach((ment) => {
+                    ments.push(ment.ment);
                 });
-                userCourseArray.push({
-                    id: course.id,
-                    situation: course.situation,
-                    title: dummyCourse.title,
-                    description: dummyCourse.description,
-                    totalDays: dummyCourse.totalDays,
-                    property: dummyCourse.property,
-                    challenges: userChallengeArray
+                userChallengeArray.push({
+                    id: challenge.id,
+                    situation: challenge.situation,
+                    title: dummyChallenge.title,
+                    description: dummyChallenge.description,
+                    year: challenge.year,
+                    month: challenge.month,
+                    day: challenge.day,
+                    currentStamp: challenge.currentStamp,
+                    totalStamp: dummyChallenge.totalStamp,
+                    userMents: ments
                 });
             });
             const responseDTO = {
@@ -55,13 +55,26 @@ exports.default = {
                 data: {
                     situation: user.situation,
                     affinity: user.affinity,
-                    courses: userCourseArray
+                    course: {
+                        id: userCourse.id,
+                        situation: userCourse.situation,
+                        title: dummyCourse.title,
+                        description: dummyCourse.title,
+                        totalDays: dummyCourse.totalDays,
+                        property: dummyCourse.property,
+                        challenges: userChallengeArray
+                    }
                 }
             };
             return responseDTO;
         }
         catch (err) {
             console.error(err.message);
+            const serverError = {
+                status: 500,
+                message: constant_1.SERVER_ERROR_MESSAGE,
+            };
+            return serverError;
         }
     }
 };

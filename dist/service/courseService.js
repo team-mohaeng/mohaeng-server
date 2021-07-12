@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const Course_1 = __importDefault(require("../models/Course"));
 const User_1 = __importDefault(require("../models/User"));
+const constant_1 = require("../constant");
 exports.default = {
     library: async (token) => {
         try {
@@ -67,6 +68,11 @@ exports.default = {
         }
         catch (err) {
             console.error(err.message);
+            const serverError = {
+                status: 500,
+                message: constant_1.SERVER_ERROR_MESSAGE,
+            };
+            return serverError;
         }
     },
     progress: async (token, id) => {
@@ -150,6 +156,11 @@ exports.default = {
         }
         catch (err) {
             console.error(err.message);
+            const serverError = {
+                status: 500,
+                message: constant_1.SERVER_ERROR_MESSAGE,
+            };
+            return serverError;
         }
     },
     medal: async (token) => {
@@ -209,6 +220,11 @@ exports.default = {
         }
         catch (err) {
             console.error(err.message);
+            const serverError = {
+                status: 500,
+                message: constant_1.SERVER_ERROR_MESSAGE,
+            };
+            return serverError;
         }
     }
 };
