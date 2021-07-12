@@ -69,15 +69,27 @@ router.post("/write", upload_1.default.fields([
     else {
         mainImageUrl = "";
     }
+    let response;
     if (req.body.hashtags) {
         if ((req.body.hashtags).length > 5) {
-            return res.status(404).json({ msg: "해시태그는 5개까지만 넣어주세요!" });
+            const hashtagsExceeded = {
+                status: 404,
+                message: "해시태그는 5개까지만 넣어주세요!",
+            };
+            response = hashtagsExceeded;
         }
         req.body.hashtags.forEach((hashtag) => {
             if (hashtag.length > 7) {
-                return res.status(404).json({ msg: "해시태그는 6글자 이내로 작성해주세요!" });
+                const hashtagExceeded = {
+                    status: 404,
+                    message: "해시태그는 6글자 이내로 작성해주세요!",
+                };
+                response = hashtagExceeded;
             }
         });
+        if (response) {
+            return res.status(404).json(response);
+        }
     }
     const requestDTO = {
         content: req.body.content,
@@ -153,6 +165,14 @@ router.post("/write", upload_1.default.fields([
  *		]
  *	}
  * }
+ *
+  * @apiErrorExample Error-Response:
+ * 404 유저가 유효하지 않은 경우
+ * {
+ *  "status": 404,
+ *  "message": "유저가 존재하지 않습니다."
+ * }
+ *
  *
  *
  * @apiErrorExample Error-Response:
@@ -236,6 +256,16 @@ router.get("/myDrawer/:year/:month", auth_1.default, async (req, res) => {
  * }
  *
  *
+ *
+ * @apiErrorExample Error-Response:
+ * 404 유저가 유효하지 않은 경우
+ * {
+ *  "status": 404,
+ *  "message": "유저가 존재하지 않습니다."
+ * }
+ *
+ *
+ *
  * @apiErrorExample Error-Response:
  * 500 서버 에러
  * {
@@ -292,6 +322,15 @@ router.get("/community/:sort", auth_1.default, async (req, res) => {
  * }
  *
  *
+  * @apiErrorExample Error-Response:
+ * 404 유저가 유효하지 않은 경우
+ * {
+ *  "status": 404,
+ *  "message": "유저가 존재하지 않습니다."
+ * }
+ *
+ *
+ *
  * @apiErrorExample Error-Response:
  * 500 서버 에러
  * {
@@ -320,9 +359,25 @@ router.get("/detail/:postId", auth_1.default, async (req, res) => {
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
  * {
- *  "status": 200
+ *  "status": 200,
+ *  "message": "좋아요 성공!"
  * }
  *
+ *
+ * @apiErrorExample Error-Response:
+ * 404 유저가 유효하지 않은 경우
+ * {
+ *  "status": 404,
+ *  "message": "유저가 존재하지 않습니다."
+ * }
+ *
+ *
+ * @apiErrorExample Error-Response:
+ * 404 소확행 게시글이 존재하지 않는 경우
+ * {
+ *  "status": 404,
+ *  "message": "글을 불러올 수 없습니다!"
+ * }
  *
  * @apiErrorExample Error-Response:
  * 500 서버 에러
@@ -352,7 +407,24 @@ router.put("/like/:postId", auth_1.default, async (req, res) => {
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
  * {
- *  "status": 200
+ *  "status": 200,
+ *  "message": "좋아요 취소 성공!"
+ * }
+ *
+ *
+ * @apiErrorExample Error-Response:
+ * 404 유저가 유효하지 않은 경우
+ * {
+ *  "status": 404,
+ *  "message": "유저가 존재하지 않습니다."
+ * }
+ *
+ *
+ * @apiErrorExample Error-Response:
+ * 404 소확행 게시글이 존재하지 않는 경우
+ * {
+ *  "status": 404,
+ *  "message": "글을 불러올 수 없습니다!"
  * }
  *
  *
@@ -365,6 +437,55 @@ router.put("/like/:postId", auth_1.default, async (req, res) => {
  */
 router.put("/unlike/:postId", auth_1.default, async (req, res) => {
     const result = await smallSatisfactionService_1.default.unlike(req.body.user.id, req.params.postId);
+    res.json(result);
+});
+/**
+ * @api {delete} /api/smallSatisfaction/delete/:postId 소확행 포스트 삭제
+ *
+ * @apiVersion 1.0.0
+ * @apiName smallSatisfactionUnlike
+ * @apiGroup 소확행
+ *
+ * @apiHeaderExample {json} Header-Example:
+ * {
+ *  "Content-Type": "application/json"
+ *  "Bearer": "jwt"
+ * }
+ *
+ *
+ * @apiSuccessExample {json} Success-Response:
+ * 200 OK
+ * {
+ *  "status": 200,
+ *  "message" "포스트가 삭제되었습니다."
+ * }
+ *
+ *
+ * @apiErrorExample Error-Response:
+ * 404 유저가 유효하지 않은 경우
+ * {
+ *  "status": 404,
+ *  "message": "유저가 존재하지 않습니다."
+ * }
+ *
+ *
+ * @apiErrorExample Error-Response:
+ * 404 소확행 게시글이 존재하지 않는 경우
+ * {
+ *  "status": 404,
+ *  "message": "글을 불러올 수 없습니다!"
+ * }
+ *
+ *
+ * @apiErrorExample Error-Response:
+ * 500 서버 에러
+ * {
+ *  "status": 500,
+ *  "message": "서버 에러입니다."
+ * }
+ */
+router.delete("/delete/:postId", auth_1.default, async (req, res) => {
+    const result = await smallSatisfactionService_1.default.delete(req.body.user.id, req.params.postId);
     res.json(result);
 });
 module.exports = router;

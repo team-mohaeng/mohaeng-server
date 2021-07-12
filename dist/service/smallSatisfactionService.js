@@ -5,13 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const SmallSatisfaction_1 = __importDefault(require("../models/SmallSatisfaction"));
 const User_1 = __importDefault(require("../models/User"));
+const constant_1 = require("../constant");
 exports.default = {
     write: async (token, dto) => {
         let today = new Date();
         let todayYear = today.getFullYear().toString();
         let todayMonth = (today.getMonth() + 1).toString();
         let todayDay = today.getDate().toString();
-        let smallSatisfactionCount = await SmallSatisfaction_1.default.countDocuments();
         const user = await User_1.default.findOne({ id: token });
         if (!user) {
             const notExistUser = {
@@ -41,7 +41,6 @@ exports.default = {
                 year: todayYear,
                 month: todayMonth,
                 day: todayDay,
-                postId: smallSatisfactionCount,
                 likeCount: 0,
             });
             await smallSatisfaction.save();
@@ -55,6 +54,11 @@ exports.default = {
         }
         catch (err) {
             console.error(err.message);
+            const serverError = {
+                status: 500,
+                message: constant_1.SERVER_ERROR_MESSAGE,
+            };
+            return serverError;
         }
     },
     myDrawer: async (token, year, month) => {
@@ -103,6 +107,11 @@ exports.default = {
         }
         catch (err) {
             console.error(err);
+            const serverError = {
+                status: 500,
+                message: constant_1.SERVER_ERROR_MESSAGE,
+            };
+            return serverError;
         }
     },
     community: async (token, sort) => {
@@ -176,6 +185,11 @@ exports.default = {
         }
         catch (err) {
             console.error(err.message);
+            const serverError = {
+                status: 500,
+                message: constant_1.SERVER_ERROR_MESSAGE,
+            };
+            return serverError;
         }
     },
     detail: async (token, postId) => {
@@ -227,6 +241,11 @@ exports.default = {
         }
         catch (err) {
             console.error(err.message);
+            const serverError = {
+                status: 500,
+                message: constant_1.SERVER_ERROR_MESSAGE,
+            };
+            return serverError;
         }
     },
     like: async (token, postId) => {
@@ -248,14 +267,6 @@ exports.default = {
                 };
                 return notExistSmallSatisfaction;
             }
-            if (smallSatisfaction.likes.filter((like) => like.user.toString() == user._id.toString())
-                .length > 0) {
-                const alreadyLiked = {
-                    status: 400,
-                    message: "이미 좋아요를 눌렀습니다.",
-                };
-                return alreadyLiked;
-            }
             await smallSatisfaction.likes.unshift({ user: user._id });
             await smallSatisfaction.save();
             const responseDTO = {
@@ -266,6 +277,11 @@ exports.default = {
         }
         catch (error) {
             console.error(error.message);
+            const serverError = {
+                status: 500,
+                message: constant_1.SERVER_ERROR_MESSAGE,
+            };
+            return serverError;
         }
     },
     unlike: async (token, postId) => {
@@ -287,14 +303,6 @@ exports.default = {
                 };
                 return notExistSmallSatisfaction;
             }
-            if (smallSatisfaction.likes.filter((like) => like.user.toString() == user._id.toString())
-                .length === 0) {
-                const notExsitLike = {
-                    status: 400,
-                    message: "좋아요를 누르지 않았습니다.",
-                };
-                return notExsitLike;
-            }
             const removeIndex = smallSatisfaction.likes
                 .map((like) => like.user)
                 .indexOf(user._id);
@@ -308,6 +316,46 @@ exports.default = {
         }
         catch (error) {
             console.error(error.message);
+            const serverError = {
+                status: 500,
+                message: constant_1.SERVER_ERROR_MESSAGE,
+            };
+            return serverError;
+        }
+    },
+    delete: async (token, postId) => {
+        try {
+            let postNumber = parseInt(postId);
+            const user = await User_1.default.findOne({ id: token });
+            if (!user) {
+                const notExistUser = {
+                    status: 404,
+                    message: "유저가 존재하지 않습니다.",
+                };
+                return notExistUser;
+            }
+            const smallSatisfaction = await SmallSatisfaction_1.default.findOne({ postId: postNumber });
+            if (!smallSatisfaction) {
+                const notExistSmallSatisfaction = {
+                    status: 404,
+                    message: "소확행이 존재하지 않습니다.",
+                };
+                return notExistSmallSatisfaction;
+            }
+            await smallSatisfaction.remove();
+            const responseDTO = {
+                status: 200,
+                message: "포스트가 삭제되었습니다."
+            };
+            return responseDTO;
+        }
+        catch (error) {
+            console.error(error.message);
+            const serverError = {
+                status: 500,
+                message: constant_1.SERVER_ERROR_MESSAGE,
+            };
+            return serverError;
         }
     },
 };

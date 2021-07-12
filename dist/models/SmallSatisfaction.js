@@ -4,6 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
+const mongoose_auto_increment_1 = __importDefault(require("mongoose-auto-increment"));
+mongoose_1.default.set('useFindAndModify', false);
 const SmallSatisfactionSchema = new mongoose_1.default.Schema({
     user: {
         //_id user object id 값이 들어옴
@@ -28,7 +30,7 @@ const SmallSatisfactionSchema = new mongoose_1.default.Schema({
         default: 0,
     },
     postId: {
-        type: String,
+        type: Number,
         required: true,
     },
     content: {
@@ -70,6 +72,13 @@ const SmallSatisfactionSchema = new mongoose_1.default.Schema({
         type: String,
         required: true,
     },
+});
+mongoose_auto_increment_1.default.initialize(mongoose_1.default.connection);
+SmallSatisfactionSchema.plugin(mongoose_auto_increment_1.default.plugin, {
+    model: 'smallSatisfaction',
+    field: 'postId',
+    startAt: 1,
+    increment: 1
 });
 exports.default = mongoose_1.default.model("SmallSatisfaction", SmallSatisfactionSchema);
 //# sourceMappingURL=SmallSatisfaction.js.map
