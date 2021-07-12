@@ -288,16 +288,6 @@ export default {
         return notExistSmallSatisfaction;
       }
 
-      if (
-        smallSatisfaction.likes.filter((like) => like.user.toString() == user._id.toString())
-          .length > 0
-      ) {
-        const alreadyLiked: IFail = {
-          status: 400,
-          message: "이미 좋아요를 눌렀습니다.",
-        }
-        return alreadyLiked;
-      }
       await smallSatisfaction.likes.unshift({ user: user._id });
       await smallSatisfaction.save();
 
@@ -334,16 +324,6 @@ export default {
         return notExistSmallSatisfaction;
       }
 
-      if (
-        smallSatisfaction.likes.filter((like) => like.user.toString() == user._id.toString())
-          .length === 0
-      ) {
-        const notExsitLike: IFail = {
-          status: 400,
-          message: "좋아요를 누르지 않았습니다.",
-        }
-        return notExsitLike;
-      }
       const removeIndex = smallSatisfaction.likes
         .map((like) => like.user)
         .indexOf(user._id);
