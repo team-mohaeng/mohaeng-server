@@ -97,7 +97,7 @@ export default {
       let myDrawers: Array<myDrawerResponseDTO> =  new Array<myDrawerResponseDTO>();
       myDrawerSmallSatisfactions.forEach((myDrawerSmallSatisfaction) => {
         let liked;
-        if (myDrawerSmallSatisfaction.likes.filter((like) => like.user.toString() === token)
+        if (myDrawerSmallSatisfaction.likes.filter((like) => like.user.toString() == user._id.toString())
             .length > 0
       ) {
         liked = true;
@@ -182,7 +182,7 @@ export default {
       let communityPosts: Array<CommunityResponseDTO> = new Array<CommunityResponseDTO>();
       communitySmallSatisfactions.forEach((communitySmallSatisfaction) => {
         let liked;
-        if (communitySmallSatisfaction.likes.filter((like) => like.user.toString() === token)
+        if (communitySmallSatisfaction.likes.filter((like) => like.user.toString() == user._id.toString())
             .length > 0
       ) {
         liked = true;
@@ -248,7 +248,7 @@ export default {
 
 
       let liked;
-      if (detailSmallSatisfaction.likes.filter((like) => like.user.toString() === user._id)
+      if (detailSmallSatisfaction.likes.filter((like) => like.user.toString() == user._id.toString())
           .length > 0
       ) {
         liked = true;
