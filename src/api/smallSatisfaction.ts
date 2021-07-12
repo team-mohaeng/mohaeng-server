@@ -3,6 +3,7 @@ import upload from "../modules/upload";
 import auth from "../middleware/auth";
 import { SmallSatisfactionWriteRequestDTO } from "../dto/SmallSatisfaction/Write/request/SmallSatisfactionWriteDTO";
 import smallSatisfactionService from "../service/smallSatisfactionService";
+import { IFail } from "../interfaces/IFail";
 
 
 const router = express.Router();
@@ -75,18 +76,30 @@ router.post("/write",
     mainImageUrl = "";
   }
 
+  let response;
+
   if (req.body.hashtags) {
     if ((req.body.hashtags).length>5) {
-      return res.status(404).json({ msg: "해시태그는 5개까지만 넣어주세요!" });
+      const hashtagsExceeded: IFail = {
+        status: 404,
+        message: "해시태그는 5개까지만 넣어주세요!",
+      };
+      response = hashtagsExceeded
     }
-
+    
     req.body.hashtags.forEach((hashtag) => { 
       if (hashtag.length > 7) {
-        return res.status(404).json({ msg: "해시태그는 6글자 이내로 작성해주세요!" });
+        const hashtagExceeded: IFail = {
+          status: 404,
+          message: "해시태그는 6글자 이내로 작성해주세요!",
+        };
+        response = hashtagExceeded
       }
     });
+    if (response) {
+      return res.status(404).json(response);
+    }
   }
-
   const requestDTO: SmallSatisfactionWriteRequestDTO = {
     content: req.body.content,
     moodText: req.body.moodText,
@@ -443,7 +456,7 @@ router.put("/like/:postId", auth, async (req, res) => {
  *  "message": "서버 에러입니다."
  * }
  */
-
+                                                                                                                                                                                                                                                               
 router.put("/unlike/:postId", auth, async (req, res) => {
   const result = await smallSatisfactionService.unlike(req.body.user.id, req.params.postId);
   res.json(result);

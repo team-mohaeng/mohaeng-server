@@ -18,7 +18,6 @@ export default {
     let todayYear = today.getFullYear().toString();
     let todayMonth = (today.getMonth() + 1).toString();
     let todayDay = today.getDate().toString();
-    let smallSatisfactionCount = await SmallSatisfaction.countDocuments();
 
     const user = await User.findOne({ id: token });
 
@@ -59,7 +58,6 @@ export default {
         year: todayYear,
         month: todayMonth,
         day: todayDay,
-        postId: smallSatisfactionCount,
         likeCount: 0,
       });
       
