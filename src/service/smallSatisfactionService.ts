@@ -6,8 +6,10 @@ import SmallSatisfactionMyDrawerResponseDTO, { myDrawerResponseDTO } from "../dt
 import SmallSatisfactionCommunityResponseDTO, { CommunityResponseDTO } from "../dto/SmallSatisfaction/Community/response/SmallSatisfactionCommunityResponseDTO";
 import SmallSatisfactionDetailResponseDTO from "../dto/SmallSatisfaction/Detail/response/SmallSatisfactionDetailResponseDTO";
 import { LikeResponseDTO } from "../dto/SmallSatisfaction/Like/response/LikeResponseDTO";
+import { DeleteResponseDTO } from "../dto/SmallSatisfaction/Delete/response/DeleteResponseDTO";
 import { IFail } from "../interfaces/IFail";
 import { SERVER_ERROR_MESSAGE } from "../constant";
+
 
 
 export default {
@@ -361,6 +363,46 @@ export default {
       const responseDTO: LikeResponseDTO = {
         status: 200,
         message: "좋아요 취소 성공!"
+      }
+      return responseDTO;
+
+    } catch (error) {
+      console.error(error.message);
+      const serverError: IFail = {
+        status: 500,
+        message: SERVER_ERROR_MESSAGE,
+      };
+      return serverError;
+    }
+  },
+  delete: async (token: String, postId: string) => {
+    try {
+      let postNumber = parseInt(postId);
+      const user = await User.findOne({ id: token });
+
+      if (!user) {
+        const notExistUser: IFail = {
+          status: 404,
+          message: "유저가 존재하지 않습니다.",
+        };
+        return notExistUser
+      }
+
+      const smallSatisfaction = await SmallSatisfaction.findOne({ postId: postNumber });
+
+      if (!smallSatisfaction) {
+        const notExistSmallSatisfaction: IFail = {
+          status: 404,
+          message: "소확행이 존재하지 않습니다.",
+        };
+        return notExistSmallSatisfaction;
+      }
+
+      await smallSatisfaction.remove();
+      
+      const responseDTO: DeleteResponseDTO = {
+        status: 200,
+        message: "포스트가 삭제되었습니다."
       }
       return responseDTO;
 
