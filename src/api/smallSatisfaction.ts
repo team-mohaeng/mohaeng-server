@@ -164,7 +164,7 @@ router.post("/write",
  *	}
  * }
  * 
-  * @apiErrorExample Eroor-Response:
+  * @apiErrorExample Error-Response:
  * 404 유저가 유효하지 않은 경우
  * {
  *  "status": 404,
@@ -258,7 +258,7 @@ router.get("/myDrawer/:year/:month", auth, async (req, res) => {
  * 
  * 
  * 
- * @apiErrorExample Eroor-Response:
+ * @apiErrorExample Error-Response:
  * 404 유저가 유효하지 않은 경우
  * {
  *  "status": 404,
@@ -326,7 +326,7 @@ router.get("/community/:sort", auth, async (req, res) => {
  * }
  * 
  * 
-  * @apiErrorExample Eroor-Response:
+  * @apiErrorExample Error-Response:
  * 404 유저가 유효하지 않은 경우
  * {
  *  "status": 404,
@@ -365,11 +365,12 @@ router.get("/detail/:postId", auth, async (req, res) => {
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
  * {
- *  "status": 200
+ *  "status": 200,
+ *  "message": "좋아요 성공!"
  * }
  * 
  * 
- * @apiErrorExample Eroor-Response:
+ * @apiErrorExample Error-Response:
  * 404 유저가 유효하지 않은 경우
  * {
  *  "status": 404,
@@ -414,11 +415,12 @@ router.put("/like/:postId", auth, async (req, res) => {
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
  * {
- *  "status": 200
+ *  "status": 200,
+ *  "message": "좋아요 취소 성공!"
  * }
  * 
  * 
- * @apiErrorExample Eroor-Response:
+ * @apiErrorExample Error-Response:
  * 404 유저가 유효하지 않은 경우
  * {
  *  "status": 404,
@@ -446,6 +448,58 @@ router.put("/unlike/:postId", auth, async (req, res) => {
   const result = await smallSatisfactionService.unlike(req.body.user.id, req.params.postId);
   res.json(result);
 });
+
+/**
+ * @api {delete} /api/smallSatisfaction/delete/:postId 소확행 포스트 삭제
+ * 
+ * @apiVersion 1.0.0
+ * @apiName smallSatisfactionUnlike
+ * @apiGroup 소확행
+ * 
+ * @apiHeaderExample {json} Header-Example:
+ * {
+ *  "Content-Type": "application/json"
+ *  "Bearer": "jwt"
+ * }
+ * 
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * 200 OK
+ * {
+ *  "status": 200,
+ *  "message" "포스트가 삭제되었습니다."
+ * }
+ * 
+ * 
+ * @apiErrorExample Error-Response:
+ * 404 유저가 유효하지 않은 경우
+ * {
+ *  "status": 404,
+ *  "message": "유저가 존재하지 않습니다."
+ * }
+ * 
+ * 
+ * @apiErrorExample Error-Response:
+ * 404 소확행 게시글이 존재하지 않는 경우
+ * {
+ *  "status": 404,
+ *  "message": "글을 불러올 수 없습니다!"
+ * }
+ * 
+ * 
+ * @apiErrorExample Error-Response:
+ * 500 서버 에러
+ * {
+ *  "status": 500,
+ *  "message": "서버 에러입니다."
+ * }
+ */
+
+router.delete("/delete/:postId", auth, async (req, res) => {
+  const result = await smallSatisfactionService.delete(req.body.user.id, req.params.postId);
+  res.json(result);
+});
+
 
 module.exports = router;
 
