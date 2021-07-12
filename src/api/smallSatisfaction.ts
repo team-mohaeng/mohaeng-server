@@ -268,7 +268,7 @@ router.get("/community/:sort", auth, async (req, res) => {
  * 
  * @apiVersion 1.0.0
  * @apiName smallSatisfactionDetail
- * @apiGroup SmallSatisfaction
+ * @apiGroup 소확행
  * 
  * @apiHeaderExample {json} Header-Example:
  * {
