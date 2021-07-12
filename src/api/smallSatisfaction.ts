@@ -268,7 +268,7 @@ router.get("/community/:sort", auth, async (req, res) => {
  * 
  * @apiVersion 1.0.0
  * @apiName smallSatisfactionDetail
- * @apiGroup SmallSatisfaction
+ * @apiGroup 소확행
  * 
  * @apiHeaderExample {json} Header-Example:
  * {
@@ -321,4 +321,73 @@ router.get("/detail/:postId", auth, async (req, res) => {
   res.status(result.status).json(result);
 });
 
+/**
+ * @api {put} /api/smallSatisfaction/like/:postId 소확행 좋아요
+ * 
+ * @apiVersion 1.0.0
+ * @apiName smallSatisfactionLike
+ * @apiGroup 소확행
+ * 
+ * @apiHeaderExample {json} Header-Example:
+ * {
+ *  "Content-Type": "application/json"
+ *  "Bearer": "jwt"
+ * }
+ * 
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * 200 OK
+ * {
+ *  "status": 200
+ * }
+ * 
+ * 
+ * @apiErrorExample Error-Response:
+ * 500 서버 에러
+ * {
+ *  "status": 500,
+ *  "message": "서버 에러입니다."
+ * }
+ */
+
+router.put("/like/:postId", auth, async (req, res) => {
+  const result = await smallSatisfactionService.like(req.body.user.id, req.params.postId);
+  res.json(result);
+});
+
+/**
+ * @api {put} /api/smallSatisfaction/unlike/:postId 소확행 좋아요 취소
+ * 
+ * @apiVersion 1.0.0
+ * @apiName smallSatisfactionUnlike
+ * @apiGroup 소확행
+ * 
+ * @apiHeaderExample {json} Header-Example:
+ * {
+ *  "Content-Type": "application/json"
+ *  "Bearer": "jwt"
+ * }
+ * 
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * 200 OK
+ * {
+ *  "status": 200
+ * }
+ * 
+ * 
+ * @apiErrorExample Error-Response:
+ * 500 서버 에러
+ * {
+ *  "status": 500,
+ *  "message": "서버 에러입니다."
+ * }
+ */
+
+router.put("/unlike/:postId", auth, async (req, res) => {
+  const result = await smallSatisfactionService.unlike(req.body.user.id, req.params.postId);
+  res.json(result);
+});
+
 module.exports = router;
+
