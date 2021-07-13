@@ -97,7 +97,7 @@ export default {
       let myDrawers: Array<myDrawerResponseDTO> =  new Array<myDrawerResponseDTO>();
       myDrawerSmallSatisfactions.forEach((myDrawerSmallSatisfaction) => {
         let liked;
-        if (myDrawerSmallSatisfaction.likes.filter((like) => like.user.toString() === token)
+        if (myDrawerSmallSatisfaction.likes.filter((like) => like.user.toString() == user._id.toString())
             .length > 0
       ) {
         liked = true;
@@ -155,15 +155,22 @@ export default {
       let todayYear = today.getFullYear().toString();
       let todayMonth = (today.getMonth() + 1).toString();
       let todayDay = today.getDate().toString();
+      
 
-      let hasSmallSatisfaction = await SmallSatisfaction.findOne({ year: todayYear, month: todayMonth, day: todayDay, user: user._id });
+      //0: 소확행 작성 불가능
+      //1: 소확행 작성 가능
+      //2: 소확행 작성 완료
+      let userSmallSatisfaction = await SmallSatisfaction.findOne({ year: todayYear, month: todayMonth, day: todayDay, user: user._id });
       user.courses.forEach((course) => {
         course.challenges.forEach((challenge) => {
-          if ((challenge.situation === 2) && (!hasSmallSatisfaction)) {
-            smallSatisfactionWritten = false;                               
+          if ((challenge.situation === 0) || (challenge.situation === 1)) {
+            smallSatisfactionWritten = 0;
           }
-          else {
-            smallSatisfactionWritten = true;
+          if ((challenge.situation === 2) && (!userSmallSatisfaction)) {
+            smallSatisfactionWritten = 1;
+          }
+          if (userSmallSatisfaction) {
+            smallSatisfactionWritten = 2;
           }
         });
       });
@@ -182,7 +189,7 @@ export default {
       let communityPosts: Array<CommunityResponseDTO> = new Array<CommunityResponseDTO>();
       communitySmallSatisfactions.forEach((communitySmallSatisfaction) => {
         let liked;
-        if (communitySmallSatisfaction.likes.filter((like) => like.user.toString() === token)
+        if (communitySmallSatisfaction.likes.filter((like) => like.user.toString() == user._id.toString())
             .length > 0
       ) {
         liked = true;
@@ -246,9 +253,8 @@ export default {
           return notExistSatisfaction;
       }
 
-
       let liked;
-      if (detailSmallSatisfaction.likes.filter((like) => like.user.toString() === user._id)
+      if (detailSmallSatisfaction.likes.filter((like) => like.user.toString() == user._id.toString())
           .length > 0
       ) {
         liked = true;

@@ -20,7 +20,7 @@ define({ "api": [
         "Success 200": [
           {
             "group": "Success 200",
-            "type": "Boolean",
+            "type": "Number",
             "optional": false,
             "field": "hasSmallSatisfaction",
             "description": ""
@@ -34,100 +34,28 @@ define({ "api": [
           },
           {
             "group": "Success 200",
-            "type": "Array",
-            "optional": true,
-            "field": "smallSatisfactions",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
+            "type": "Object",
             "optional": false,
-            "field": "postId",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "moodImage",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "mainImage",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "Array",
-            "optional": true,
-            "field": "hashtags",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "content",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "likeCount",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "Boolean",
-            "optional": false,
-            "field": "hasLike",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "nickname",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "year",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "month",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "day",
-            "description": ""
+            "field": "community",
+            "description": "<p>포함 속성은 하단 코드 참조</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "200 OK\n{\n\t\"status\": 200,\n\t\"data\": {\n\t\t\t\"hasSmallSaisfacion\": false\n\t\t\t\"userCount\": 64\n\t\t\t\"smallSatisfactions\": [\n\t\t\t{\n\t\t\t\t\"postId\": 1,\n       \"nickname\": \"시원스쿨\",\n       \"moodImage\": \"무드이미지.png\",\n\t\t\t\t\"mainImage\": \"메인이미지.png\",\n\t\t\t\t\"hashtags\": [\"#해쉬태그1\", \"#해쉬태그2\", ... ],\n\t\t\t\t\"content\": \"맛있는 피자에 시원한 맥주 ... \",\n\t\t\t\t\"likeCount\": 72,\n\t\t\t\t\"hasLike\": true,\n\t\t\t\t\"year\": \"2021\",\n       \"month\": \"7\",\n       \"day\": \"11\",\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"postId\": 1,\n       \"nickname\": \"시원스쿨\",\n       \"moodImage\": \"무드이미지.png\",\n\t\t\t\t\"mainImage\": \"메인이미지.png\",\n\t\t\t\t\"hashtags\": [\"#해쉬태그1\", \"#해쉬태그2\", ... ],\n\t\t\t\t\"content\": \"맛있는 피자에 시원한 맥주 ... \",\n\t\t\t\t\"likeCount\": 72,\n\t\t\t\t\"hasLike\": true,\n\t\t\t\t\"year\": \"2021\",\n       \"month\": \"7\",\n       \"day\": \"11\",\n\t\t\t},\n\t\t...\n\t\t]\n\t}\n}",
+          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"hasSmallSatisfaction\": 2,\n   \"userCount\": 64,\n   \"smallSatisfactions\": [\n     {\n       \"postId\": 1,\n       \"moodImage\": \"moodImage.png\",\n       \"mainImage\": \"mainImage.png\",\n       \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n       \"content\": \"맛있는 피자에 시원한 맥주\",\n       \"likeCount\": 72,\n       \"hasLike\": false,\n       \"nickname\": \"시원스쿨\",\n       \"year\": \"2021\",\n       \"month\": \"7\",\n       \"day\": \"13\"\n     },\n     {\n       \"postId\": 2,\n       \"moodImage\": \"moodImage.png\",\n       \"mainImage\": \"mainImage.png\",\n       \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n       \"content\": \"맛있는 피자에 시원한 맥주\",\n       \"likeCount\": 72,\n       \"hasLike\": false,\n       \"nickname\": \"시원스쿨\",\n       \"year\": \"2021\",\n       \"month\": \"7\",\n       \"day\": \"13\"\n     }\n   ]\n }\n}",
           "type": "json"
         }
       ]
     },
     "error": {
       "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "404 유저가 유효하지 않은 경우\n{\n \"status\": 404,\n \"message\": \"유저가 존재하지 않습니다.\"\n}",
+          "type": "json"
+        },
         {
           "title": "Error-Response:",
           "content": "500 서버 에러\n{\n \"status\": 400,\n \"message\": \"서버 에러입니다.\"\n}",
@@ -248,6 +176,11 @@ define({ "api": [
       "examples": [
         {
           "title": "Error-Response:",
+          "content": "404 유저가 유효하지 않은 경우\n{\n \"status\": 404,\n \"message\": \"유저가 존재하지 않습니다.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
           "content": "500 서버 에러\n{\n \"status\": 500,\n \"message\": \"서버 에러입니다.\"\n}",
           "type": "json"
         }
@@ -276,13 +209,23 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "200 OK\n{\n \"status\": 200\n}",
+          "content": "200 OK\n{\n \"status\": 200,\n \"message\": \"좋아요 성공!\"\n}",
           "type": "json"
         }
       ]
     },
     "error": {
       "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "404 유저가 유효하지 않은 경우\n{\n \"status\": 404,\n \"message\": \"유저가 존재하지 않습니다.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "404 소확행 게시글이 존재하지 않는 경우\n{\n \"status\": 404,\n \"message\": \"글을 불러올 수 없습니다!\"\n}",
+          "type": "json"
+        },
         {
           "title": "Error-Response:",
           "content": "500 서버 에러\n{\n \"status\": 500,\n \"message\": \"서버 에러입니다.\"\n}",
@@ -314,100 +257,28 @@ define({ "api": [
         "Success 200": [
           {
             "group": "Success 200",
-            "type": "Array",
-            "optional": true,
+            "type": "Object",
+            "optional": false,
             "field": "myDrawerSmallSatisfactions",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "postId",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "moodImage",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "mainImage",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "Array",
-            "optional": false,
-            "field": "hashtags",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "content",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "likeCount",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "Boolean",
-            "optional": false,
-            "field": "hasLike",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "nickname",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "year",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "month",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "day",
-            "description": ""
+            "description": "<p>포함 속성은 하단 코드 참조</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "200 OK\n{\n\t\"status\": 200,\n\t\"data\": {\n\t\t\t\"myDrawerSmallSatisfactions\": [\n\t\t\t{\n\t\t\t\t\"postId\": 1,\n       \"nickname\": \"시원스쿨\",\n       \"moodImage\": \"무드이미지.png\",\n\t\t\t\t\"mainImage\": \"메인이미지.png\",\n\t\t\t\t\"hashtags\": [\"#해쉬태그1\", \"#해쉬태그2\", ... ],\n\t\t\t\t\"content\": \"맛있는 피자에 시원한 맥주 ... \",\n\t\t\t\t\"likeCount\": 72,\n\t\t\t\t\"hasLike\": true,\n\t\t\t\t\"year\": \"2021\",\n       \"month\": \"7\",\n       \"day\": \"11\",\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"postId\": 1,\n       \"nickname\": \"시원스쿨\",\n       \"moodImage\": \"무드이미지.png\",\n\t\t\t\t\"mainImage\": \"메인이미지.png\",\n\t\t\t\t\"hashtags\": [\"#해쉬태그1\", \"#해쉬태그2\", ... ],\n\t\t\t\t\"content\": \"맛있는 피자에 시원한 맥주 ... \",\n\t\t\t\t\"likeCount\": 72,\n\t\t\t\t\"hasLike\": true,\n\t\t\t\t\"year\": \"2021\",\n       \"month\": \"7\",\n       \"day\": \"11\",\n\t\t\t},\n\t\t...\n\t\t]\n\t}\n}",
+          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"myDrawerSmallSatisfactions\": [\n     {\n       \"postId\": 1,\n       \"moodImage\": \"moodImage.png\",\n       \"mainImage\": \"mainImage.png\",\n       \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n       \"content\": \"맛있는 피자에 시원한 맥주\",\n       \"likeCount\": 72,\n       \"hasLike\": false,\n       \"nickname\": \"시원스쿨\",\n       \"year\": \"2021\",\n       \"month\": \"7\",\n       \"day\": \"13\"\n     },\n     {\n       \"postId\": 2,\n       \"moodImage\": \"moodImage.png\",\n       \"mainImage\": \"mainImage.png\",\n       \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n       \"content\": \"맛있는 피자에 시원한 맥주\",\n       \"likeCount\": 72,\n       \"hasLike\": false,\n       \"nickname\": \"시원스쿨\",\n       \"year\": \"2021\",\n       \"month\": \"7\",\n       \"day\": \"13\"\n     }\n   ]\n }\n}",
           "type": "json"
         }
       ]
     },
     "error": {
       "examples": [
+        {
+          "title": "Error-Resopnse:",
+          "content": "404 유저가 유효하지 않은 경우\n{\n \"status\": 404,\n \"message\": \"유저가 존재하지 않습니다.\"\n}",
+          "type": "json"
+        },
         {
           "title": "Error-Response:",
           "content": "500 서버 에러\n{\n \"status\": 500,\n \"message\": \"서버 에러입니다.\"\n}",
@@ -438,13 +309,70 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "200 OK\n{\n \"status\": 200\n}",
+          "content": "200 OK\n{\n \"status\": 200,\n \"message\": \"좋아요 취소 성공!\"\n}",
           "type": "json"
         }
       ]
     },
     "error": {
       "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "404 유저가 유효하지 않은 경우\n{\n \"status\": 404,\n \"message\": \"유저가 존재하지 않습니다.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "404 소확행 게시글이 존재하지 않는 경우\n{\n \"status\": 404,\n \"message\": \"글을 불러올 수 없습니다!\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "500 서버 에러\n{\n \"status\": 500,\n \"message\": \"서버 에러입니다.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/api/smallSatisfaction.ts",
+    "groupTitle": "소확행"
+  },
+  {
+    "type": "delete",
+    "url": "/api/smallSatisfaction/delete/:postId",
+    "title": "소확행 포스트 삭제",
+    "version": "1.0.0",
+    "name": "smallSatisfactionUnlike",
+    "group": "소확행",
+    "header": {
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n \"Content-Type\": \"application/json\"\n \"Bearer\": \"jwt\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "200 OK\n{\n \"status\": 200,\n \"message\" \"포스트가 삭제되었습니다.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "404 유저가 유효하지 않은 경우\n{\n \"status\": 404,\n \"message\": \"유저가 존재하지 않습니다.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "404 소확행 게시글이 존재하지 않는 경우\n{\n \"status\": 404,\n \"message\": \"글을 불러올 수 없습니다!\"\n}",
+          "type": "json"
+        },
         {
           "title": "Error-Response:",
           "content": "500 서버 에러\n{\n \"status\": 500,\n \"message\": \"서버 에러입니다.\"\n}",

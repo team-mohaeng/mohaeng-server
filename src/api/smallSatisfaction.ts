@@ -127,57 +127,45 @@ router.post("/write",
  * }
  * 
  *
- * @apiSuccess {Array} [myDrawerSmallSatisfactions]
- * @apiSuccess {Number} postId
- * @apiSuccess {String} moodImage
- * @apiSuccess {String} mainImage
- * @apiSuccess {Array} hashtags
- * @apiSuccess {String} content
- * @apiSuccess {Number} likeCount
- * @apiSuccess {Boolean} hasLike
- * @apiSuccess {String} nickname
- * @apiSuccess {String} year
- * @apiSuccess {String} month
- * @apiSuccess {String} day
+ * @apiSuccess {Object} myDrawerSmallSatisfactions 포함 속성은 하단 코드 참조
  * 
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
  * {
- *	"status": 200,
- *	"data": {
- *			"myDrawerSmallSatisfactions": [
- *			{
- *				"postId": 1,
+ *  "status": 200,
+ *  "data": {
+ *    "myDrawerSmallSatisfactions": [
+ *      {
+ *        "postId": 1,
+ *        "moodImage": "moodImage.png",
+ *        "mainImage": "mainImage.png",
+ *        "hashtags": ["#해시태그1", "#해시태그2", ... ],
+ *        "content": "맛있는 피자에 시원한 맥주",
+ *        "likeCount": 72,
+ *        "hasLike": false,
  *        "nickname": "시원스쿨",
- *        "moodImage": "무드이미지.png",
- *				"mainImage": "메인이미지.png",
- *				"hashtags": ["#해쉬태그1", "#해쉬태그2", ... ],
- *				"content": "맛있는 피자에 시원한 맥주 ... ",
- *				"likeCount": 72,
- *				"hasLike": true,
- *				"year": "2021",
+ *        "year": "2021",
  *        "month": "7",
- *        "day": "11",
- *			},
- *			{
- *				"postId": 1,
+ *        "day": "13"
+ *      },
+ *      {
+ *        "postId": 2,
+ *        "moodImage": "moodImage.png",
+ *        "mainImage": "mainImage.png",
+ *        "hashtags": ["#해시태그1", "#해시태그2", ... ],
+ *        "content": "맛있는 피자에 시원한 맥주",
+ *        "likeCount": 72,
+ *        "hasLike": false,
  *        "nickname": "시원스쿨",
- *        "moodImage": "무드이미지.png",
- *				"mainImage": "메인이미지.png",
- *				"hashtags": ["#해쉬태그1", "#해쉬태그2", ... ],
- *				"content": "맛있는 피자에 시원한 맥주 ... ",
- *				"likeCount": 72,
- *				"hasLike": true,
- *				"year": "2021",
+ *        "year": "2021",
  *        "month": "7",
- *        "day": "11",
- *			},
- *		...
- *		]
- *	}
+ *        "day": "13"
+ *      }
+ *    ]
+ *  }
  * }
  * 
-  * @apiErrorExample Error-Response:
+ * @apiErrorExample Error-Resopnse:
  * 404 유저가 유효하지 않은 경우
  * {
  *  "status": 404,
@@ -214,59 +202,47 @@ router.get("/myDrawer/:year/:month", auth, async (req, res) => {
  * }
  * 
  *
- * @apiSuccess {Boolean} hasSmallSatisfaction
+ * @apiSuccess {Number} hasSmallSatisfaction
  * @apiSuccess {Number} userCount
- * @apiSuccess {Array} [smallSatisfactions]
- * @apiSuccess {Number} postId
- * @apiSuccess {String} moodImage
- * @apiSuccess {String} mainImage
- * @apiSuccess {Array} [hashtags]
- * @apiSuccess {String} content
- * @apiSuccess {Number} likeCount
- * @apiSuccess {Boolean} hasLike
- * @apiSuccess {String} nickname
- * @apiSuccess {String} year
- * @apiSuccess {String} month
- * @apiSuccess {String} day
+ * @apiSuccess {Object} community 포함 속성은 하단 코드 참조
  * 
  * 
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
  * {
- *	"status": 200,
- *	"data": {
- *			"hasSmallSaisfacion": false
- *			"userCount": 64
- *			"smallSatisfactions": [
- *			{
- *				"postId": 1,
+ *  "status": 200,
+ *  "data": {
+ *    "hasSmallSatisfaction": 2,
+ *    "userCount": 64,
+ *    "smallSatisfactions": [
+ *      {
+ *        "postId": 1,
+ *        "moodImage": "moodImage.png",
+ *        "mainImage": "mainImage.png",
+ *        "hashtags": ["#해시태그1", "#해시태그2", ... ],
+ *        "content": "맛있는 피자에 시원한 맥주",
+ *        "likeCount": 72,
+ *        "hasLike": false,
  *        "nickname": "시원스쿨",
- *        "moodImage": "무드이미지.png",
- *				"mainImage": "메인이미지.png",
- *				"hashtags": ["#해쉬태그1", "#해쉬태그2", ... ],
- *				"content": "맛있는 피자에 시원한 맥주 ... ",
- *				"likeCount": 72,
- *				"hasLike": true,
- *				"year": "2021",
+ *        "year": "2021",
  *        "month": "7",
- *        "day": "11",
- *			},
- *			{
- *				"postId": 1,
+ *        "day": "13"
+ *      },
+ *      {
+ *        "postId": 2,
+ *        "moodImage": "moodImage.png",
+ *        "mainImage": "mainImage.png",
+ *        "hashtags": ["#해시태그1", "#해시태그2", ... ],
+ *        "content": "맛있는 피자에 시원한 맥주",
+ *        "likeCount": 72,
+ *        "hasLike": false,
  *        "nickname": "시원스쿨",
- *        "moodImage": "무드이미지.png",
- *				"mainImage": "메인이미지.png",
- *				"hashtags": ["#해쉬태그1", "#해쉬태그2", ... ],
- *				"content": "맛있는 피자에 시원한 맥주 ... ",
- *				"likeCount": 72,
- *				"hasLike": true,
- *				"year": "2021",
+ *        "year": "2021",
  *        "month": "7",
- *        "day": "11",
- *			},
- *		...
- *		]
- *	}
+ *        "day": "13"
+ *      }
+ *    ]
+ *  }
  * }
  * 
  * 
