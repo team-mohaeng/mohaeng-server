@@ -4,7 +4,7 @@ import { IHashtag } from "../../../../interfaces/IHashtag";
 export default interface SmallSatisfactionCommunityResponseDTO {
 	status: number;
 	data: {
-		hasSmallSatisfaction: boolean;
+		hasSmallSatisfaction: number;
   	userCount: number;
   	community: CommunityResponseDTO[];
 	}
