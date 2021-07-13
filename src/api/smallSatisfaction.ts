@@ -9,10 +9,58 @@ import { IFail } from "../interfaces/IFail";
 const router = express.Router();
 
 /**
- * @api {post} /api/smallSatisfaction/write 소확행 작성
+ * @api {get} /api/smallSatisfaction/create 소확행 작성
  * 
  * @apiVersion 1.0.0
- * @apiName writeSmallSatisfaction
+ * @apiName createSmallSatisfaction
+ * @apiGroup 소확행
+ * 
+ * @apiHeaderExample {json} Header-Example:
+ * {
+ *  "Content-Type": "application/json"
+ *  "Bearer": "jwt"
+ * }
+ * 
+ * @apiSuccess {String} year
+ * @apiSuccess {String} month
+ * @apiSuccess {String} date
+ * @apiSuccess {String} day
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * 200 OK
+ * {
+ *  "status": 200,
+ *  "data": {
+ *    "year": "2021",
+ *    "month": "7",
+ *    "date": "14",
+ *    "day": "수"
+ *  }
+ * }
+ *  
+ * 
+ * 
+ * @apiErrorExample Error-Response:
+ * 500 서버 에러
+ * {
+ *  "status": 500,
+ *  "message": "서버 에러입니다."
+ * }
+ */
+
+
+router.get("/create", auth, async (req, res) => {
+  const result = await smallSatisfactionService.create();
+  res.status(result.status).json(result);
+});
+
+
+
+/**
+ * @api {post} /api/smallSatisfaction/write 소확행 작성 완료
+ * 
+ * @apiVersion 1.0.0
+ * @apiName SmallSatisfactionWrite
  * @apiGroup 소확행
  * 
  * @apiHeaderExample {json} Header-Example:
@@ -55,7 +103,7 @@ const router = express.Router();
  * }
  */
 
-router.post("/write", 
+router.post("/write",
   upload.fields([
     { name: 'moodImage', maxCount: 1 },
     { name: 'mainImage', maxCount: 1 },
@@ -156,7 +204,7 @@ router.post("/write",
  *          "content": "맛있는 피자에 시원한 맥주 ... ",
  *          "likeCount": 72,
  *          "hasLike": true,
- *          "year": "2021",
+ *          "year": "2021", 
  *          "month": "7",
  *          "day": "11"
  *         },
@@ -393,7 +441,7 @@ router.get("/detail/:postId", auth, async (req, res) => {
 
 router.put("/like/:postId", auth, async (req, res) => {
   const result = await smallSatisfactionService.like(req.body.user.id, req.params.postId);
-  res.json(result);
+  res.status(result.status).json(result);
 });
 
 /**
@@ -444,7 +492,7 @@ router.put("/like/:postId", auth, async (req, res) => {
                                                                                                                                                                                                                                                                
 router.put("/unlike/:postId", auth, async (req, res) => {
   const result = await smallSatisfactionService.unlike(req.body.user.id, req.params.postId);
-  res.json(result);
+  res.status(result.status).json(result);
 });
 
 /**
@@ -495,7 +543,7 @@ router.put("/unlike/:postId", auth, async (req, res) => {
 
 router.delete("/delete/:postId", auth, async (req, res) => {
   const result = await smallSatisfactionService.delete(req.body.user.id, req.params.postId);
-  res.json(result);
+  res.status(result.status).json(result);
 });
 
 
