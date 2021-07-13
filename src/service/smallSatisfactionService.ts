@@ -46,9 +46,6 @@ export default {
     }
 
 
-
-
-
   },
   write: async (token: String, dto: SmallSatisfactionWriteRequestDTO) => {
     let today = new Date();
