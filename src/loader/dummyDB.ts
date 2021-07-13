@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import config from "../config";
 import UserD from "../dummyModels/UserD";
-import Course from "../models/Course";
+import CourseD from "../dummyModels/CourseD"
 import SmallSatisfactionD from "../dummyModels/SmallSatisfactionD";
 
 const connectDB = async () => {
@@ -17,7 +17,7 @@ const connectDB = async () => {
     // UserD.createCollection().then(function(collection) {
     //   console.log('User Collection is created!');
     // });
-    // Course.createCollection().then(function(collection) {
+    // CourseD.createCollection().then(function(collection) {
     //   console.log('Course Collection is created!');
     // });
     // SmallSatisfactionD.createCollection().then(function(collection) {
