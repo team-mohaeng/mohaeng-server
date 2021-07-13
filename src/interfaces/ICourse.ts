@@ -5,6 +5,6 @@ export interface ICourse {
   title: string;
   description: string;
   totalDays: number;
-  property: string;
+  property: number;
   challenges: [IChallenge];
 }

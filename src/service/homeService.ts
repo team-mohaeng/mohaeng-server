@@ -8,7 +8,52 @@ export default {
   reHome: async (token: String) => {
     let user, userCourse, dummyCourse;
 
-    const userPromise = new Promise( async (resolve, reject) => {
+    const promiseOne = new Promise( async (resolve, reject) => {
+      User.findOne({ id: token })
+      .populate({
+        path: "courses",
+        populate: {
+          path: "course",
+          select: "title description totalDays property challenges.title challenges.description challenges.totalStamp challenges.userMents"
+        }
+      })
+      .then((user) => {
+        user = user;
+        userCourse = user.courses.find((course) => course.situation === 1);
+      });
+
+      if (!user) {
+        const notExistUser: IFail = {
+          status: 404,
+          message: "유저가 존재하지 않습니다.",
+        };
+        reject(notExistUser);
+      }
+
+      if (!userCourse) {
+        const notProgressUser: HomeResponseDTO = {
+          status: 200,
+          data: {
+            situation: user.situation,
+            affinity: user.affinity
+          }
+        };
+        reject(notProgressUser);
+      }
+
+      resolve("success");
+    });
+
+    const promiseTwo = new Promise ( async (resolve, reject) => {
+      dummyCourse = Course.find({ id: userCourse.id });
+
+      userCourse.challenges.forEach((challenge) => {
+        const dummyChallenge = dummyCourse.challenges[challenge.id - 1];
+
+      })
+    } )
+
+    const promise1 = new Promise( async (resolve, reject) => {
       const userP = await User.findOne({ id: token });
       if (!userP) {
         const notExistUser: IFail = {
@@ -36,7 +81,7 @@ export default {
     } );
 
     let userChallengeArray: Array<HomeChallengeResponseDTO> = new Array<HomeChallengeResponseDTO>();
-    const coursePromise = new Promise ( async (resolve, reject) => {
+    const promise2 = new Promise ( async (resolve, reject) => {
       const courseP = await Course.find();
       const dummyCourseP = courseP.find((course) => course.id === userCourse.id);
       dummyCourse = dummyCourseP;
@@ -65,7 +110,7 @@ export default {
     } );
 
     let response;
-    await Promise.all([userPromise, coursePromise])
+    await Promise.all([promise1, promise2])
           .then((data) => {
             const responseDTO: HomeResponseDTO = {
               status: 200,
@@ -87,7 +132,6 @@ export default {
           })
           .catch((err) => {
             response = err;
-            console.log(err);
           });
     return response;
   },
