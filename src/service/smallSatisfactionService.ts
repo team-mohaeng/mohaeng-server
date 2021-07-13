@@ -55,7 +55,6 @@ export default {
     let todayMonth = (today.getMonth() + 1).toString();
     let todayDay = today.getDate().toString();
     let todayWeek = week[days];
-    console.log(todayWeek);
 
     const user = await User.findOne({ id: token });
 
