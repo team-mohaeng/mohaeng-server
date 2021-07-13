@@ -70,6 +70,10 @@ const SmallSatisfactionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  week: {
+    type: String,
+    required: true,
+  }
 });
 
 autoincrement.initialize(mongoose.connection);
