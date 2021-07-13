@@ -57,7 +57,7 @@ router.get("/create", auth, async (req, res) => {
 
 
 /**
- * @api {post} /api/smallSatisfaction/write 소확행 작성 완료
+ * @api {post} /api/smallSatisfaction/write 소확행 작성완료
  * 
  * @apiVersion 1.0.0
  * @apiName SmallSatisfactionWrite
