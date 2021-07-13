@@ -48,10 +48,14 @@ export default {
 
   },
   write: async (token: String, dto: SmallSatisfactionWriteRequestDTO) => {
+    let week = new Array("일", "월", "화", "수", "목", "금", "토");
     let today = new Date();
+    let days = new Date().getDay();
     let todayYear = today.getFullYear().toString();
     let todayMonth = (today.getMonth() + 1).toString();
     let todayDay = today.getDate().toString();
+    let todayWeek = week[days];
+    console.log(todayWeek);
 
     const user = await User.findOne({ id: token });
 
@@ -92,6 +96,7 @@ export default {
         year: todayYear,
         month: todayMonth,
         day: todayDay,
+        week: todayWeek,
         likeCount: 0,
       });
       
@@ -153,6 +158,7 @@ export default {
         year: myDrawerSmallSatisfaction.year,
         month: myDrawerSmallSatisfaction.month,
         day: myDrawerSmallSatisfaction.day,
+        week: myDrawerSmallSatisfaction.week,
       }
       myDrawers.push(responseDTO);
     });
@@ -244,6 +250,7 @@ export default {
         year: communitySmallSatisfaction.year,
         month: communitySmallSatisfaction.month,
         day: communitySmallSatisfaction.day,
+        week: communitySmallSatisfaction.week,
       }
       communityPosts.push(responseDTO);
     });
@@ -314,6 +321,7 @@ export default {
           year: detailSmallSatisfaction.year,
           month: detailSmallSatisfaction.month,
           day: detailSmallSatisfaction.day,
+          week: detailSmallSatisfaction.week,
         }
       }
   
