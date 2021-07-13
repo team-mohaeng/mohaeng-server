@@ -24,6 +24,9 @@ const connectDB = async () => {
     //   console.log('Course Collection is created!');
     // });
 
+    /**
+     * 프로퍼티 숫자로 바뀌었습니다! 주의!
+     */
     // Course.insertMany([
     //   {
     //     "id": 1,

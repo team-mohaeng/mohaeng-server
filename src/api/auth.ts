@@ -76,35 +76,4 @@ router.post(
   }
 );
 
-router.post(
-  "/testing",
-  [
-    check("userId", "이메일 형태가 아닙니다.").isEmail(),
-    check("userPw", "비밀번호는 영문과 숫자를 포함한 8~16자로 입력해주세요.").isAlphanumeric().isLength({ min: 8, max: 16 }),
-    check("nickname", "닉네임은 2~6글자 사이입니다.").isLength({ min: 2, max: 6 }),
-    check("gender", "입력 칸을 채워주세요!").not().isEmpty(),
-    check("birthYear", "입력 칸을 채워주세요!").not().isEmpty(),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ 
-        status: 400,
-        errors: errors.array()
-      });
-    }
-
-    const requestDTO: UserSignUpRequestDTO = {
-      userId: req.body.userId,
-      userPw: req.body.userPw,
-      nickname: req.body.nickname,
-      gender: req.body.gender,
-      birthYear: req.body.birthYear
-    };
-
-    const result = await authService.testing(requestDTO);
-    res.status(result.status).json(result);
-  }
-);
-
 module.exports = router;

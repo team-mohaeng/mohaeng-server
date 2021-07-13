@@ -11,109 +11,7 @@ import { IUserCourse } from "../interfaces/IUserCourse";
 import { IUserChallenge } from "../interfaces/IUsrChallenge";
 import { SERVER_ERROR_MESSAGE } from "../constant";
 
-import UserD from "../dummyModels/UserD";
-import CourseD from "../dummyModels/CourseD";
-import { IUserCourseD } from "../dummyInterfaces/IUserCourseD"
-import { IUserChallengeD } from "../dummyInterfaces/IUserChallengeD"
-
 export default {
-  testing: async (dto: UserSignUpRequestDTO) => {
-    try {
-      const { userId, userPw, nickname, gender, birthYear } = dto;
-
-      let user = await UserD.findOne({ userId });
-      if (user) {
-        const duplicateId: IFail = {
-          status: 400,
-          message: "이미 사용 중인 이메일입니다.",
-        };
-        return duplicateId;
-      }
-
-      user = await UserD.findOne({ nickname });
-      if (user) {
-        const duplicateNickname: IFail = {
-          status: 400,
-          message: "이미 사용 중인 닉네임입니다",
-        };
-        return duplicateNickname;
-      }
-
-      user = new UserD({
-        userId,
-        userPw,
-        nickname,
-        gender,
-        birthYear
-      });
-
-      const courses = await CourseD.find({});
-      let userCourse: Array<IUserCourseD> = new Array<IUserCourseD>();
-
-      courses.forEach((course) => {
-        let userChallenge: Array<IUserChallengeD> = new Array<IUserChallengeD>();
-
-        course.challenges.forEach((challenge) => {
-          userChallenge.push(
-            {
-              id: challenge.id,
-              title: challenge.title,
-              situation: 0,
-              description: challenge.description,
-              currentStamp: 0,
-              totalStamp: challenge.totalStamp,
-              userMents: challenge.userMents
-            }
-          );
-        });
-
-        userCourse.push(
-          {
-            id: course.id,
-            situation: 0,
-            title: course.title,
-            description: course.description,
-            totalDays: course.totalDays,
-            property: course.property,
-            challenges: userChallenge
-          }
-        );
-      });
-      user.courses = userCourse;
-
-      const salt = await bcrypt.genSalt(10);
-      user.userPw = await bcrypt.hash(userPw, salt);
-
-      await user.save();
-
-      const payload = {
-        user: {
-          id: user.id,
-        },
-      };
-
-      const jwtToken = jwt.sign(
-        payload,
-        config.jwtSecret,
-      );
-
-      const responseDTO: UserSignUpResponseDTO = {
-        status: 200,
-        data: {
-          jwt: jwtToken,
-        },
-      };
-
-      return responseDTO;
-    } catch (err) {
-      console.error(err.message);
-      const serverError: IFail = {
-        status: 500,
-        message: SERVER_ERROR_MESSAGE,
-      };
-      return serverError;
-    }
-  },
   signup: async (dto: UserSignUpRequestDTO) => {
     try {
       const { userId, userPw, nickname, gender, birthYear } = dto;
@@ -154,17 +52,24 @@ export default {
           userChallenge.push(
             {
               id: challenge.id,
+              title: challenge.title,
               situation: 0,
-              currentStamp: 0
+              description: challenge.description,
+              currentStamp: 0,
+              totalStamp: challenge.totalStamp,
+              userMents: challenge.userMents
             }
           );
         });
 
         userCourse.push(
           {
-            course: course._id,
             id: course.id,
             situation: 0,
+            title: course.title,
+            description: course.description,
+            totalDays: course.totalDays,
+            property: course.property,
             challenges: userChallenge
           }
         );
