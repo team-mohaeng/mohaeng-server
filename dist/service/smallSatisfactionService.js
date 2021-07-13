@@ -7,11 +7,43 @@ const SmallSatisfaction_1 = __importDefault(require("../models/SmallSatisfaction
 const User_1 = __importDefault(require("../models/User"));
 const constant_1 = require("../constant");
 exports.default = {
-    write: async (token, dto) => {
+    create: async () => {
+        let week = new Array("일", "월", "화", "수", "목", "금", "토");
         let today = new Date();
+        let days = new Date().getDay();
         let todayYear = today.getFullYear().toString();
         let todayMonth = (today.getMonth() + 1).toString();
         let todayDay = today.getDate().toString();
+        let todayWeek = week[days];
+        try {
+            const responseDTO = {
+                status: 200,
+                data: {
+                    year: todayYear,
+                    month: todayMonth,
+                    day: todayDay,
+                    week: todayWeek,
+                }
+            };
+            return responseDTO;
+        }
+        catch (err) {
+            console.error(err.message);
+            const serverError = {
+                status: 500,
+                message: constant_1.SERVER_ERROR_MESSAGE,
+            };
+            return serverError;
+        }
+    },
+    write: async (token, dto) => {
+        let week = new Array("일", "월", "화", "수", "목", "금", "토");
+        let today = new Date();
+        let days = new Date().getDay();
+        let todayYear = today.getFullYear().toString();
+        let todayMonth = (today.getMonth() + 1).toString();
+        let todayDay = today.getDate().toString();
+        let todayWeek = week[days];
         const user = await User_1.default.findOne({ id: token });
         if (!user) {
             const notExistUser = {
@@ -41,6 +73,7 @@ exports.default = {
                 year: todayYear,
                 month: todayMonth,
                 day: todayDay,
+                week: todayWeek,
                 likeCount: 0,
             });
             await smallSatisfaction.save();
@@ -94,6 +127,7 @@ exports.default = {
                     year: myDrawerSmallSatisfaction.year,
                     month: myDrawerSmallSatisfaction.month,
                     day: myDrawerSmallSatisfaction.day,
+                    week: myDrawerSmallSatisfaction.week,
                 };
                 myDrawers.push(responseDTO);
             });
@@ -176,6 +210,7 @@ exports.default = {
                     year: communitySmallSatisfaction.year,
                     month: communitySmallSatisfaction.month,
                     day: communitySmallSatisfaction.day,
+                    week: communitySmallSatisfaction.week,
                 };
                 communityPosts.push(responseDTO);
             });
@@ -241,6 +276,7 @@ exports.default = {
                     year: detailSmallSatisfaction.year,
                     month: detailSmallSatisfaction.month,
                     day: detailSmallSatisfaction.day,
+                    week: detailSmallSatisfaction.week,
                 }
             };
             return responseDTO;

@@ -72,6 +72,10 @@ const SmallSatisfactionSchema = new mongoose_1.default.Schema({
         type: String,
         required: true,
     },
+    week: {
+        type: String,
+        required: true,
+    }
 });
 mongoose_auto_increment_1.default.initialize(mongoose_1.default.connection);
 SmallSatisfactionSchema.plugin(mongoose_auto_increment_1.default.plugin, {
