@@ -12,7 +12,7 @@ export interface myDrawerResponseDTO {
 	postId: number;
 	nickname: string;
 	moodImage: IImage;
-	mainImage: IImage;
+	mainImage?: IImage;
 	likeCount: number;
 	content: string;
 	hasLike: boolean;
