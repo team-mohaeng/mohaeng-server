@@ -193,7 +193,8 @@ router.post("/write",
  *          "hasLike": true,
  *          "year": "2021",
  *          "month": "7",
- *          "day": "11"
+ *          "day": "11",
+ *          "week": "일"
  *        },
  *        {
  *          "postId": 1,
@@ -206,7 +207,8 @@ router.post("/write",
  *          "hasLike": true,
  *          "year": "2021", 
  *          "month": "7",
- *          "day": "11"
+ *          "day": "11",
+ *          "week": "일"
  *         },
  *        ...
  *      ]
@@ -274,7 +276,8 @@ router.get("/myDrawer/:year/:month", auth, async (req, res) => {
  *          "hasLike": true,
  *          "year": "2021",
  *          "month": "7",
- *          "day": "13"
+ *          "day": "13",
+ *          "week": "화"
  *        },
  *        {
  *          "postId": 1,
@@ -287,7 +290,8 @@ router.get("/myDrawer/:year/:month", auth, async (req, res) => {
  *          "hasLike": true,
  *          "year": "2021",
  *          "month": "7",
- *          "day": "13"
+ *          "day": "13",
+ *          "week": "화"
  *        },
  *       ...
  *      ]
@@ -343,6 +347,7 @@ router.get("/community/:sort", auth, async (req, res) => {
  * @apiSuccess {String} year
  * @apiSuccess {String} month
  * @apiSuccess {String} day
+ * @apiSuccess {String} week
  * 
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
@@ -360,6 +365,7 @@ router.get("/community/:sort", auth, async (req, res) => {
  *    "year": "2021",
  *    "month": "6",
  *    "day": "29",
+ *    "week": "화"
  *  }
  * }
  * 
