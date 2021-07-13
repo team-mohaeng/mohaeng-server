@@ -4,7 +4,7 @@ import { ISmallSatisfactionD } from "../dummyInterfaces/ISmallSatisfactionD";
 
 mongoose.set('useFindAndModify', false);
 
-const SmallSatisfactionSchema = new mongoose.Schema({
+const SmallSatisfactionSchemaD = new mongoose.Schema({
   user: {
     //_id user object id 값이 들어옴
     type: mongoose.Types.ObjectId,
@@ -77,11 +77,11 @@ const SmallSatisfactionSchema = new mongoose.Schema({
 });
 
 autoincrement.initialize(mongoose.connection);
-SmallSatisfactionSchema.plugin(autoincrement.plugin, {
+SmallSatisfactionSchemaD.plugin(autoincrement.plugin, {
   model: 'smallSatisfaction',
   field: 'postId',
   startAt: 1,
   increment: 1
 });
 
-export default mongoose.model<ISmallSatisfactionD & mongoose.Document>("SmallSatisfaction", SmallSatisfactionSchema);
+export default mongoose.model<ISmallSatisfactionD & mongoose.Document>("SmallSatisfactionD", SmallSatisfactionSchemaD);

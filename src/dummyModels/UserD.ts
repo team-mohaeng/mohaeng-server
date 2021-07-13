@@ -3,7 +3,7 @@ import { IUserD } from "../dummyInterfaces/IUserD";
 import { IMessageD } from "../dummyInterfaces/IMessageD";
 import { IUserCourseD } from "../dummyInterfaces/IUserCourseD";
 
-const UserSchema = new mongoose.Schema({
+const UserSchemaD = new mongoose.Schema({
   id: {
     type: String,
   },
@@ -174,4 +174,4 @@ const UserSchema = new mongoose.Schema({
   ],
 });
 
-export default mongoose.model<IUserD & mongoose.Document>("User", UserSchema); 
+export default mongoose.model<IUserD & mongoose.Document>("UserD", UserSchemaD); 

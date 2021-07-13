@@ -1,12 +1,14 @@
 import express from "express";
 import connectDB from "./loader/db";
+import dummyDB from "./loader/dummyDB";
 import path from "path";
 
 const app = express();
 const apidocPath = path.join(__dirname, "../apidoc");
 
 // Connect Database
-connectDB();
+// connectDB();
+dummyDB();
 
 app.use(express.json());
 

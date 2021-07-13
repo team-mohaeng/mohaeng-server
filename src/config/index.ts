@@ -27,7 +27,7 @@ export default {
    * That long string from mlab
    */
   mongoURI: process.env.MONGODB_URI,
-  mongoDummyURI: process.env.MONGO_DUMMY_URI,
+  mongoDummyURI: process.env.MONGODB_DUMMY_URI,
 
   deviceToken: process.env.deviceToken,
   
