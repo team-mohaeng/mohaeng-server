@@ -9,10 +9,58 @@ import { IFail } from "../interfaces/IFail";
 const router = express.Router();
 
 /**
- * @api {post} /api/smallSatisfaction/write 소확행 작성
+ * @api {get} /api/smallSatisfaction/create 소확행 작성
  * 
  * @apiVersion 1.0.0
- * @apiName writeSmallSatisfaction
+ * @apiName createSmallSatisfaction
+ * @apiGroup 소확행
+ * 
+ * @apiHeaderExample {json} Header-Example:
+ * {
+ *  "Content-Type": "application/json"
+ *  "Bearer": "jwt"
+ * }
+ * 
+ * @apiSuccess {String} year
+ * @apiSuccess {String} month
+ * @apiSuccess {String} date
+ * @apiSuccess {String} day
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * 200 OK
+ * {
+ *  "status": 200,
+ *  "data": {
+ *    "year": "2021",
+ *    "month": "7",
+ *    "date": "14",
+ *    "day": "수"
+ *  }
+ * }
+ *  
+ * 
+ * 
+ * @apiErrorExample Error-Response:
+ * 500 서버 에러
+ * {
+ *  "status": 500,
+ *  "message": "서버 에러입니다."
+ * }
+ */
+
+
+router.get("/create", auth, async (req, res) => {
+  const result = await smallSatisfactionService.create();
+  res.status(result.status).json(result);
+});
+
+
+
+/**
+ * @api {post} /api/smallSatisfaction/write 소확행 작성완료
+ * 
+ * @apiVersion 1.0.0
+ * @apiName SmallSatisfactionWrite
  * @apiGroup 소확행
  * 
  * @apiHeaderExample {json} Header-Example:
@@ -28,9 +76,8 @@ const router = express.Router();
  *	"content": "소확행 내용",
  *	"hashtags": ["#해시태그1", "#해시태그2", ... ],
  *	"mainImage": "mainImageUrl",
- *	"isPrivate": false 
-    }
- *
+ *	"isPrivate": false
+ * }
  * @apiSuccess {String} image
  * 
  * @apiSuccessExample {json} Success-Response:
@@ -56,7 +103,7 @@ const router = express.Router();
  * }
  */
 
-router.post("/write", 
+router.post("/write",
   upload.fields([
     { name: 'moodImage', maxCount: 1 },
     { name: 'mainImage', maxCount: 1 },
@@ -81,7 +128,7 @@ router.post("/write",
   if (req.body.hashtags) {
     if ((req.body.hashtags).length>5) {
       const hashtagsExceeded: IFail = {
-        status: 404,
+        status: 400,
         message: "해시태그는 5개까지만 넣어주세요!",
       };
       response = hashtagsExceeded
@@ -90,7 +137,7 @@ router.post("/write",
     req.body.hashtags.forEach((hashtag) => { 
       if (hashtag.length > 7) {
         const hashtagExceeded: IFail = {
-          status: 404,
+          status: 400,
           message: "해시태그는 6글자 이내로 작성해주세요!",
         };
         response = hashtagExceeded
@@ -132,40 +179,43 @@ router.post("/write",
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
  * {
- *  "status": 200,
- *  "data": {
- *    "myDrawerSmallSatisfactions": [
- *      {
- *        "postId": 1,
- *        "moodImage": "moodImage.png",
- *        "mainImage": "mainImage.png",
- *        "hashtags": ["#해시태그1", "#해시태그2", ... ],
- *        "content": "맛있는 피자에 시원한 맥주",
- *        "likeCount": 72,
- *        "hasLike": false,
- *        "nickname": "시원스쿨",
- *        "year": "2021",
- *        "month": "7",
- *        "day": "13"
- *      },
- *      {
- *        "postId": 2,
- *        "moodImage": "moodImage.png",
- *        "mainImage": "mainImage.png",
- *        "hashtags": ["#해시태그1", "#해시태그2", ... ],
- *        "content": "맛있는 피자에 시원한 맥주",
- *        "likeCount": 72,
- *        "hasLike": false,
- *        "nickname": "시원스쿨",
- *        "year": "2021",
- *        "month": "7",
- *        "day": "13"
- *      }
- *    ]
- *  }
+ *    "status": 200,
+ *    "data": {
+ *      "myDrawerSmallSatisfactions": [
+ *        {
+ *          "postId": 1,
+ *          "nickname": "시원스쿨",
+ *          "moodImage": "moodImageUrl",
+ *          "mainImage": "mainImageUrl",
+ *          "hashtags": ["#해시태그1", "#해시태그2", ... ],
+ *          "content": "맛있는 피자에 시원한 맥주 ... ",
+ *          "likeCount": 72,
+ *          "hasLike": true,
+ *          "year": "2021",
+ *          "month": "7",
+ *          "day": "11",
+ *          "week": "일"
+ *        },
+ *        {
+ *          "postId": 1,
+ *          "nickname": "시원스쿨",
+ *          "moodImage": "moodImageUrl",
+ *          "mainImage": "mainImageUrl",
+ *          "hashtags": ["#해시태그1", "#해시태그2", ... ],
+ *          "content": "맛있는 피자에 시원한 맥주 ... ",
+ *          "likeCount": 72,
+ *          "hasLike": true,
+ *          "year": "2021", 
+ *          "month": "7",
+ *          "day": "11",
+ *          "week": "일"
+ *         },
+ *        ...
+ *      ]
+ *    }
  * }
  * 
- * @apiErrorExample Error-Resopnse:
+ * @apiErrorExample Error-Response:
  * 404 유저가 유효하지 않은 경우
  * {
  *  "status": 404,
@@ -210,39 +260,42 @@ router.get("/myDrawer/:year/:month", auth, async (req, res) => {
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
  * {
- *  "status": 200,
- *  "data": {
- *    "hasSmallSatisfaction": 2,
- *    "userCount": 64,
- *    "smallSatisfactions": [
- *      {
- *        "postId": 1,
- *        "moodImage": "moodImage.png",
- *        "mainImage": "mainImage.png",
- *        "hashtags": ["#해시태그1", "#해시태그2", ... ],
- *        "content": "맛있는 피자에 시원한 맥주",
- *        "likeCount": 72,
- *        "hasLike": false,
- *        "nickname": "시원스쿨",
- *        "year": "2021",
- *        "month": "7",
- *        "day": "13"
- *      },
- *      {
- *        "postId": 2,
- *        "moodImage": "moodImage.png",
- *        "mainImage": "mainImage.png",
- *        "hashtags": ["#해시태그1", "#해시태그2", ... ],
- *        "content": "맛있는 피자에 시원한 맥주",
- *        "likeCount": 72,
- *        "hasLike": false,
- *        "nickname": "시원스쿨",
- *        "year": "2021",
- *        "month": "7",
- *        "day": "13"
- *      }
- *    ]
- *  }
+ *    "status": 200,
+ *    "data": {
+ *      "hasSmallSatisfaction": 2,
+ *      "userCount": 64,
+ *      "community": [
+ *        {
+ *          "postId": 1,
+ *          "nickname": "시원스쿨",
+ *          "moodImage": "moodImageUrl",
+ *          "mainImage": "mainImageUrl",
+ *          "hashtags": ["#해시태그1", "#해시태그2", ... ],
+ *          "content": "맛있는 피자에 시원한 맥주 ... ",
+ *          "likeCount": 72,
+ *          "hasLike": true,
+ *          "year": "2021",
+ *          "month": "7",
+ *          "day": "13",
+ *          "week": "화"
+ *        },
+ *        {
+ *          "postId": 1,
+ *          "nickname": "시원스쿨",
+ *          "moodImage": "moodImageUrl",
+ *          "mainImage": "mainImageUrl",
+ *          "hashtags": ["#해시태그1", "#해시태그2", ... ],
+ *          "content": "맛있는 피자에 시원한 맥주 ... ",
+ *          "likeCount": 72,
+ *          "hasLike": true,
+ *          "year": "2021",
+ *          "month": "7",
+ *          "day": "13",
+ *          "week": "화"
+ *        },
+ *       ...
+ *      ]
+ *    }
  * }
  * 
  * 
@@ -259,7 +312,7 @@ router.get("/myDrawer/:year/:month", auth, async (req, res) => {
  * @apiErrorExample Error-Response:
  * 500 서버 에러
  * {
- *  "status": 400,
+ *  "status": 500,
  *  "message": "서버 에러입니다."
  * }
  */
@@ -294,6 +347,7 @@ router.get("/community/:sort", auth, async (req, res) => {
  * @apiSuccess {String} year
  * @apiSuccess {String} month
  * @apiSuccess {String} day
+ * @apiSuccess {String} week
  * 
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
@@ -311,15 +365,24 @@ router.get("/community/:sort", auth, async (req, res) => {
  *    "year": "2021",
  *    "month": "6",
  *    "day": "29",
+ *    "week": "화"
  *  }
  * }
  * 
  * 
-  * @apiErrorExample Error-Response:
+ * @apiErrorExample Error-Response:
  * 404 유저가 유효하지 않은 경우
  * {
  *  "status": 404,
  *  "message": "유저가 존재하지 않습니다."
+ * }
+ * 
+ * 
+ * @apiErrorExample Error-Response:
+ * 404 포스트가 삭제된 경우
+ * {
+ *  "status": 404,
+ *  "message": "글을 불러올 수 없습니다!"
  * }
  * 
  * 
@@ -368,7 +431,7 @@ router.get("/detail/:postId", auth, async (req, res) => {
  * 
  * 
  * @apiErrorExample Error-Response:
- * 404 소확행 게시글이 존재하지 않는 경우
+ * 404 포스트가 삭제된 경우
  * {
  *  "status": 404,
  *  "message": "글을 불러올 수 없습니다!"
@@ -384,7 +447,7 @@ router.get("/detail/:postId", auth, async (req, res) => {
 
 router.put("/like/:postId", auth, async (req, res) => {
   const result = await smallSatisfactionService.like(req.body.user.id, req.params.postId);
-  res.json(result);
+  res.status(result.status).json(result);
 });
 
 /**
@@ -418,7 +481,7 @@ router.put("/like/:postId", auth, async (req, res) => {
  * 
  * 
  * @apiErrorExample Error-Response:
- * 404 소확행 게시글이 존재하지 않는 경우
+ * 404 포스트가 삭제된 경우
  * {
  *  "status": 404,
  *  "message": "글을 불러올 수 없습니다!"
@@ -435,7 +498,7 @@ router.put("/like/:postId", auth, async (req, res) => {
                                                                                                                                                                                                                                                                
 router.put("/unlike/:postId", auth, async (req, res) => {
   const result = await smallSatisfactionService.unlike(req.body.user.id, req.params.postId);
-  res.json(result);
+  res.status(result.status).json(result);
 });
 
 /**
@@ -469,7 +532,7 @@ router.put("/unlike/:postId", auth, async (req, res) => {
  * 
  * 
  * @apiErrorExample Error-Response:
- * 404 소확행 게시글이 존재하지 않는 경우
+ * 404 포스트가 삭제된 경우
  * {
  *  "status": 404,
  *  "message": "글을 불러올 수 없습니다!"
@@ -486,7 +549,7 @@ router.put("/unlike/:postId", auth, async (req, res) => {
 
 router.delete("/delete/:postId", auth, async (req, res) => {
   const result = await smallSatisfactionService.delete(req.body.user.id, req.params.postId);
-  res.json(result);
+  res.status(result.status).json(result);
 });
 
 

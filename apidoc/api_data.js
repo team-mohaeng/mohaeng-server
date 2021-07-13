@@ -1,5 +1,131 @@
 define({ "api": [
   {
+    "type": "post",
+    "url": "/api/smallSatisfaction/write",
+    "title": "소확행 작성완료",
+    "version": "1.0.0",
+    "name": "SmallSatisfactionWrite",
+    "group": "소확행",
+    "header": {
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n \"Content-Type\": \"application/json\"\n \"Bearer\": \"jwt\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n\t\"moodImage\": \"moodImageUrl\",\n\t\"moodText\": \"그저 그런 하루\",\n\t\"content\": \"소확행 내용\",\n\t\"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n\t\"mainImage\": \"mainImageUrl\",\n\t\"isPrivate\": false\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "image",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"image\" : mainImageUrl\n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "400 해시태그 5개 이상\n{\n \"status\": 400,\n \"message\": \"해시태그는 5개까지만 넣어주세요!\"\n}\n\n400 해시태그 6글자수 제한\n{\n \"status\": 400,\n \"message\": \"해시태그는 6글자 이내로 작성해주세요!\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/api/smallSatisfaction.ts",
+    "groupTitle": "소확행"
+  },
+  {
+    "type": "get",
+    "url": "/api/smallSatisfaction/create",
+    "title": "소확행 작성",
+    "version": "1.0.0",
+    "name": "createSmallSatisfaction",
+    "group": "소확행",
+    "header": {
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n \"Content-Type\": \"application/json\"\n \"Bearer\": \"jwt\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "year",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "month",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "date",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "day",
+            "description": ""
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"year\": \"2021\",\n   \"month\": \"7\",\n   \"date\": \"14\",\n   \"day\": \"수\"\n }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "500 서버 에러\n{\n \"status\": 500,\n \"message\": \"서버 에러입니다.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "src/api/smallSatisfaction.ts",
+    "groupTitle": "소확행"
+  },
+  {
     "type": "get",
     "url": "/api/smallSatisfaction/community/:sort",
     "title": "커뮤니티 소확행 글 조회",
@@ -44,7 +170,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"hasSmallSatisfaction\": 2,\n   \"userCount\": 64,\n   \"smallSatisfactions\": [\n     {\n       \"postId\": 1,\n       \"moodImage\": \"moodImage.png\",\n       \"mainImage\": \"mainImage.png\",\n       \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n       \"content\": \"맛있는 피자에 시원한 맥주\",\n       \"likeCount\": 72,\n       \"hasLike\": false,\n       \"nickname\": \"시원스쿨\",\n       \"year\": \"2021\",\n       \"month\": \"7\",\n       \"day\": \"13\"\n     },\n     {\n       \"postId\": 2,\n       \"moodImage\": \"moodImage.png\",\n       \"mainImage\": \"mainImage.png\",\n       \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n       \"content\": \"맛있는 피자에 시원한 맥주\",\n       \"likeCount\": 72,\n       \"hasLike\": false,\n       \"nickname\": \"시원스쿨\",\n       \"year\": \"2021\",\n       \"month\": \"7\",\n       \"day\": \"13\"\n     }\n   ]\n }\n}",
+          "content": "200 OK\n{\n   \"status\": 200,\n   \"data\": {\n     \"hasSmallSatisfaction\": 2,\n     \"userCount\": 64,\n     \"community\": [\n       {\n         \"postId\": 1,\n         \"nickname\": \"시원스쿨\",\n         \"moodImage\": \"moodImageUrl\",\n         \"mainImage\": \"mainImageUrl\",\n         \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n         \"content\": \"맛있는 피자에 시원한 맥주 ... \",\n         \"likeCount\": 72,\n         \"hasLike\": true,\n         \"year\": \"2021\",\n         \"month\": \"7\",\n         \"day\": \"13\",\n         \"week\": \"화\"\n       },\n       {\n         \"postId\": 1,\n         \"nickname\": \"시원스쿨\",\n         \"moodImage\": \"moodImageUrl\",\n         \"mainImage\": \"mainImageUrl\",\n         \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n         \"content\": \"맛있는 피자에 시원한 맥주 ... \",\n         \"likeCount\": 72,\n         \"hasLike\": true,\n         \"year\": \"2021\",\n         \"month\": \"7\",\n         \"day\": \"13\",\n         \"week\": \"화\"\n       },\n      ...\n     ]\n   }\n}",
           "type": "json"
         }
       ]
@@ -58,7 +184,7 @@ define({ "api": [
         },
         {
           "title": "Error-Response:",
-          "content": "500 서버 에러\n{\n \"status\": 400,\n \"message\": \"서버 에러입니다.\"\n}",
+          "content": "500 서버 에러\n{\n \"status\": 500,\n \"message\": \"서버 에러입니다.\"\n}",
           "type": "json"
         }
       ]
@@ -161,13 +287,20 @@ define({ "api": [
             "optional": false,
             "field": "day",
             "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "week",
+            "description": ""
           }
         ]
       },
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"nickname\": \"시원스쿨\",\n   \"postId\": 4,\n   \"mainImage\": \"mainImageUrl\",\n   \"moodImage\": \"moodImageUrl\",\n   \"hashtags\": [\"#맥주\", \"#여름\"],\n   \"content\": \"맛있는 피자에 시원한 맥주 ...\",\n   \"likeCount\": 72,\n   \"hasLike\": false,\n   \"year\": \"2021\",\n   \"month\": \"6\",\n   \"day\": \"29\",\n }\n}",
+          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"nickname\": \"시원스쿨\",\n   \"postId\": 4,\n   \"mainImage\": \"mainImageUrl\",\n   \"moodImage\": \"moodImageUrl\",\n   \"hashtags\": [\"#맥주\", \"#여름\"],\n   \"content\": \"맛있는 피자에 시원한 맥주 ...\",\n   \"likeCount\": 72,\n   \"hasLike\": false,\n   \"year\": \"2021\",\n   \"month\": \"6\",\n   \"day\": \"29\",\n   \"week\": \"화\"\n }\n}",
           "type": "json"
         }
       ]
@@ -177,6 +310,11 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": "404 유저가 유효하지 않은 경우\n{\n \"status\": 404,\n \"message\": \"유저가 존재하지 않습니다.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "404 포스트가 삭제된 경우\n{\n \"status\": 404,\n \"message\": \"글을 불러올 수 없습니다!\"\n}",
           "type": "json"
         },
         {
@@ -223,7 +361,7 @@ define({ "api": [
         },
         {
           "title": "Error-Response:",
-          "content": "404 소확행 게시글이 존재하지 않는 경우\n{\n \"status\": 404,\n \"message\": \"글을 불러올 수 없습니다!\"\n}",
+          "content": "404 포스트가 삭제된 경우\n{\n \"status\": 404,\n \"message\": \"글을 불러올 수 없습니다!\"\n}",
           "type": "json"
         },
         {
@@ -267,7 +405,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"myDrawerSmallSatisfactions\": [\n     {\n       \"postId\": 1,\n       \"moodImage\": \"moodImage.png\",\n       \"mainImage\": \"mainImage.png\",\n       \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n       \"content\": \"맛있는 피자에 시원한 맥주\",\n       \"likeCount\": 72,\n       \"hasLike\": false,\n       \"nickname\": \"시원스쿨\",\n       \"year\": \"2021\",\n       \"month\": \"7\",\n       \"day\": \"13\"\n     },\n     {\n       \"postId\": 2,\n       \"moodImage\": \"moodImage.png\",\n       \"mainImage\": \"mainImage.png\",\n       \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n       \"content\": \"맛있는 피자에 시원한 맥주\",\n       \"likeCount\": 72,\n       \"hasLike\": false,\n       \"nickname\": \"시원스쿨\",\n       \"year\": \"2021\",\n       \"month\": \"7\",\n       \"day\": \"13\"\n     }\n   ]\n }\n}",
+          "content": "200 OK\n{\n   \"status\": 200,\n   \"data\": {\n     \"myDrawerSmallSatisfactions\": [\n       {\n         \"postId\": 1,\n         \"nickname\": \"시원스쿨\",\n         \"moodImage\": \"moodImageUrl\",\n         \"mainImage\": \"mainImageUrl\",\n         \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n         \"content\": \"맛있는 피자에 시원한 맥주 ... \",\n         \"likeCount\": 72,\n         \"hasLike\": true,\n         \"year\": \"2021\",\n         \"month\": \"7\",\n         \"day\": \"11\",\n         \"week\": \"일\"\n       },\n       {\n         \"postId\": 1,\n         \"nickname\": \"시원스쿨\",\n         \"moodImage\": \"moodImageUrl\",\n         \"mainImage\": \"mainImageUrl\",\n         \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n         \"content\": \"맛있는 피자에 시원한 맥주 ... \",\n         \"likeCount\": 72,\n         \"hasLike\": true,\n         \"year\": \"2021\", \n         \"month\": \"7\",\n         \"day\": \"11\",\n         \"week\": \"일\"\n        },\n       ...\n     ]\n   }\n}",
           "type": "json"
         }
       ]
@@ -275,7 +413,7 @@ define({ "api": [
     "error": {
       "examples": [
         {
-          "title": "Error-Resopnse:",
+          "title": "Error-Response:",
           "content": "404 유저가 유효하지 않은 경우\n{\n \"status\": 404,\n \"message\": \"유저가 존재하지 않습니다.\"\n}",
           "type": "json"
         },
@@ -323,7 +461,7 @@ define({ "api": [
         },
         {
           "title": "Error-Response:",
-          "content": "404 소확행 게시글이 존재하지 않는 경우\n{\n \"status\": 404,\n \"message\": \"글을 불러올 수 없습니다!\"\n}",
+          "content": "404 포스트가 삭제된 경우\n{\n \"status\": 404,\n \"message\": \"글을 불러올 수 없습니다!\"\n}",
           "type": "json"
         },
         {
@@ -370,69 +508,12 @@ define({ "api": [
         },
         {
           "title": "Error-Response:",
-          "content": "404 소확행 게시글이 존재하지 않는 경우\n{\n \"status\": 404,\n \"message\": \"글을 불러올 수 없습니다!\"\n}",
+          "content": "404 포스트가 삭제된 경우\n{\n \"status\": 404,\n \"message\": \"글을 불러올 수 없습니다!\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
           "content": "500 서버 에러\n{\n \"status\": 500,\n \"message\": \"서버 에러입니다.\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "src/api/smallSatisfaction.ts",
-    "groupTitle": "소확행"
-  },
-  {
-    "type": "post",
-    "url": "/api/smallSatisfaction/write",
-    "title": "소확행 작성",
-    "version": "1.0.0",
-    "name": "writeSmallSatisfaction",
-    "group": "소확행",
-    "header": {
-      "examples": [
-        {
-          "title": "Header-Example:",
-          "content": "{\n \"Content-Type\": \"application/json\"\n \"Bearer\": \"jwt\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "parameter": {
-      "examples": [
-        {
-          "title": "Request-Example:",
-          "content": "{\n\t\"moodImage\": \"moodImageUrl\",\n\t\"moodText\": \"그저 그런 하루\",\n\t\"content\": \"소확행 내용\",\n\t\"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n\t\"mainImage\": \"mainImageUrl\",\n\t\"isPrivate\": false \n    }",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "image",
-            "description": ""
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"image\" : mainImageUrl\n }\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "400 해시태그 5개 이상\n{\n \"status\": 400,\n \"message\": \"해시태그는 5개까지만 넣어주세요!\"\n}\n\n400 해시태그 6글자수 제한\n{\n \"status\": 400,\n \"message\": \"해시태그는 6글자 이내로 작성해주세요!\"\n}",
           "type": "json"
         }
       ]

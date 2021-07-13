@@ -22,4 +22,5 @@ export interface CommunityResponseDTO {
 	year: string;
 	month: string;
 	day: string;
+	week: string;
 }

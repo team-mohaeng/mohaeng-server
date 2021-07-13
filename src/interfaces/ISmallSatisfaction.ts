@@ -16,5 +16,6 @@ export interface ISmallSatisfaction {
 	year: string;
 	month: string;
 	day: string;
+	week: string;
 	date: Date;
 }
