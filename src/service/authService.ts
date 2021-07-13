@@ -52,17 +52,24 @@ export default {
           userChallenge.push(
             {
               id: challenge.id,
+              title: challenge.title,
               situation: 0,
-              currentStamp: 0
+              description: challenge.description,
+              currentStamp: 0,
+              totalStamp: challenge.totalStamp,
+              userMents: challenge.userMents
             }
           );
         });
 
         userCourse.push(
           {
-            course: course._id,
             id: course.id,
             situation: 0,
+            title: course.title,
+            description: course.description,
+            totalDays: course.totalDays,
+            property: course.property,
             challenges: userChallenge
           }
         );

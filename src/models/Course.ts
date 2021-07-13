@@ -37,14 +37,10 @@ const CourseSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
-      userMents: [
-        {
-          ment: {
-            type: String,
-            required: true,
-          },
-        },
-      ],
+      userMents: {
+        type: [String],
+        required: true,
+      },
       totalStamp: {
         type: Number,
         required: true,

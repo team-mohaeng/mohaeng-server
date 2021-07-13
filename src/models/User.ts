@@ -88,10 +88,6 @@ const UserSchema = new mongoose.Schema({
   ],
   courses: [
     {
-      course: {
-        type: mongoose.Types.ObjectId,
-        ref: "Course",
-      },
       id: {
         type: Number,
         required: true,
@@ -101,16 +97,40 @@ const UserSchema = new mongoose.Schema({
         required: true,
         default: 0,
       },
+      title: {
+        type: String,
+        required: true,
+      },
+      description: {
+        type: String,
+        required: true,
+      },
+      totalDays: {
+        type: Number,
+        required: true,
+      },
+      property: {
+        type: Number,
+        required: true,
+      },
       challenges: [
         {
           id: {
             type: Number,
             required: true,
           },
+          title: {
+            type: String,
+            required: true,
+          },
           situation: {
             type: Number,
             required: true,
             default: 0,
+          },
+          description: {
+            type: String,
+            required: true,
           },
           date: {
             type: Date,
@@ -131,6 +151,14 @@ const UserSchema = new mongoose.Schema({
             type: Number,
             required: true,
             default: 0,
+          },
+          totalStamp: {
+            type: Number,
+            required: true,
+          },
+          userMents: {
+            type: [String],
+            required: true,
           },
         },
       ],
