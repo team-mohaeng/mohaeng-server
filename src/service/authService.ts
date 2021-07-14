@@ -55,6 +55,7 @@ export default {
               title: challenge.title,
               situation: 0,
               description: challenge.description,
+              successDescription: challenge.successDescription,
               currentStamp: 0,
               totalStamp: challenge.totalStamp,
               userMents: challenge.userMents
