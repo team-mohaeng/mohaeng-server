@@ -35,16 +35,12 @@ const SmallSatisfactionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  mood: {
+    type: Number,
+    required: true,
+  },
   mainImage: {
     type: String,
-  },
-  moodImage: {
-    type: String,
-    required: true,
-  },
-  moodText: {
-    type: String,
-    required: true,
   },
   hashtags: {
       type: [String],
