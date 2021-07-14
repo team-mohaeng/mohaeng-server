@@ -4,8 +4,7 @@ import { IHashtag } from "../../../../interfaces/IHashtag";
 export interface SmallSatisfactionWriteRequestDTO {
 	content: string;
 	mainImage?: IImage;
-	moodImage: IImage;
-	moodText: string;
+	mood: number;
 	hashtags?: [IHashtag];
 	isPrivate: boolean;
 }
