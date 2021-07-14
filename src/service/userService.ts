@@ -3,6 +3,9 @@ import jwt from "jsonwebtoken";
 import config from "../config";
 
 import User from "../models/User";
+import Course from "../models/Course";
+import { IUserCourse } from "../interfaces/IUserCourse";
+import { IUserChallenge } from "../interfaces/IUsrChallenge";
 import { IFail } from "../interfaces/IFail";
 import UserSignInRequestDTO from "../dto/SignIn/UserSignInRequestDTO";
 import UserSignInResponseDTO from "../dto/SignIn/UserSignInResponseDTO";
@@ -31,6 +34,33 @@ export default {
         };
         return notMatchPw;
       }
+
+      // const courses = await Course.find({});
+      // let userCourse: Array<IUserCourse> = new Array<IUserCourse>();
+
+      // courses.forEach((course) => {
+      //   let userChallenge: Array<IUserChallenge> = new Array<IUserChallenge>();
+
+      //   course.challenges.forEach((challenge) => {
+      //     userChallenge.push(
+      //       {
+      //         id: challenge.id,
+      //         situation: 0,
+      //         currentStamp: 0
+      //       }
+      //     );
+      //   });
+
+      //   userCourse.push(
+      //     {
+      //       course: course._id,
+      //       id: course.id,
+      //       situation: 0,
+      //       challenges: userChallenge
+      //     }
+      //   );
+      // });
+      // user.courses = userCourse;
 
       user.id = userToken;
       await user.save();

@@ -13,7 +13,7 @@ interface TodayChallengeCourseRepsonseDTO {
   title: string;
   description: string;
   totalDays: number;
-  property: string;
+  property: number;
   challenges: TodayChallengeDetailResponseDTO[];
 }
 
@@ -22,6 +22,7 @@ export interface TodayChallengeDetailResponseDTO {
   situation: number;
   title: string;
   description: string;
+  successDescription: string;
   year: string;
   month: string;
   day: string;

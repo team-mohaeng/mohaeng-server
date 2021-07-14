@@ -17,7 +17,7 @@ export interface HomeCourseResponseDTO {
   title: string;
   description: string;
   totalDays: number;
-  property: string;
+  property: number;
   challenges: HomeChallengeResponseDTO[];
 }
 
@@ -26,6 +26,7 @@ export interface HomeChallengeResponseDTO {
   situation: number;
   title: string;
   description: string;
+  successDescription: string;
   year: string;
   month: string;
   day: string;

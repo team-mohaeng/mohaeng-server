@@ -35,22 +35,19 @@ export default {
 
         course.challenges.forEach((challenge) => {
           const userChallenge = userCourse.challenges[challenge.id - 1];
-          let ments: Array<String> = new Array<String>();
-          challenge.userMents.forEach((ment) => {
-            ments.push(ment.ment);
-          });
 
           challengeLibraryArray.push({
             id: challenge.id,
             situation: userChallenge.situation,
             title: challenge.title,
             description: challenge.description,
+            successDescription: challenge.successDescription,
             year: userChallenge.year,
             month: userChallenge.month,
             day: userChallenge.day,
             currentStamp: userChallenge.currentStamp,
             totalStamp: challenge.totalStamp,
-            userMents: ments
+            userMents: challenge.userMents
           });
         });
 
@@ -138,22 +135,19 @@ export default {
       let challengeProgressArray: Array<ChallengeDetailProgressResponseDTO> = new Array<ChallengeDetailProgressResponseDTO>();
       user.courses[courseId - 1].challenges.forEach((challenge) => {
         const dummyChallenge = dummyCourse.challenges[challenge.id - 1];
-        let ments: Array<String> = new Array<String>();
-        dummyChallenge.userMents.forEach((ment) => {
-          ments.push(ment.ment);
-        });
 
         challengeProgressArray.push({
           id: challenge.id,
           situation: challenge.situation,
           title: dummyChallenge.title,
           description: dummyChallenge.description,
+          successDescription: dummyChallenge.successDescription,
           year: challenge.year,
           month: challenge.month,
           day: challenge.day,
           currentStamp: challenge.currentStamp,
           totalStamp: dummyChallenge.totalStamp,
-          userMents: ments
+          userMents: dummyChallenge.userMents
         });
       });
 
@@ -204,22 +198,19 @@ export default {
 
         course.challenges.forEach((challenge) => {
           const dummyChallenge = dummyCourse.challenges.find((c) => c.id === challenge.id);
-          let ments: Array<String> = new Array<String>();
-          dummyChallenge.userMents.forEach((ment) => {
-            ments.push(ment.ment);
-          });
 
           challengeMedalArray.push({
             id: challenge.id,
             situation: challenge.situation,
             title: dummyChallenge.title,
             description: dummyChallenge.description,
+            successDescription: dummyChallenge.successDescription,
             year: challenge.year,
             month: challenge.month,
             day: challenge.day,
             currentStamp: challenge.currentStamp,
             totalStamp: dummyChallenge.totalStamp,
-            userMents: ments
+            userMents: dummyChallenge.userMents
           });
         });
 
