@@ -43,22 +43,19 @@ export default {
 
       userCourse.challenges.forEach((challenge) => {
         const dummyChallengeP = dummyCourseP.challenges.find((c) => c.id === challenge.id);
-        let ments: Array<String> = new Array<String>();
-        dummyChallengeP.userMents.forEach((ment) => {
-          ments.push(ment.ment);
-        });
 
         userChallengeArray.push({
           id: challenge.id,
           situation: challenge.situation,
           title: dummyChallengeP.title,
           description: dummyChallengeP.description,
+          successDescription: dummyChallengeP.successDescription,
           year: challenge.year,
           month: challenge.month,
           day: challenge.day,
           currentStamp: challenge.currentStamp,
           totalStamp: dummyChallengeP.totalStamp,
-          userMents: ments
+          userMents: dummyChallengeP.userMents
         });
       });
       resolve("success");
@@ -122,22 +119,19 @@ export default {
       let userChallengeArray: Array<HomeChallengeResponseDTO> = new Array<HomeChallengeResponseDTO>();
       userCourse.challenges.forEach((challenge) => {
         const dummyChallenge = dummyCourse.challenges.find((c) => c.id === challenge.id);
-        let ments: Array<String> = new Array<String>();
-        dummyChallenge.userMents.forEach((ment) => {
-          ments.push(ment.ment);
-        });
 
         userChallengeArray.push({
           id: challenge.id,
           situation: challenge.situation,
           title: dummyChallenge.title,
           description: dummyChallenge.description,
+          successDescription: dummyChallenge.successDescription,
           year: challenge.year,
           month: challenge.month,
           day: challenge.day,
           currentStamp: challenge.currentStamp,
           totalStamp: dummyChallenge.totalStamp,
-          userMents: ments
+          userMents: dummyChallenge.userMents
         });
       })
 

@@ -13,7 +13,7 @@ export interface StampCourseDetailResponseDTO {
   title: string;
   description: string;
   totalDays: number;
-  property: string;
+  property: number;
   challenges: StampChallengeDetailResponseDTO[];
 }
 
@@ -22,6 +22,7 @@ export interface StampChallengeDetailResponseDTO {
   situation: number;
   title: string;
   description: string;
+  successDescription: string;
   year: string;
   month: string;
   day: string;

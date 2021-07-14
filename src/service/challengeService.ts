@@ -95,23 +95,19 @@ export default {
       // response할 challenge 배열 만들어서 저장
       let challengeArray: Array<TodayChallengeDetailResponseDTO> = new Array<TodayChallengeDetailResponseDTO>();
       userCourse.challenges.forEach((challenge) => {
-        let ments: Array<String> = new Array<String>();
-        dummyChallenge
-          .userMents.forEach((ment) => {
-            ments.push(ment.ment);
-        });
 
         const responseChallenge: TodayChallengeDetailResponseDTO = {
           id: challenge.id,
           situation: challenge.situation,
           title: dummyChallenge.title,
           description: dummyChallenge.description,
+          successDescription: dummyChallenge.successDescription,
           year: challenge.year,
           month: challenge.month,
           day: challenge.day,
           currentStamp: challenge.currentStamp,
           totalStamp: dummyChallenge.totalStamp,
-          userMents: ments
+          userMents: dummyChallenge.userMents
         };
         challengeArray.push(responseChallenge);
       });
@@ -261,25 +257,21 @@ export default {
 
       let challengeArray: Array<StampChallengeDetailResponseDTO> = new Array<StampChallengeDetailResponseDTO>();
       userCourse.challenges.forEach((challenge) => {
-        let ments: Array<String> = new Array<String>();
         const currentChallenge = courses.find((course) => course.id === progressCourseId)
-                                        .challenges.find((challenge) => challenge.id === progressChallengeId);
-        currentChallenge
-          .userMents.forEach((ment) => {
-            ments.push(ment.ment);
-        });
+                                        .challenges.find((challenge) => challenge.id === progressChallengeId);        
 
         const responseChallenge: TodayChallengeDetailResponseDTO = {
           id: challenge.id,
           situation: challenge.situation,
           title: currentChallenge.title,
           description: currentChallenge.description,
+          successDescription: currentChallenge.successDescription,
           year: challenge.year,
           month: challenge.month,
           day: challenge.day,
           currentStamp: challenge.currentStamp,
           totalStamp: currentChallenge.totalStamp,
-          userMents: ments
+          userMents: currentChallenge.userMents
         };
         challengeArray.push(responseChallenge);
       });
@@ -342,25 +334,21 @@ export default {
 
       let challengeArray: Array<ChallengeMapDetailResponseDTO> = new Array<ChallengeMapDetailResponseDTO>();
       userCourse.challenges.forEach((challenge) => {
-        let ments: Array<String> = new Array<String>();
         const currentChallenge = courses.find((course) => course.id === progressCourseId)
                                         .challenges.find((c) => c.id === challenge.id);
-        currentChallenge
-          .userMents.forEach((ment) => {
-            ments.push(ment.ment);
-        });
 
         const responseChallenge: ChallengeMapDetailResponseDTO = {
           id: challenge.id,
           situation: challenge.situation,
           title: currentChallenge.title,
           description: currentChallenge.description,
+          successDescription: currentChallenge.successDescription,
           year: challenge.year,
           month: challenge.month,
           day: challenge.day,
           currentStamp: challenge.currentStamp,
           totalStamp: currentChallenge.totalStamp,
-          userMents: ments
+          userMents: currentChallenge.userMents
         };
         challengeArray.push(responseChallenge);
       });
