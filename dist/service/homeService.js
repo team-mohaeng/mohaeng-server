@@ -10,54 +10,61 @@ exports.default = {
     reHome: async (token) => {
         let user, userCourse, dummyCourse;
         const userPromise = new Promise(async (resolve, reject) => {
-            const userP = await User_1.default.findOne({ id: token });
-            if (!userP) {
-                const notExistUser = {
-                    status: 404,
-                    message: "유저가 존재하지 않습니다.",
-                };
-                reject(notExistUser);
+            try {
+                const userP = await User_1.default.findOne({ id: token });
+                if (!userP) {
+                    const notExistUser = {
+                        status: 404,
+                        message: "유저가 존재하지 않습니다.",
+                    };
+                    reject(notExistUser);
+                }
+                user = userP;
+                const userCourseP = user.courses.find((course) => course.situation === 1);
+                if (!userCourseP) {
+                    const notProgressUser = {
+                        status: 200,
+                        data: {
+                            situation: user.situation,
+                            affinity: user.affinity
+                        }
+                    };
+                    reject(notProgressUser);
+                }
+                userCourse = userCourseP;
+                resolve("success");
             }
-            user = userP;
-            const userCourseP = user.courses.find((course) => course.situation === 1);
-            if (!userCourseP) {
-                const notProgressUser = {
-                    status: 200,
-                    data: {
-                        situation: user.situation,
-                        affinity: user.affinity
-                    }
-                };
-                reject(notProgressUser);
+            catch (err) {
+                console.error(err.message);
             }
-            userCourse = userCourseP;
-            resolve("success");
         });
         let userChallengeArray = new Array();
         const coursePromise = new Promise(async (resolve, reject) => {
-            const courseP = await Course_1.default.find();
-            const dummyCourseP = courseP.find((course) => course.id === userCourse.id);
-            dummyCourse = dummyCourseP;
-            userCourse.challenges.forEach((challenge) => {
-                const dummyChallengeP = dummyCourseP.challenges.find((c) => c.id === challenge.id);
-                let ments = new Array();
-                dummyChallengeP.userMents.forEach((ment) => {
-                    ments.push(ment.ment);
+            try {
+                const courseP = await Course_1.default.find();
+                const dummyCourseP = courseP.find((course) => course.id === userCourse.id);
+                dummyCourse = dummyCourseP;
+                userCourse.challenges.forEach((challenge) => {
+                    const dummyChallengeP = dummyCourseP.challenges.find((c) => c.id === challenge.id);
+                    userChallengeArray.push({
+                        id: challenge.id,
+                        situation: challenge.situation,
+                        title: dummyChallengeP.title,
+                        description: dummyChallengeP.description,
+                        successDescription: dummyChallengeP.successDescription,
+                        year: challenge.year,
+                        month: challenge.month,
+                        day: challenge.day,
+                        currentStamp: challenge.currentStamp,
+                        totalStamp: dummyChallengeP.totalStamp,
+                        userMents: dummyChallengeP.userMents
+                    });
                 });
-                userChallengeArray.push({
-                    id: challenge.id,
-                    situation: challenge.situation,
-                    title: dummyChallengeP.title,
-                    description: dummyChallengeP.description,
-                    year: challenge.year,
-                    month: challenge.month,
-                    day: challenge.day,
-                    currentStamp: challenge.currentStamp,
-                    totalStamp: dummyChallengeP.totalStamp,
-                    userMents: ments
-                });
-            });
-            resolve("success");
+                resolve("success");
+            }
+            catch (err) {
+                console.error(err.message);
+            }
         });
         let response;
         await Promise.all([userPromise, coursePromise])
@@ -82,7 +89,7 @@ exports.default = {
         })
             .catch((err) => {
             response = err;
-            console.log(err);
+            console.error(err);
         });
         return response;
     },
@@ -112,21 +119,18 @@ exports.default = {
             let userChallengeArray = new Array();
             userCourse.challenges.forEach((challenge) => {
                 const dummyChallenge = dummyCourse.challenges.find((c) => c.id === challenge.id);
-                let ments = new Array();
-                dummyChallenge.userMents.forEach((ment) => {
-                    ments.push(ment.ment);
-                });
                 userChallengeArray.push({
                     id: challenge.id,
                     situation: challenge.situation,
                     title: dummyChallenge.title,
                     description: dummyChallenge.description,
+                    successDescription: dummyChallenge.successDescription,
                     year: challenge.year,
                     month: challenge.month,
                     day: challenge.day,
                     currentStamp: challenge.currentStamp,
                     totalStamp: dummyChallenge.totalStamp,
-                    userMents: ments
+                    userMents: dummyChallenge.userMents
                 });
             });
             const responseDTO = {

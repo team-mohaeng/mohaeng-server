@@ -84,22 +84,18 @@ exports.default = {
             // response할 challenge 배열 만들어서 저장
             let challengeArray = new Array();
             userCourse.challenges.forEach((challenge) => {
-                let ments = new Array();
-                dummyChallenge
-                    .userMents.forEach((ment) => {
-                    ments.push(ment.ment);
-                });
                 const responseChallenge = {
                     id: challenge.id,
                     situation: challenge.situation,
                     title: dummyChallenge.title,
                     description: dummyChallenge.description,
+                    successDescription: dummyChallenge.successDescription,
                     year: challenge.year,
                     month: challenge.month,
                     day: challenge.day,
                     currentStamp: challenge.currentStamp,
                     totalStamp: dummyChallenge.totalStamp,
-                    userMents: ments
+                    userMents: dummyChallenge.userMents
                 };
                 challengeArray.push(responseChallenge);
             });
@@ -227,24 +223,20 @@ exports.default = {
             await user.save();
             let challengeArray = new Array();
             userCourse.challenges.forEach((challenge) => {
-                let ments = new Array();
                 const currentChallenge = courses.find((course) => course.id === progressCourseId)
                     .challenges.find((challenge) => challenge.id === progressChallengeId);
-                currentChallenge
-                    .userMents.forEach((ment) => {
-                    ments.push(ment.ment);
-                });
                 const responseChallenge = {
                     id: challenge.id,
                     situation: challenge.situation,
                     title: currentChallenge.title,
                     description: currentChallenge.description,
+                    successDescription: currentChallenge.successDescription,
                     year: challenge.year,
                     month: challenge.month,
                     day: challenge.day,
                     currentStamp: challenge.currentStamp,
                     totalStamp: currentChallenge.totalStamp,
-                    userMents: ments
+                    userMents: currentChallenge.userMents
                 };
                 challengeArray.push(responseChallenge);
             });
@@ -301,24 +293,20 @@ exports.default = {
             const dummyChallenge = courses[progressCourseId - 1].challenges;
             let challengeArray = new Array();
             userCourse.challenges.forEach((challenge) => {
-                let ments = new Array();
                 const currentChallenge = courses.find((course) => course.id === progressCourseId)
                     .challenges.find((c) => c.id === challenge.id);
-                currentChallenge
-                    .userMents.forEach((ment) => {
-                    ments.push(ment.ment);
-                });
                 const responseChallenge = {
                     id: challenge.id,
                     situation: challenge.situation,
                     title: currentChallenge.title,
                     description: currentChallenge.description,
+                    successDescription: currentChallenge.successDescription,
                     year: challenge.year,
                     month: challenge.month,
                     day: challenge.day,
                     currentStamp: challenge.currentStamp,
                     totalStamp: currentChallenge.totalStamp,
-                    userMents: ments
+                    userMents: currentChallenge.userMents
                 };
                 challengeArray.push(responseChallenge);
             });
