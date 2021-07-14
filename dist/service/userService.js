@@ -28,6 +28,29 @@ exports.default = {
                 };
                 return notMatchPw;
             }
+            // const courses = await Course.find({});
+            // let userCourse: Array<IUserCourse> = new Array<IUserCourse>();
+            // courses.forEach((course) => {
+            //   let userChallenge: Array<IUserChallenge> = new Array<IUserChallenge>();
+            //   course.challenges.forEach((challenge) => {
+            //     userChallenge.push(
+            //       {
+            //         id: challenge.id,
+            //         situation: 0,
+            //         currentStamp: 0
+            //       }
+            //     );
+            //   });
+            //   userCourse.push(
+            //     {
+            //       course: course._id,
+            //       id: course.id,
+            //       situation: 0,
+            //       challenges: userChallenge
+            //     }
+            //   );
+            // });
+            // user.courses = userCourse;
             user.id = userToken;
             await user.save();
             const payload = {

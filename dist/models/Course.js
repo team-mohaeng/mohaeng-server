@@ -23,7 +23,7 @@ const CourseSchema = new mongoose_1.default.Schema({
         required: true,
     },
     property: {
-        type: String,
+        type: Number,
         required: true,
     },
     challenges: [
@@ -40,14 +40,14 @@ const CourseSchema = new mongoose_1.default.Schema({
                 type: String,
                 required: true,
             },
-            userMents: [
-                {
-                    ment: {
-                        type: String,
-                        required: true,
-                    },
-                },
-            ],
+            successDescription: {
+                type: String,
+                default: "",
+            },
+            userMents: {
+                type: [String],
+                required: true,
+            },
             totalStamp: {
                 type: Number,
                 required: true,
