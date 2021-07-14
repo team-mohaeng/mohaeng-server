@@ -53,7 +53,7 @@ exports.default = {
             return notExistUser;
         }
         try {
-            const { content, moodText, moodImage, mainImage, hashtags, isPrivate, } = dto;
+            const { content, mood, mainImage, hashtags, isPrivate, } = dto;
             if (content == "") {
                 const notExistContent = {
                     status: 400,
@@ -65,8 +65,7 @@ exports.default = {
                 user: user._id,
                 nickname: user.nickname,
                 content,
-                moodText,
-                moodImage,
+                mood,
                 mainImage,
                 hashtags,
                 isPrivate,
@@ -118,7 +117,7 @@ exports.default = {
                 const responseDTO = {
                     postId: myDrawerSmallSatisfaction.postId,
                     nickname: user.nickname,
-                    moodImage: myDrawerSmallSatisfaction.moodImage,
+                    mood: myDrawerSmallSatisfaction.mood,
                     mainImage: myDrawerSmallSatisfaction.mainImage,
                     likeCount: myDrawerSmallSatisfaction.likes.length,
                     content: myDrawerSmallSatisfaction.content,
@@ -201,7 +200,7 @@ exports.default = {
                 const responseDTO = {
                     postId: communitySmallSatisfaction.postId,
                     nickname: communitySmallSatisfaction.nickname,
-                    moodImage: communitySmallSatisfaction.moodImage,
+                    mood: communitySmallSatisfaction.mood,
                     mainImage: communitySmallSatisfaction.mainImage,
                     likeCount: communitySmallSatisfaction.likes.length,
                     content: communitySmallSatisfaction.content,
@@ -267,7 +266,7 @@ exports.default = {
                 data: {
                     postId: detailSmallSatisfaction.postId,
                     nickname: userNickname,
-                    moodImage: detailSmallSatisfaction.moodImage,
+                    mood: detailSmallSatisfaction.mood,
                     mainImage: detailSmallSatisfaction.mainImage,
                     likeCount: detailSmallSatisfaction.likes.length,
                     content: detailSmallSatisfaction.content,

@@ -66,8 +66,7 @@ router.get("/create", auth_1.default, async (req, res) => {
  *
  * @apiParamExample {json} Request-Example:
  * {
- *	"moodImage": "moodImageUrl",
- *	"moodText": "그저 그런 하루",
+ *	"mood": "2",
  *	"content": "소확행 내용",
  *	"hashtags": ["#해시태그1", "#해시태그2", ... ],
  *	"mainImage": "mainImageUrl",
@@ -98,12 +97,10 @@ router.get("/create", auth_1.default, async (req, res) => {
  * }
  */
 router.post("/write", upload_1.default.fields([
-    { name: 'moodImage', maxCount: 1 },
     { name: 'mainImage', maxCount: 1 },
 ]), auth_1.default, async (req, res) => {
-    let moodImageUrl = req.files['moodImage'][0].location;
     let mainImageUrl;
-    //main 이미지만 있을 경우
+    //main 이미지가 있을 경우
     if (req.files['mainImage']) {
         mainImageUrl = req.files['mainImage'][0].location;
     }
@@ -135,8 +132,7 @@ router.post("/write", upload_1.default.fields([
     }
     const requestDTO = {
         content: req.body.content,
-        moodText: req.body.moodText,
-        moodImage: moodImageUrl,
+        mood: req.body.mood,
         mainImage: mainImageUrl,
         hashtags: req.body.hashtags,
         isPrivate: req.body.isPrivate,
@@ -169,7 +165,7 @@ router.post("/write", upload_1.default.fields([
  *        {
  *          "postId": 1,
  *          "nickname": "시원스쿨",
- *          "moodImage": "moodImageUrl",
+ *          "mood": 2,
  *          "mainImage": "mainImageUrl",
  *          "hashtags": ["#해시태그1", "#해시태그2", ... ],
  *          "content": "맛있는 피자에 시원한 맥주 ... ",
@@ -183,7 +179,7 @@ router.post("/write", upload_1.default.fields([
  *        {
  *          "postId": 1,
  *          "nickname": "시원스쿨",
- *          "moodImage": "moodImageUrl",
+ *          "mood": 2,
  *          "mainImage": "mainImageUrl",
  *          "hashtags": ["#해시태그1", "#해시태그2", ... ],
  *          "content": "맛있는 피자에 시원한 맥주 ... ",
@@ -249,7 +245,7 @@ router.get("/myDrawer/:year/:month", auth_1.default, async (req, res) => {
  *        {
  *          "postId": 1,
  *          "nickname": "시원스쿨",
- *          "moodImage": "moodImageUrl",
+ *          "mood": 2,
  *          "mainImage": "mainImageUrl",
  *          "hashtags": ["#해시태그1", "#해시태그2", ... ],
  *          "content": "맛있는 피자에 시원한 맥주 ... ",
@@ -263,7 +259,7 @@ router.get("/myDrawer/:year/:month", auth_1.default, async (req, res) => {
  *        {
  *          "postId": 1,
  *          "nickname": "시원스쿨",
- *          "moodImage": "moodImageUrl",
+ *          "mood": 2,
  *          "mainImage": "mainImageUrl",
  *          "hashtags": ["#해시태그1", "#해시태그2", ... ],
  *          "content": "맛있는 피자에 시원한 맥주 ... ",
@@ -317,7 +313,7 @@ router.get("/community/:sort", auth_1.default, async (req, res) => {
  * @apiSuccess {String} nickname
  * @apiSuccess {Number} postId
  * @apiSuccess {String} mainImage
- * @apiSuccess {String} moodImage
+ * @apiSuccess {Number} mood
  * @apiSuccess {Array} hashtags
  * @apiSuccess {String} content
  * @apiSuccess {Number} likeCount
@@ -335,7 +331,7 @@ router.get("/community/:sort", auth_1.default, async (req, res) => {
  *    "nickname": "시원스쿨",
  *    "postId": 4,
  *    "mainImage": "mainImageUrl",
- *    "moodImage": "moodImageUrl",
+ *    "mood": 2,
  *    "hashtags": ["#맥주", "#여름"],
  *    "content": "맛있는 피자에 시원한 맥주 ...",
  *    "likeCount": 72,
