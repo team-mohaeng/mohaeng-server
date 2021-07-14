@@ -3,6 +3,7 @@ export interface IUserChallenge {
   title: string;
   situation: number;
   description: string;
+  successDescription: string;
   date?: Date;
   year?: string;
   month?: string;
