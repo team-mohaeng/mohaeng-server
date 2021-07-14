@@ -162,23 +162,29 @@ exports.default = {
             let todayYear = today.getFullYear().toString();
             let todayMonth = (today.getMonth() + 1).toString();
             let todayDay = today.getDate().toString();
-            //0: 소확행 작성 불가능
-            //1: 소확행 작성 가능
-            //2: 소확행 작성 완료
+            // 0:소확행 작성 가능 1: 소확행 이미 작성, 2: 코스 시작 전, 3:챌린지 성공 전(시작은 함)
             let userSmallSatisfaction = await SmallSatisfaction_1.default.findOne({ year: todayYear, month: todayMonth, day: todayDay, user: user._id });
-            user.courses.forEach((course) => {
-                course.challenges.forEach((challenge) => {
-                    if ((challenge.situation === 0) || (challenge.situation === 1)) {
-                        smallSatisfactionWritten = 0;
-                    }
-                    if ((challenge.situation === 2) && (!userSmallSatisfaction)) {
-                        smallSatisfactionWritten = 1;
-                    }
-                    if (userSmallSatisfaction) {
-                        smallSatisfactionWritten = 2;
-                    }
-                });
-            });
+            let userCourse = user.courses.filter((course) => course.situation == 1);
+            if (userCourse) {
+                let userChallenge = userCourse[0].challenges.filter((challenge) => challenge.situation == 2);
+                if (userChallenge.length > 0) {
+                    userChallenge.forEach((challenge) => {
+                        if ((challenge.year == todayYear) && (challenge.month == todayMonth) && (challenge.day == todayDay) && (!userSmallSatisfaction)) {
+                            smallSatisfactionWritten = 0;
+                        }
+                        if ((challenge.year == todayYear) && (challenge.month == todayMonth) && (challenge.day == todayDay) && (userSmallSatisfaction)) {
+                            smallSatisfactionWritten = 1;
+                        }
+                    });
+                }
+                else {
+                    smallSatisfactionWritten = 3;
+                }
+            }
+            else {
+                //course.situation != 1
+                smallSatisfactionWritten = 2;
+            }
             const userCount = await SmallSatisfaction_1.default.findOne({ year: todayYear, month: todayMonth, day: todayDay }).countDocuments();
             let communitySmallSatisfactions;
             if (sort === "date") {
