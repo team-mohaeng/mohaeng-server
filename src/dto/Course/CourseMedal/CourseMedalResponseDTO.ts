@@ -15,7 +15,7 @@ export interface MedalCourseResponseDTO {
   title: string;
   description: string;
   totalDays: number;
-  property: string;
+  property: number;
   challenges: MedalChallengeResponseDTO[];
 }
 
@@ -24,6 +24,7 @@ export interface MedalChallengeResponseDTO {
   situation: number;
   title: string;
   description: string;
+  successDescription: string;
   year: string;
   month: string;
   day: string;
