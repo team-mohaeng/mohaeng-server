@@ -13,7 +13,7 @@ export default interface SmallSatisfactionCommunityResponseDTO {
 export interface CommunityResponseDTO {
 	postId: number;
 	nickname: string;
-	moodImage: IImage;
+	mood: number;
 	mainImage: IImage;
 	likeCount: number; 
 	content: string;

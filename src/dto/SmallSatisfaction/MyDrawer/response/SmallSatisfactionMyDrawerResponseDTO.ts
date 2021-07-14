@@ -11,7 +11,7 @@ export default interface SmallSatisfactionMyDrawerResponseDTO {
 export interface myDrawerResponseDTO {
 	postId: number;
 	nickname: string;
-	moodImage: IImage;
+	mood: number;
 	mainImage?: IImage;
 	likeCount: number;
 	content: string;

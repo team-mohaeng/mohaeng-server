@@ -6,7 +6,7 @@ export default interface SmallSatisfactionDetailResponseDTO {
 	data: {
 		postId: number;
 		nickname: string;
-		moodImage: IImage;
+		mood: number;
 		mainImage: IImage;
 		likeCount: number;
 		content: string;
