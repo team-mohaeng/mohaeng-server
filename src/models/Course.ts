@@ -20,7 +20,7 @@ const CourseSchema = new mongoose.Schema({
     required: true,
   },
   property: {
-    type: String,
+    type: Number,
     required: true,
   },
   challenges: [
@@ -36,6 +36,9 @@ const CourseSchema = new mongoose.Schema({
       description: {
         type: String,
         required: true,
+      },
+      successDescription: {
+        type: String,
       },
       userMents: [
         {
