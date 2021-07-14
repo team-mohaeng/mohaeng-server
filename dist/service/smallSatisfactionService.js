@@ -165,7 +165,8 @@ exports.default = {
             // 0:소확행 작성 가능 1: 소확행 이미 작성, 2: 코스 시작 전, 3:챌린지 성공 전(시작은 함)
             let userSmallSatisfaction = await SmallSatisfaction_1.default.findOne({ year: todayYear, month: todayMonth, day: todayDay, user: user._id });
             let userCourse = user.courses.filter((course) => course.situation == 1);
-            if (userCourse) {
+            if (userCourse.length > 0) {
+                console.log(userCourse);
                 let userChallenge = userCourse[0].challenges.filter((challenge) => challenge.situation == 2);
                 if (userChallenge.length > 0) {
                     userChallenge.forEach((challenge) => {
