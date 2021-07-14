@@ -69,8 +69,7 @@ export default {
     try{
       const {       
         content,
-        moodText,
-        moodImage,
+        mood,
         mainImage,
         hashtags,
         isPrivate, } = dto;
@@ -87,8 +86,7 @@ export default {
         user: user._id,
         nickname: user.nickname,
         content,
-        moodText,
-        moodImage,
+        mood,
         mainImage,
         hashtags,
         isPrivate, 
@@ -148,7 +146,7 @@ export default {
       const responseDTO: myDrawerResponseDTO = {
         postId: myDrawerSmallSatisfaction.postId,
         nickname: user.nickname,
-        moodImage: myDrawerSmallSatisfaction.moodImage,
+        mood: myDrawerSmallSatisfaction.mood,
         mainImage: myDrawerSmallSatisfaction.mainImage,
         likeCount: myDrawerSmallSatisfaction.likes.length,
         content: myDrawerSmallSatisfaction.content,
@@ -240,7 +238,7 @@ export default {
       const responseDTO: CommunityResponseDTO = {
         postId: communitySmallSatisfaction.postId,
         nickname: communitySmallSatisfaction.nickname,
-        moodImage: communitySmallSatisfaction.moodImage,
+        mood: communitySmallSatisfaction.mood,
         mainImage: communitySmallSatisfaction.mainImage,
         likeCount: communitySmallSatisfaction.likes.length,
         content: communitySmallSatisfaction.content,
@@ -311,7 +309,7 @@ export default {
         data: {
           postId: detailSmallSatisfaction.postId,
           nickname: userNickname,
-          moodImage: detailSmallSatisfaction.moodImage,
+          mood: detailSmallSatisfaction.mood,
           mainImage: detailSmallSatisfaction.mainImage,
           likeCount: detailSmallSatisfaction.likes.length,
           content: detailSmallSatisfaction.content,
