@@ -19,7 +19,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n\t\"moodImage\": \"moodImageUrl\",\n\t\"moodText\": \"그저 그런 하루\",\n\t\"content\": \"소확행 내용\",\n\t\"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n\t\"mainImage\": \"mainImageUrl\",\n\t\"isPrivate\": false\n}",
+          "content": "{\n\t\"mood\": \"2\",\n\t\"content\": \"소확행 내용\",\n\t\"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n\t\"mainImage\": \"mainImageUrl\",\n\t\"isPrivate\": false\n}",
           "type": "json"
         }
       ]
@@ -170,7 +170,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "200 OK\n{\n   \"status\": 200,\n   \"data\": {\n     \"hasSmallSatisfaction\": 2,\n     \"userCount\": 64,\n     \"community\": [\n       {\n         \"postId\": 1,\n         \"nickname\": \"시원스쿨\",\n         \"moodImage\": \"moodImageUrl\",\n         \"mainImage\": \"mainImageUrl\",\n         \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n         \"content\": \"맛있는 피자에 시원한 맥주 ... \",\n         \"likeCount\": 72,\n         \"hasLike\": true,\n         \"year\": \"2021\",\n         \"month\": \"7\",\n         \"day\": \"13\",\n         \"week\": \"화\"\n       },\n       {\n         \"postId\": 1,\n         \"nickname\": \"시원스쿨\",\n         \"moodImage\": \"moodImageUrl\",\n         \"mainImage\": \"mainImageUrl\",\n         \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n         \"content\": \"맛있는 피자에 시원한 맥주 ... \",\n         \"likeCount\": 72,\n         \"hasLike\": true,\n         \"year\": \"2021\",\n         \"month\": \"7\",\n         \"day\": \"13\",\n         \"week\": \"화\"\n       },\n      ...\n     ]\n   }\n}",
+          "content": "200 OK\n{\n   \"status\": 200,\n   \"data\": {\n     \"hasSmallSatisfaction\": 2,\n     \"userCount\": 64,\n     \"community\": [\n       {\n         \"postId\": 1,\n         \"nickname\": \"시원스쿨\",\n         \"mood\": 2,\n         \"mainImage\": \"mainImageUrl\",\n         \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n         \"content\": \"맛있는 피자에 시원한 맥주 ... \",\n         \"likeCount\": 72,\n         \"hasLike\": true,\n         \"year\": \"2021\",\n         \"month\": \"7\",\n         \"day\": \"13\",\n         \"week\": \"화\"\n       },\n       {\n         \"postId\": 1,\n         \"nickname\": \"시원스쿨\",\n         \"mood\": 2,\n         \"mainImage\": \"mainImageUrl\",\n         \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n         \"content\": \"맛있는 피자에 시원한 맥주 ... \",\n         \"likeCount\": 72,\n         \"hasLike\": true,\n         \"year\": \"2021\",\n         \"month\": \"7\",\n         \"day\": \"13\",\n         \"week\": \"화\"\n       },\n      ...\n     ]\n   }\n}",
           "type": "json"
         }
       ]
@@ -234,9 +234,9 @@ define({ "api": [
           },
           {
             "group": "Success 200",
-            "type": "String",
+            "type": "Number",
             "optional": false,
-            "field": "moodImage",
+            "field": "mood",
             "description": ""
           },
           {
@@ -300,7 +300,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"nickname\": \"시원스쿨\",\n   \"postId\": 4,\n   \"mainImage\": \"mainImageUrl\",\n   \"moodImage\": \"moodImageUrl\",\n   \"hashtags\": [\"#맥주\", \"#여름\"],\n   \"content\": \"맛있는 피자에 시원한 맥주 ...\",\n   \"likeCount\": 72,\n   \"hasLike\": false,\n   \"year\": \"2021\",\n   \"month\": \"6\",\n   \"day\": \"29\",\n   \"week\": \"화\"\n }\n}",
+          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"nickname\": \"시원스쿨\",\n   \"postId\": 4,\n   \"mainImage\": \"mainImageUrl\",\n   \"mood\": 2,\n   \"hashtags\": [\"#맥주\", \"#여름\"],\n   \"content\": \"맛있는 피자에 시원한 맥주 ...\",\n   \"likeCount\": 72,\n   \"hasLike\": false,\n   \"year\": \"2021\",\n   \"month\": \"6\",\n   \"day\": \"29\",\n   \"week\": \"화\"\n }\n}",
           "type": "json"
         }
       ]
@@ -405,7 +405,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "200 OK\n{\n   \"status\": 200,\n   \"data\": {\n     \"myDrawerSmallSatisfactions\": [\n       {\n         \"postId\": 1,\n         \"nickname\": \"시원스쿨\",\n         \"moodImage\": \"moodImageUrl\",\n         \"mainImage\": \"mainImageUrl\",\n         \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n         \"content\": \"맛있는 피자에 시원한 맥주 ... \",\n         \"likeCount\": 72,\n         \"hasLike\": true,\n         \"year\": \"2021\",\n         \"month\": \"7\",\n         \"day\": \"11\",\n         \"week\": \"일\"\n       },\n       {\n         \"postId\": 1,\n         \"nickname\": \"시원스쿨\",\n         \"moodImage\": \"moodImageUrl\",\n         \"mainImage\": \"mainImageUrl\",\n         \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n         \"content\": \"맛있는 피자에 시원한 맥주 ... \",\n         \"likeCount\": 72,\n         \"hasLike\": true,\n         \"year\": \"2021\", \n         \"month\": \"7\",\n         \"day\": \"11\",\n         \"week\": \"일\"\n        },\n       ...\n     ]\n   }\n}",
+          "content": "200 OK\n{\n   \"status\": 200,\n   \"data\": {\n     \"myDrawerSmallSatisfactions\": [\n       {\n         \"postId\": 1,\n         \"nickname\": \"시원스쿨\",\n         \"mood\": 2,\n         \"mainImage\": \"mainImageUrl\",\n         \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n         \"content\": \"맛있는 피자에 시원한 맥주 ... \",\n         \"likeCount\": 72,\n         \"hasLike\": true,\n         \"year\": \"2021\",\n         \"month\": \"7\",\n         \"day\": \"11\",\n         \"week\": \"일\"\n       },\n       {\n         \"postId\": 1,\n         \"nickname\": \"시원스쿨\",\n         \"mood\": 2,\n         \"mainImage\": \"mainImageUrl\",\n         \"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n         \"content\": \"맛있는 피자에 시원한 맥주 ... \",\n         \"likeCount\": 72,\n         \"hasLike\": true,\n         \"year\": \"2021\", \n         \"month\": \"7\",\n         \"day\": \"11\",\n         \"week\": \"일\"\n        },\n       ...\n     ]\n   }\n}",
           "type": "json"
         }
       ]

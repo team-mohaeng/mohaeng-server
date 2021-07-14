@@ -9,8 +9,7 @@ export interface ISmallSatisfaction {
 	likes?: [ILike];
 	content: string;
 	mainImage?: IImage; 
-	moodImage: IImage; 
-	moodText: string;
+	mood: number;
 	hashtags?: [IHashtag]; 
 	isPrivate: boolean;
 	year: string;
