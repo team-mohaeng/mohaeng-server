@@ -108,7 +108,9 @@ export default {
       });
 
       if (progressCourseId != null) {
+        const count = user.courses[progressCourseId - 1].challenges.filter((challenge) => challenge.situation === 2).length;
         user.courses[progressCourseId - 1].situation = 0;
+        user.affinity = user.affinity - (2 * count);
         let userChallenge: Array<IUserChallenge> = new Array<IUserChallenge>();
 
         user.courses[progressCourseId - 1].challenges.forEach((challenge) => {
