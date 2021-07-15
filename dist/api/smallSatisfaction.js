@@ -108,28 +108,6 @@ router.post("/write", upload_1.default.fields([
     else {
         mainImageUrl = "";
     }
-    let response;
-    if (req.body.hashtags) {
-        if ((req.body.hashtags).length > 5) {
-            const hashtagsExceeded = {
-                status: 400,
-                message: "해시태그는 5개까지만 넣어주세요!",
-            };
-            response = hashtagsExceeded;
-        }
-        req.body.hashtags.forEach((hashtag) => {
-            if (hashtag.length > 7) {
-                const hashtagExceeded = {
-                    status: 400,
-                    message: "해시태그는 6글자 이내로 작성해주세요!",
-                };
-                response = hashtagExceeded;
-            }
-        });
-        if (response) {
-            return res.status(404).json(response);
-        }
-    }
     const requestDTO = {
         content: req.body.content,
         mood: req.body.mood,

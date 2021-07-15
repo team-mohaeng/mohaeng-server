@@ -34,13 +34,20 @@ exports.default = {
                 return notExistCourse;
             }
             // 진행 중인 코스가 아닐 경우
-            if (user.courses.filter((course) => course.situation != 0)
-                .pop().id != progressCourseId) {
+            if (!user.courses.filter((course) => course.situation != 0)
+                .find((course) => course.id === progressCourseId)) {
                 const notProgressCourse = {
                     status: 400,
                     message: "현재 진행 중인 코스가 아닙니다.",
                 };
                 return notProgressCourse;
+            }
+            if (user.courses.find((course) => course.id === progressCourseId).situation === 2) {
+                const alreadyProgressCourse = {
+                    status: 400,
+                    message: "이미 진행한 코스입니다.",
+                };
+                return alreadyProgressCourse;
             }
             let userCourse = user.courses.find((course) => course.id === progressCourseId);
             let challenge = user.courses.find((course) => course.id === progressCourseId)

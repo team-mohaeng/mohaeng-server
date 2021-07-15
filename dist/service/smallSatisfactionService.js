@@ -189,10 +189,10 @@ exports.default = {
             const userCount = await SmallSatisfaction_1.default.findOne({ year: todayYear, month: todayMonth, day: todayDay }).countDocuments();
             let communitySmallSatisfactions;
             if (sort === "date") {
-                communitySmallSatisfactions = await SmallSatisfaction_1.default.find({ isPrivate: false }).sort({ date: -1 });
+                communitySmallSatisfactions = await SmallSatisfaction_1.default.find({ year: todayYear, month: todayMonth, day: todayDay, isPrivate: false }).sort({ date: -1 });
             }
             if (sort === "like") {
-                communitySmallSatisfactions = await SmallSatisfaction_1.default.find({ isPrivate: false }).sort({ likeCount: -1 });
+                communitySmallSatisfactions = await SmallSatisfaction_1.default.find({ year: todayYear, month: todayMonth, day: todayDay, isPrivate: false }).sort({ likeCount: -1 });
             }
             let communityPosts = new Array();
             communitySmallSatisfactions.forEach((communitySmallSatisfaction) => {
