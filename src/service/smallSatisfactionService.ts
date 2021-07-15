@@ -197,7 +197,8 @@ export default {
       // 0:소확행 작성 가능 1: 소확행 이미 작성, 2: 코스 시작 전, 3:챌린지 성공 전(시작은 함)
       let userSmallSatisfaction = await SmallSatisfaction.findOne({ year: todayYear, month: todayMonth, day: todayDay, user: user._id });
       let userCourse = user.courses.filter((course) => course.situation == 1 );
-      if (userCourse) {
+      if (userCourse.length > 0) {
+        console.log(userCourse);
         let userChallenge = userCourse[0].challenges.filter((challenge) => challenge.situation == 2);
         if (userChallenge.length > 0) {
           userChallenge.forEach((challenge) => {
@@ -224,11 +225,11 @@ export default {
 
       let communitySmallSatisfactions;
       if (sort === "date") {
-        communitySmallSatisfactions = await SmallSatisfaction.find({ isPrivate: false }).sort({ date: -1 });
+        communitySmallSatisfactions = await SmallSatisfaction.find({ year: todayYear, month: todayMonth, day: todayDay, isPrivate: false }).sort({ date: -1 });
       }
       
       if (sort === "like") {
-        communitySmallSatisfactions = await SmallSatisfaction.find({ isPrivate: false }).sort({ likeCount: -1 });
+        communitySmallSatisfactions = await SmallSatisfaction.find({ year: todayYear, month: todayMonth, day: todayDay, isPrivate: false }).sort({ likeCount: -1 });
       }
 
       let communityPosts: Array<CommunityResponseDTO> = new Array<CommunityResponseDTO>();

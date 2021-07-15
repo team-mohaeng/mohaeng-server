@@ -29,7 +29,7 @@ const router = express.Router();
  *  "data": {
  *    "situation": 0, // 유저가 현재 코스를 진행하고 있는지 여부
  *    "affinity": 42, // 쟈니와의 애정도
- *    "courses": [
+ *    "course":
  *      {
  *        "id": 1,
  *        "situation": 2, // 현재 코스 진행 상태
@@ -56,9 +56,7 @@ const router = express.Router();
  *          },
  *          // ...
  *        ]
- *      },
- *      // ...
- *    ]
+ *      }
  *  }
  * }
  * 
