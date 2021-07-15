@@ -19,12 +19,17 @@
 
 ```json
 "dependencies": {
-  "bcryptjs": "^2.4.3",
-  "dotenv": "^10.0.0",
-  "express": "^4.17.1",
-  "express-validator": "^6.12.0",
-  "jsonwebtoken": "^8.5.1",
-  "mongoose": "^5.13.0"
+    "aws-sdk": "^2.938.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.12.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.0",
+    "mongoose-auto-increment": "^5.0.1",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
+    "package.json": "^2.0.1"
 }
 ```
 
