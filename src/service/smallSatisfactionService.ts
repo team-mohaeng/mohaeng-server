@@ -225,11 +225,11 @@ export default {
 
       let communitySmallSatisfactions;
       if (sort === "date") {
-        communitySmallSatisfactions = await SmallSatisfaction.find({ isPrivate: false }).sort({ date: -1 });
+        communitySmallSatisfactions = await SmallSatisfaction.find({ year: todayYear, month: todayMonth, day: todayDay, isPrivate: false }).sort({ date: -1 });
       }
       
       if (sort === "like") {
-        communitySmallSatisfactions = await SmallSatisfaction.find({ isPrivate: false }).sort({ likeCount: -1 });
+        communitySmallSatisfactions = await SmallSatisfaction.find({ year: todayYear, month: todayMonth, day: todayDay, isPrivate: false }).sort({ likeCount: -1 });
       }
 
       let communityPosts: Array<CommunityResponseDTO> = new Array<CommunityResponseDTO>();
