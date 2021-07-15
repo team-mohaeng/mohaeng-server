@@ -50,7 +50,7 @@ exports.default = {
                 return alreadyProgressCourse;
             }
             let userCourse = user.courses.find((course) => course.id === progressCourseId);
-            let challenge = user.courses.find((course) => course.id === progressCourseId)
+            let challenge = userCourse
                 .challenges.sort((a, b) => (a.id > b.id) ? -1 : Number(a.id > b.id))
                 .find((challenge) => challenge.situation === 1);
             if (challenge) {
@@ -65,7 +65,7 @@ exports.default = {
                 }
             }
             else {
-                challenge = user.courses.find((course) => course.id === progressCourseId)
+                challenge = userCourse
                     .challenges.sort((a, b) => (a.id > b.id) ? -1 : Number(a.id > b.id))
                     .find((challenge) => challenge.situation === 2);
                 if (challenge) {
@@ -86,11 +86,11 @@ exports.default = {
             await user.save();
             // dummy data
             dummyCourse = courses.find((course) => course.id === progressCourseId);
-            const dummyChallenge = courses.find((course) => course.id === progressCourseId)
-                .challenges.find((challenge) => challenge.id === progressChallengeId);
             // response할 challenge 배열 만들어서 저장
             let challengeArray = new Array();
             userCourse.challenges.forEach((challenge) => {
+                const dummyChallenge = dummyCourse
+                    .challenges.find((c) => c.id === challenge.id);
                 const responseChallenge = {
                     id: challenge.id,
                     situation: challenge.situation,
@@ -231,7 +231,7 @@ exports.default = {
             let challengeArray = new Array();
             userCourse.challenges.forEach((challenge) => {
                 const currentChallenge = courses.find((course) => course.id === progressCourseId)
-                    .challenges.find((challenge) => challenge.id === progressChallengeId);
+                    .challenges.find((c) => c.id === challenge.id);
                 const responseChallenge = {
                     id: challenge.id,
                     situation: challenge.situation,
@@ -286,15 +286,16 @@ exports.default = {
                 return notExistUser;
             }
             // 진행 중인 코스 id 찾기
-            const progressCourseId = user.courses.find((course) => course.situation === 1).id;
+            const progressCourse = user.courses.find((course) => course.situation === 1);
             // 진행 중인 코스 id가 없는 경우
-            if (!progressCourseId) {
+            if (!progressCourse) {
                 const notExistsCourseId = {
                     status: 400,
                     message: "진행 중인 코스가 없습니다.",
                 };
                 return notExistsCourseId;
             }
+            const progressCourseId = progressCourse.id;
             const userCourse = user.courses[progressCourseId - 1];
             const dummyCourse = courses[progressCourseId - 1];
             const dummyChallenge = courses[progressCourseId - 1].challenges;

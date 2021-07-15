@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const SmallSatisfaction_1 = __importDefault(require("../models/SmallSatisfaction"));
 const User_1 = __importDefault(require("../models/User"));
 const constant_1 = require("../constant");
+const challengeDateFormatter_1 = require("../formatter/challengeDateFormatter");
 exports.default = {
     create: async () => {
         let week = new Array("일", "월", "화", "수", "목", "금", "토");
@@ -40,9 +41,9 @@ exports.default = {
         let week = new Array("일", "월", "화", "수", "목", "금", "토");
         let today = new Date();
         let days = new Date().getDay();
-        let todayYear = today.getFullYear().toString();
-        let todayMonth = (today.getMonth() + 1).toString();
-        let todayDay = today.getDate().toString();
+        let todayYear = challengeDateFormatter_1.getYear();
+        let todayMonth = challengeDateFormatter_1.getMonth();
+        let todayDay = challengeDateFormatter_1.getDay();
         let todayWeek = week[days];
         const user = await User_1.default.findOne({ id: token });
         if (!user) {
@@ -159,14 +160,13 @@ exports.default = {
         try {
             let smallSatisfactionWritten;
             let today = new Date();
-            let todayYear = today.getFullYear().toString();
-            let todayMonth = (today.getMonth() + 1).toString();
-            let todayDay = today.getDate().toString();
+            let todayYear = challengeDateFormatter_1.getYear();
+            let todayMonth = challengeDateFormatter_1.getMonth();
+            let todayDay = challengeDateFormatter_1.getDay();
             // 0:소확행 작성 가능 1: 소확행 이미 작성, 2: 코스 시작 전, 3:챌린지 성공 전(시작은 함)
             let userSmallSatisfaction = await SmallSatisfaction_1.default.findOne({ year: todayYear, month: todayMonth, day: todayDay, user: user._id });
             let userCourse = user.courses.filter((course) => course.situation == 1);
             if (userCourse.length > 0) {
-                console.log(userCourse);
                 let userChallenge = userCourse[0].challenges.filter((challenge) => challenge.situation == 2);
                 if (userChallenge.length > 0) {
                     userChallenge.forEach((challenge) => {
