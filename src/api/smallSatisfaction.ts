@@ -3,57 +3,9 @@ import upload from "../modules/upload";
 import auth from "../middleware/auth";
 import { SmallSatisfactionWriteRequestDTO } from "../dto/SmallSatisfaction/Write/request/SmallSatisfactionWriteDTO";
 import smallSatisfactionService from "../service/smallSatisfactionService";
-import { IFail } from "../interfaces/IFail";
 
 
 const router = express.Router();
-
-/**
- * @api {get} /api/smallSatisfaction/create 소확행 작성
- * 
- * @apiVersion 1.0.0
- * @apiName createSmallSatisfaction
- * @apiGroup 소확행
- * 
- * @apiHeaderExample {json} Header-Example:
- * {
- *  "Content-Type": "application/json"
- *  "Bearer": "jwt"
- * }
- * 
- * @apiSuccess {String} year
- * @apiSuccess {String} month
- * @apiSuccess {String} date
- * @apiSuccess {String} day
- * 
- * @apiSuccessExample {json} Success-Response:
- * 200 OK
- * {
- *  "status": 200,
- *  "data": {
- *    "year": "2021",
- *    "month": "7",
- *    "date": "14",
- *    "day": "수"
- *  }
- * }
- *  
- * 
- * 
- * @apiErrorExample Error-Response:
- * 500 서버 에러
- * {
- *  "status": 500,
- *  "message": "서버 에러입니다."
- * }
- */
-
-
-router.get("/create", auth, async (req, res) => {
-  const result = await smallSatisfactionService.create();
-  res.status(result.status).json(result);
-});
-
 
 
 /**
