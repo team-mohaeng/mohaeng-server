@@ -108,12 +108,14 @@ router.post("/write", upload_1.default.fields([
     else {
         mainImageUrl = "";
     }
+    const smallSatisfactionParams = JSON.parse(req.body.smallSatisfaction);
+    const { content, mood, hashtags, isPrivate } = smallSatisfactionParams;
     const requestDTO = {
-        content: req.body.content,
-        mood: req.body.mood,
+        content: content,
+        mood: mood,
         mainImage: mainImageUrl,
-        hashtags: req.body.hashtags,
-        isPrivate: req.body.isPrivate,
+        hashtags: hashtags,
+        isPrivate: isPrivate,
     };
     const result = await smallSatisfactionService_1.default.write(req.body.user.id, requestDTO);
     res.status(result.status).json(result);
