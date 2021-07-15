@@ -10,6 +10,7 @@ import { DeleteResponseDTO } from "../dto/SmallSatisfaction/Delete/response/Dele
 import { IFail } from "../interfaces/IFail";
 import { CreateSmallSatisfactionResponseDTO } from "../dto/SmallSatisfaction/Create/response/CreateSmallSatisfactionDTO";
 import { SERVER_ERROR_MESSAGE } from "../constant";
+import { getDay, getMonth, getYear } from "../formatter/challengeDateFormatter";
 
 
 
@@ -51,9 +52,9 @@ export default {
     let week = new Array("일", "월", "화", "수", "목", "금", "토");
     let today = new Date();
     let days = new Date().getDay();
-    let todayYear = today.getFullYear().toString();
-    let todayMonth = (today.getMonth() + 1).toString();
-    let todayDay = today.getDate().toString();
+    let todayYear = getYear();
+    let todayMonth = getMonth();
+    let todayDay = getDay();
     let todayWeek = week[days];
 
     const user = await User.findOne({ id: token });
@@ -189,16 +190,15 @@ export default {
     try {
       let smallSatisfactionWritten;
       let today = new Date();
-      let todayYear = today.getFullYear().toString();
-      let todayMonth = (today.getMonth() + 1).toString();
-      let todayDay = today.getDate().toString();
+      let todayYear = getYear();
+      let todayMonth = getMonth();
+      let todayDay = getDay();
       
 
       // 0:소확행 작성 가능 1: 소확행 이미 작성, 2: 코스 시작 전, 3:챌린지 성공 전(시작은 함)
       let userSmallSatisfaction = await SmallSatisfaction.findOne({ year: todayYear, month: todayMonth, day: todayDay, user: user._id });
       let userCourse = user.courses.filter((course) => course.situation == 1 );
       if (userCourse.length > 0) {
-        console.log(userCourse);
         let userChallenge = userCourse[0].challenges.filter((challenge) => challenge.situation == 2);
         if (userChallenge.length > 0) {
           userChallenge.forEach((challenge) => {
