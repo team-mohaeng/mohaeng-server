@@ -60,7 +60,7 @@ export default {
 
       let userCourse = user.courses.find((course) => course.id === progressCourseId);
 
-      let challenge = user.courses.find((course) => course.id === progressCourseId)
+      let challenge = userCourse
                           .challenges.sort((a, b) => (a.id > b.id)? -1: Number(a.id > b.id))
                           .find((challenge) => challenge.situation === 1);
                           
@@ -75,7 +75,7 @@ export default {
             .date = today;
         }
       } else {
-        challenge = user.courses.find((course) => course.id === progressCourseId)
+        challenge = userCourse
                           .challenges.sort((a, b) => (a.id > b.id)? -1: Number(a.id > b.id))
                           .find((challenge) => challenge.situation === 2);
 
@@ -99,13 +99,13 @@ export default {
 
       // dummy data
       dummyCourse = courses.find((course) => course.id === progressCourseId);
-      const dummyChallenge = courses.find((course) => course.id === progressCourseId)
-                                    .challenges.find((challenge) => challenge.id === progressChallengeId);
+      
 
       // response할 challenge 배열 만들어서 저장
       let challengeArray: Array<TodayChallengeDetailResponseDTO> = new Array<TodayChallengeDetailResponseDTO>();
       userCourse.challenges.forEach((challenge) => {
-
+        const dummyChallenge = dummyCourse
+                                    .challenges.find((c) => c.id === challenge.id);
         const responseChallenge: TodayChallengeDetailResponseDTO = {
           id: challenge.id,
           situation: challenge.situation,
@@ -268,7 +268,7 @@ export default {
       let challengeArray: Array<StampChallengeDetailResponseDTO> = new Array<StampChallengeDetailResponseDTO>();
       userCourse.challenges.forEach((challenge) => {
         const currentChallenge = courses.find((course) => course.id === progressCourseId)
-                                        .challenges.find((challenge) => challenge.id === progressChallengeId);        
+                                        .challenges.find((c) => c.id === challenge.id);        
 
         const responseChallenge: TodayChallengeDetailResponseDTO = {
           id: challenge.id,
@@ -327,16 +327,18 @@ export default {
       }
       
       // 진행 중인 코스 id 찾기
-      const progressCourseId = user.courses.find((course) => course.situation === 1).id;
+      const progressCourse = user.courses.find((course) => course.situation === 1);
 
       // 진행 중인 코스 id가 없는 경우
-      if (!progressCourseId) {
+      if (!progressCourse) {
         const notExistsCourseId: IFail = {
           status: 400,
           message: "진행 중인 코스가 없습니다.",
         };
         return notExistsCourseId;
       }
+
+      const progressCourseId = progressCourse.id;
       
       const userCourse = user.courses[progressCourseId - 1];
       const dummyCourse = courses[progressCourseId - 1];
