@@ -8,35 +8,6 @@ const User_1 = __importDefault(require("../models/User"));
 const constant_1 = require("../constant");
 const challengeDateFormatter_1 = require("../formatter/challengeDateFormatter");
 exports.default = {
-    create: async () => {
-        let week = new Array("일", "월", "화", "수", "목", "금", "토");
-        let today = new Date();
-        let days = new Date().getDay();
-        let todayYear = today.getFullYear().toString();
-        let todayMonth = (today.getMonth() + 1).toString();
-        let todayDay = today.getDate().toString();
-        let todayWeek = week[days];
-        try {
-            const responseDTO = {
-                status: 200,
-                data: {
-                    year: todayYear,
-                    month: todayMonth,
-                    day: todayDay,
-                    week: todayWeek,
-                }
-            };
-            return responseDTO;
-        }
-        catch (err) {
-            console.error(err.message);
-            const serverError = {
-                status: 500,
-                message: constant_1.SERVER_ERROR_MESSAGE,
-            };
-            return serverError;
-        }
-    },
     write: async (token, dto) => {
         let week = new Array("일", "월", "화", "수", "목", "금", "토");
         let today = new Date();

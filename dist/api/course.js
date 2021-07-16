@@ -109,7 +109,7 @@ router.get("/", auth_1.default, async (req, res) => {
  *          "year": "2021", // 챌린지를 완료하면, year month day를 보냄.
  *          "month": "07", // 챌린지가 완료되지 않은 상태라면 year, month, day는 ""(빈 문자열)로 response
  *          "day": "03",
- *          "currentStamp": 3, // 현재 유저 인증 횟수
+ *          "currentStamp": 1, // 현재 유저 인증 횟수
  *          "totalStamp": 2, // 인증해야할 총 횟수
  *          "userMents": [ // 스탬프 수 길이만큼 userMents가 갑니다.
  *            "손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼",
@@ -173,7 +173,7 @@ router.put("/:id", auth_1.default, async (req, res) => {
  *            "year": "2021", // 챌린지를 완료하면, year month day를 보냄.
  *            "month": "07", // 챌린지가 완료되지 않은 상태라면 year, month, day는 ""(빈 문자열)로 response
  *            "day": "03",
- *            "currentStamp": 3, // 현재 유저 인증 횟수
+ *            "currentStamp": 1, // 현재 유저 인증 횟수
  *            "totalStamp": 2, // 인증해야할 총 횟수
  *            "userMents": [ // 스탬프 수 길이만큼 userMents가 갑니다.
  *              "손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼",

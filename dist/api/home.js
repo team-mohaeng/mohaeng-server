@@ -30,7 +30,7 @@ const router = express_1.default.Router();
  * {
  *  "status": 200,
  *  "data": {
- *    "situation": 0, // 유저가 현재 코스를 진행하고 있는지 여부
+ *    "situation": 1, // 유저가 현재 코스를 진행하고 있는지 여부
  *    "affinity": 42, // 쟈니와의 애정도
  *    "course":
  *      {
