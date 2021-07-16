@@ -165,15 +165,23 @@ export default {
       let userSmallSatisfaction = await SmallSatisfaction.findOne({ year: todayYear, month: todayMonth, day: todayDay, user: user._id });
       let userCourse = user.courses.filter((course) => course.situation == 1 );
       if (userCourse.length > 0) {
+        console.log("진행중인 코스 있음");
         let userChallenge = userCourse[0].challenges.filter((challenge) => challenge.situation == 2);
         if (userChallenge.length > 0) {
+          console.log("완료한 코스 있음");
           userChallenge.forEach((challenge) => {
             if ((challenge.year == todayYear) && (challenge.month == todayMonth) && (challenge.day == todayDay) && (!userSmallSatisfaction)) {
+              console.log("소확행 작성 아직 안함");
               smallSatisfactionWritten = 0;
             }
   
             if ((challenge.year == todayYear) && (challenge.month == todayMonth) && (challenge.day == todayDay) && (userSmallSatisfaction)) {
+              console.log("소확행 작성 함");
               smallSatisfactionWritten = 1;
+            }
+
+            if ((challenge.year != todayYear) || (challenge.month != todayMonth) || (challenge.day != todayDay)) {
+              smallSatisfactionWritten = 3;
             }
           })
         }
