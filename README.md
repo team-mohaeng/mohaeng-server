@@ -15,7 +15,8 @@
 
 ### 서버 아키텍처
 
-![서버 아키텍처](https://user-images.githubusercontent.com/49138331/125880291-768fa07e-1ba9-4a43-849d-f4bdc3dac841.png)
+![서버 아키텍처]![image](https://user-images.githubusercontent.com/71828832/125944767-35141497-43c0-424d-8fff-ad80b218e856.png)
+
 
 
 
