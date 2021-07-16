@@ -70,14 +70,15 @@ router.get("/create", auth, async (req, res) => {
  * }
  * 
  * @apiParamExample {json} Request-Example:
- * {
- *	"mood": "2",
- *	"content": "소확행 내용",
- *	"hashtags": ["#해시태그1", "#해시태그2", ... ],
- *	"mainImage": "mainImageUrl",
- *	"isPrivate": false
- * }
- * @apiSuccess {String} image
+ * form-data 형식
+ * KEY(Text): smallSatisfaction, 
+ * VALUE : {"content": "오늘 아무생각없이 그림을 그렸는데 생각보다 마음에 든다!", "mood": 2, "isPrivate": false},
+ * CONTENT-TYPE: application/json
+ * 
+ * KEY(File): mainImage,
+ * VALUE: 이미지파일
+ * 
+ * @apiSuccess {String} mainImageUrl
  * 
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
