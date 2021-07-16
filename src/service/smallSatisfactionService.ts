@@ -8,46 +8,12 @@ import SmallSatisfactionDetailResponseDTO from "../dto/SmallSatisfaction/Detail/
 import { LikeResponseDTO } from "../dto/SmallSatisfaction/Like/response/LikeResponseDTO";
 import { DeleteResponseDTO } from "../dto/SmallSatisfaction/Delete/response/DeleteResponseDTO";
 import { IFail } from "../interfaces/IFail";
-import { CreateSmallSatisfactionResponseDTO } from "../dto/SmallSatisfaction/Create/response/CreateSmallSatisfactionDTO";
 import { SERVER_ERROR_MESSAGE } from "../constant";
 import { getDay, getMonth, getYear } from "../formatter/challengeDateFormatter";
 
 
 
 export default {
-  create: async() => {
-    let week = new Array("일", "월", "화", "수", "목", "금", "토");
-    let today = new Date();
-    let days = new Date().getDay();
-    let todayYear = today.getFullYear().toString();
-    let todayMonth = (today.getMonth() + 1).toString();
-    let todayDay = today.getDate().toString();
-    let todayWeek = week[days];
-
-    try {
-      const responseDTO: CreateSmallSatisfactionResponseDTO = {
-        status: 200,
-        data: {
-          year: todayYear,
-          month: todayMonth,
-          day: todayDay,
-          week: todayWeek,
-        }
-      };
-  
-      return responseDTO;
-
-    } catch (err) {
-      console.error(err.message);
-      const serverError: IFail = {
-        status: 500,
-        message: SERVER_ERROR_MESSAGE,
-      };
-      return serverError;
-    }
-
-
-  },
   write: async (token: String, dto: SmallSatisfactionWriteRequestDTO) => {
     let week = new Array("일", "월", "화", "수", "목", "금", "토");
     let today = new Date();

@@ -11,20 +11,6 @@
 
 # 서비스 워크플로우
 
-```
-<details>
-<summary>쟈니 워크플로우</summary>
-<div markdown="1">       
-![워크플로우 1](https://user-images.githubusercontent.com/49138331/125880107-d467e51f-e089-430a-b15e-828df1d6c163.png)
-![쟈니 워크플로우](https://user-images.githubusercontent.com/49138331/125879876-57aa78e8-9457-47f8-86d9-b3b68f6808ef.png)
-![워크플로우 3](https://user-images.githubusercontent.com/49138331/125880120-f5b2e046-6b63-4bfe-bcda-7ee438f6a11e.png)
-![워크플로우 4](https://user-images.githubusercontent.com/49138331/125880131-cac89e84-9c0a-40f4-b26c-b052e8a6a839.png)
-![워크플로우 5](https://user-images.githubusercontent.com/49138331/125880143-4e1bdaf9-2b8f-458b-a9a4-3fea68a069e0.png)
-![워크플로우 6](https://user-images.githubusercontent.com/49138331/125880140-a8a2dd78-85f1-44b9-a804-feb6ba47cc7c.png)
-</div>
-</details>
-```
-
 
 
 # 서버 아키텍처
@@ -83,7 +69,7 @@
 # Contributor 🖤
 
 | [김현지](https://github.com/khyunjiee)                      | [김기연](https://github.com/gamza55) |
-| ----------------------------------------------------------- | ------------------------------------ |
+| ------------------------------------ | ------------------------------------ |
 | 더 잘해주지 못해서 미안하고,, 항상 고맙습니다 우리 기연이 🖤 | 수정해주세요 🖤                       |
 
 

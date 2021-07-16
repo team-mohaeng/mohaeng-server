@@ -3,57 +3,9 @@ import upload from "../modules/upload";
 import auth from "../middleware/auth";
 import { SmallSatisfactionWriteRequestDTO } from "../dto/SmallSatisfaction/Write/request/SmallSatisfactionWriteDTO";
 import smallSatisfactionService from "../service/smallSatisfactionService";
-import { IFail } from "../interfaces/IFail";
 
 
 const router = express.Router();
-
-/**
- * @api {get} /api/smallSatisfaction/create 소확행 작성
- * 
- * @apiVersion 1.0.0
- * @apiName createSmallSatisfaction
- * @apiGroup 소확행
- * 
- * @apiHeaderExample {json} Header-Example:
- * {
- *  "Content-Type": "application/json"
- *  "Bearer": "jwt"
- * }
- * 
- * @apiSuccess {String} year
- * @apiSuccess {String} month
- * @apiSuccess {String} date
- * @apiSuccess {String} day
- * 
- * @apiSuccessExample {json} Success-Response:
- * 200 OK
- * {
- *  "status": 200,
- *  "data": {
- *    "year": "2021",
- *    "month": "7",
- *    "date": "14",
- *    "day": "수"
- *  }
- * }
- *  
- * 
- * 
- * @apiErrorExample Error-Response:
- * 500 서버 에러
- * {
- *  "status": 500,
- *  "message": "서버 에러입니다."
- * }
- */
-
-
-router.get("/create", auth, async (req, res) => {
-  const result = await smallSatisfactionService.create();
-  res.status(result.status).json(result);
-});
-
 
 
 /**
@@ -70,14 +22,15 @@ router.get("/create", auth, async (req, res) => {
  * }
  * 
  * @apiParamExample {json} Request-Example:
- * {
- *	"mood": "2",
- *	"content": "소확행 내용",
- *	"hashtags": ["#해시태그1", "#해시태그2", ... ],
- *	"mainImage": "mainImageUrl",
- *	"isPrivate": false
- * }
- * @apiSuccess {String} image
+ * form-data 형식
+ * KEY(Text): smallSatisfaction, 
+ * VALUE : {"content": "오늘 아무생각없이 그림을 그렸는데 생각보다 마음에 든다!", "mood": 2, "isPrivate": false},
+ * CONTENT-TYPE: application/json
+ * 
+ * KEY(File): mainImage,
+ * VALUE: 이미지파일
+ * 
+ * @apiSuccess {String} mainImageUrl
  * 
  * @apiSuccessExample {json} Success-Response:
  * 200 OK
