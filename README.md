@@ -33,10 +33,7 @@
 
 ## 서버 아키텍처
 
-![서버 아키텍처](https://user-images.githubusercontent.com/49138331/125880291-768fa07e-1ba9-4a43-849d-f4bdc3dac841.png)
-
-
-
+![아키텍처쟈니](https://user-images.githubusercontent.com/49138331/125946680-985557a8-694f-4f49-aae2-400dcc30267c.png)
 
 
 ## 기능 분담
