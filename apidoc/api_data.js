@@ -19,7 +19,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Request-Example:",
-          "content": "{\n\t\"mood\": \"2\",\n\t\"content\": \"소확행 내용\",\n\t\"hashtags\": [\"#해시태그1\", \"#해시태그2\", ... ],\n\t\"mainImage\": \"mainImageUrl\",\n\t\"isPrivate\": false\n}",
+          "content": "form-data 형식\nKEY(Text): smallSatisfaction, \nVALUE : {\"content\": \"오늘 아무생각없이 그림을 그렸는데 생각보다 마음에 든다!\", \"mood\": 2, \"isPrivate\": false},\nCONTENT-TYPE: application/json\n\nKEY(File): mainImage,\nVALUE: 이미지파일",
           "type": "json"
         }
       ]
@@ -31,7 +31,7 @@ define({ "api": [
             "group": "Success 200",
             "type": "String",
             "optional": false,
-            "field": "image",
+            "field": "mainImageUrl",
             "description": ""
           }
         ]
@@ -49,75 +49,6 @@ define({ "api": [
         {
           "title": "Error-Response:",
           "content": "400 해시태그 5개 이상\n{\n \"status\": 400,\n \"message\": \"해시태그는 5개까지만 넣어주세요!\"\n}\n\n400 해시태그 6글자수 제한\n{\n \"status\": 400,\n \"message\": \"해시태그는 6글자 이내로 작성해주세요!\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "filename": "src/api/smallSatisfaction.ts",
-    "groupTitle": "소확행"
-  },
-  {
-    "type": "get",
-    "url": "/api/smallSatisfaction/create",
-    "title": "소확행 작성",
-    "version": "1.0.0",
-    "name": "createSmallSatisfaction",
-    "group": "소확행",
-    "header": {
-      "examples": [
-        {
-          "title": "Header-Example:",
-          "content": "{\n \"Content-Type\": \"application/json\"\n \"Bearer\": \"jwt\"\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "year",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "month",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "date",
-            "description": ""
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "day",
-            "description": ""
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"year\": \"2021\",\n   \"month\": \"7\",\n   \"date\": \"14\",\n   \"day\": \"수\"\n }\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "error": {
-      "examples": [
-        {
-          "title": "Error-Response:",
-          "content": "500 서버 에러\n{\n \"status\": 500,\n \"message\": \"서버 에러입니다.\"\n}",
           "type": "json"
         }
       ]
@@ -783,7 +714,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"courses\": {\n     \"id\": 1,\n     \"situation\": 1, // 현재 코스 진행 상태\n     \"title\": \"뽀득뽀득 세균퇴치\",\n     \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n     \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n     \"property\": \"water\", // 코스 속성\n     \"challenges\": [\n       {\n         \"id\": 1,\n         \"title\": \"깨끗하게 손 씻기 3회\",\n         \"situation\": 1, // 챌린지 진행 상태\n         \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n         \"year\": \"\", // 챌린지를 완료하면, year month day를 보냄.\n         \"month\": \"\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n         \"day\": \"\",\n         \"currentStamp\": 2, // 현재 유저 인증 횟수\n         \"totalStamp\": 3, // 인증해야할 총 횟수\n         \"userMents\": [ // 수정될 수 있지만, 0번 인덱스는 인증 팝업 멘트 1번 인덱스는 인증 완료 시 하단 멘트\n           \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n           \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n         ]\n       },\n       // ...\n     ]\n   }\n }\n}",
+          "content": "200 OK\n{\n \"status\": 200,\n \"data\": {\n   \"course\": {\n     \"id\": 1,\n     \"situation\": 1, // 현재 코스 진행 상태\n     \"title\": \"뽀득뽀득 세균퇴치\",\n     \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n     \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n     \"property\": 0, // 코스 속성\n     \"challenges\": [\n       {\n         \"id\": 1,\n         \"title\": \"깨끗하게 손 씻기 3회\",\n         \"situation\": 1, // 챌린지 진행 상태\n         \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n         \"successDescription\": \"당신은 나에게 한 송이 꽃과 같으니 광합성을 해야만 해. 잠시라도 나와 함께 햇빛을 느껴보겠어?\",\n         \"year\": \"\", // 챌린지를 완료하면, year month day를 보냄.\n         \"month\": \"\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n         \"day\": \"\",\n         \"currentStamp\": 1, // 현재 유저 인증 횟수\n         \"totalStamp\": 2, // 인증해야할 총 횟수\n         \"userMents\": [ \n           \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n           \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n         ]\n       },\n       // ...\n     ]\n   }\n }\n}",
           "type": "json"
         }
       ]
@@ -951,7 +882,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "200 진행하는 코스 하나만 response\n{\n \"status\": 200,\n \"data\": {\n   \"course\": {\n     \"id\": 1,\n     \"situation\": 1, // 현재 코스 진행 상태\n     \"title\": \"뽀득뽀득 세균퇴치\",\n     \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n     \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n     \"property\": 0, // 코스 속성\n     \"challenges\": [\n       {\n         \"id\": 1,\n         \"title\": \"깨끗하게 손 씻기 3회\",\n         \"situation\": 2, // 챌린지 진행 상태\n         \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n         \"successDescription\": \"당신은 나에게 한 송이 꽃과 같으니 광합성을 해야만 해. 잠시라도 나와 함께 햇빛을 느껴보겠어?\",\n         \"year\": \"2021\", // 챌린지를 완료하면, year month day를 보냄.\n         \"month\": \"07\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n         \"day\": \"03\",\n         \"currentStamp\": 3, // 현재 유저 인증 횟수\n         \"totalStamp\": 2, // 인증해야할 총 횟수\n         \"userMents\": [ // 스탬프 수 길이만큼 userMents가 갑니다.\n           \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n           \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n         ]\n       },\n       // ...\n   }\n }\n}",
+          "content": "200 진행하는 코스 하나만 response\n{\n \"status\": 200,\n \"data\": {\n   \"course\": {\n     \"id\": 1,\n     \"situation\": 1, // 현재 코스 진행 상태\n     \"title\": \"뽀득뽀득 세균퇴치\",\n     \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n     \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n     \"property\": 0, // 코스 속성\n     \"challenges\": [\n       {\n         \"id\": 1,\n         \"title\": \"깨끗하게 손 씻기 3회\",\n         \"situation\": 2, // 챌린지 진행 상태\n         \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n         \"successDescription\": \"당신은 나에게 한 송이 꽃과 같으니 광합성을 해야만 해. 잠시라도 나와 함께 햇빛을 느껴보겠어?\",\n         \"year\": \"2021\", // 챌린지를 완료하면, year month day를 보냄.\n         \"month\": \"07\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n         \"day\": \"03\",\n         \"currentStamp\": 1, // 현재 유저 인증 횟수\n         \"totalStamp\": 2, // 인증해야할 총 횟수\n         \"userMents\": [ // 스탬프 수 길이만큼 userMents가 갑니다.\n           \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n           \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n         ]\n       },\n       // ...\n   }\n }\n}",
           "type": "json"
         }
       ]
@@ -1006,7 +937,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "200 완료한 코스가 있는 경우\n{\n \"status\": 200,\n \"data\": {\n   \"totalIncreasedAffinity\": 26, // 총 증가시킨 쟈니와의 애정도\n   \"maxSuccessCount\": 2, // 최대 챌린지 연속 성공 횟수\n   \"courses\": [\n     {\n       \"id\": 1,\n       \"situation\": 2, // 현재 코스 진행 상태\n       \"title\": \"뽀득뽀득 세균퇴치\",\n       \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n       \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n       \"property\": 0, // 코스 속성\n       \"challenges\": [\n         {\n           \"id\": 1,\n           \"title\": \"깨끗하게 손 씻기 3회\",\n           \"situation\": 2, // 챌린지 진행 상태\n           \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n           \"successDescription\": \"당신은 나에게 한 송이 꽃과 같으니 광합성을 해야만 해. 잠시라도 나와 함께 햇빛을 느껴보겠어?\",\n           \"year\": \"2021\", // 챌린지를 완료하면, year month day를 보냄.\n           \"month\": \"07\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n           \"day\": \"03\",\n           \"currentStamp\": 3, // 현재 유저 인증 횟수\n           \"totalStamp\": 2, // 인증해야할 총 횟수\n           \"userMents\": [ // 스탬프 수 길이만큼 userMents가 갑니다.\n             \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n             \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n           ]\n         },\n         // ...\n       ]\n     },\n     // ...\n   ]\n }\n}",
+          "content": "200 완료한 코스가 있는 경우\n{\n \"status\": 200,\n \"data\": {\n   \"totalIncreasedAffinity\": 26, // 총 증가시킨 쟈니와의 애정도\n   \"maxSuccessCount\": 2, // 최대 챌린지 연속 성공 횟수\n   \"courses\": [\n     {\n       \"id\": 1,\n       \"situation\": 2, // 현재 코스 진행 상태\n       \"title\": \"뽀득뽀득 세균퇴치\",\n       \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n       \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n       \"property\": 0, // 코스 속성\n       \"challenges\": [\n         {\n           \"id\": 1,\n           \"title\": \"깨끗하게 손 씻기 3회\",\n           \"situation\": 2, // 챌린지 진행 상태\n           \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n           \"successDescription\": \"당신은 나에게 한 송이 꽃과 같으니 광합성을 해야만 해. 잠시라도 나와 함께 햇빛을 느껴보겠어?\",\n           \"year\": \"2021\", // 챌린지를 완료하면, year month day를 보냄.\n           \"month\": \"07\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n           \"day\": \"03\",\n           \"currentStamp\": 1, // 현재 유저 인증 횟수\n           \"totalStamp\": 2, // 인증해야할 총 횟수\n           \"userMents\": [ // 스탬프 수 길이만큼 userMents가 갑니다.\n             \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n             \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n           ]\n         },\n         // ...\n       ]\n     },\n     // ...\n   ]\n }\n}",
           "type": "json"
         },
         {
@@ -1135,7 +1066,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "200 챌린지 진행 중\n{\n \"status\": 200,\n \"data\": {\n   \"situation\": 0, // 유저가 현재 코스를 진행하고 있는지 여부\n   \"affinity\": 42, // 쟈니와의 애정도\n   \"course\":\n     {\n       \"id\": 1,\n       \"situation\": 2, // 현재 코스 진행 상태\n       \"title\": \"뽀득뽀득 세균퇴치\",\n       \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n       \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n       \"property\": 0, // 코스 속성\n       \"challenges\": [\n         {\n           \"id\": 1,\n           \"title\": \"깨끗하게 손 씻기 3회\",\n           \"situation\": 2, // 챌린지 진행 상태\n           \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n           \"successDescription\": \"당신은 나에게 한 송이 꽃과 같으니 광합성을 해야만 해. 잠시라도 나와 함께 햇빛을 느껴보겠어?\",\n           \"year\": \"2021\", // 챌린지를 완료하면, year month day를 보냄.\n           \"month\": \"07\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n           \"day\": \"03\",\n           \"currentStamp\": 3, // 현재 유저 인증 횟수\n           \"totalStamp\": 2, // 인증해야할 총 횟수\n           \"userMents\": [\n             \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n             \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n           ]\n         },\n         // ...\n       ]\n     }\n }\n}",
+          "content": "200 챌린지 진행 중\n{\n \"status\": 200,\n \"data\": {\n   \"situation\": 1, // 유저가 현재 코스를 진행하고 있는지 여부\n   \"affinity\": 42, // 쟈니와의 애정도\n   \"course\":\n     {\n       \"id\": 1,\n       \"situation\": 2, // 현재 코스 진행 상태\n       \"title\": \"뽀득뽀득 세균퇴치\",\n       \"description\": \"나 쟈니가 인간세계에 처음 도착했을 때 사람들이 청결에 대해 은근히 무심한 것이 신기했쟈니. 내가 사는 별에서는 상상도 할 수 없쟈니.\",\n       \"totalDays\": 6, // 코스가 총 며칠짜리 코스인지\n       \"property\": 0, // 코스 속성\n       \"challenges\": [\n         {\n           \"id\": 1,\n           \"title\": \"깨끗하게 손 씻기 3회\",\n           \"situation\": 2, // 챌린지 진행 상태\n           \"description\": \"손을 씻는 것은 청결에 있어서 가장 기본적이지만 잊기 쉬운 일이쟈니. 깨끗해진 너의 손으로 쟈니를 섬세하게 다뤄줘.\",\n           \"successDescription\": \"당신은 나에게 한 송이 꽃과 같으니 광합성을 해야만 해. 잠시라도 나와 함께 햇빛을 느껴보겠어?\",\n           \"year\": \"2021\", // 챌린지를 완료하면, year month day를 보냄.\n           \"month\": \"07\", // 챌린지가 완료되지 않은 상태라면 year, month, day는 \"\"(빈 문자열)로 response\n           \"day\": \"03\",\n           \"currentStamp\": 3, // 현재 유저 인증 횟수\n           \"totalStamp\": 2, // 인증해야할 총 횟수\n           \"userMents\": [\n             \"손톱 밑에도 신경 써서 닦아야 해 세균은 집요하거든. 마치 쟈니처럼\",\n             \"세균 따위가 우리 사이를 가로막을 수는 없지. 청결해지기 위한 쟈기의 노력 덕분에 우리의 사이가 더 농밀해졌네? 찡긋\"\n           ]\n         },\n         // ...\n       ]\n     }\n }\n}",
           "type": "json"
         },
         {
