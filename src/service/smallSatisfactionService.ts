@@ -175,6 +175,10 @@ export default {
             if ((challenge.year == todayYear) && (challenge.month == todayMonth) && (challenge.day == todayDay) && (userSmallSatisfaction)) {
               smallSatisfactionWritten = 1;
             }
+
+            if ((challenge.year != todayYear) || (challenge.month != todayMonth) || (challenge.day != todayDay)) {
+              smallSatisfactionWritten = 3;
+            }
           })
         }
         else {
