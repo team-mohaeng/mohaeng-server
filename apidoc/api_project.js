@@ -3,7 +3,7 @@ define({
   "version": "1.0.0",
   "description": "🌹 쟈기들과는 async 하고싶지 않아.. 오로지 sync.. 🌹",
   "title": "쟈니",
-  "url": "http://3.36.55.247:5000",
+  "url": "http://3.35.25.237:5000",
   "sampleUrl": false,
   "defaultVersion": "0.0.0",
   "apidoc": "0.3.0",
